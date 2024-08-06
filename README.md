@@ -1,6 +1,6 @@
 # Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment
 
-![Default_A_minimalist_logo_design_for_Request_Master_show_navig_2](https://github.com/user-attachments/assets/2b1539fa-f627-43db-b183-9048faeca5d3)
+<img src="https://github.com/user-attachments/assets/2b1539fa-f627-43db-b183-9048faeca5d3" width="300">
 
 ## Background
 
