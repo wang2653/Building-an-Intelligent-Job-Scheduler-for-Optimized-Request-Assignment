@@ -1,5 +1,7 @@
 # Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment
 
+![image](https://github.com/user-attachments/assets/74d71d9c-1bb1-4d2c-88ce-504c32d8046b)
+
 ## Background
 
 In recent years, connecting customers to agents has always been challenging due to the unpredictability of online queues. Traditional rule-based algorithms, such as assigning customers to the next available agent, often result in suboptimal performance and long delays. This project aims to leverage advancements in machine learning to develop an intelligent job scheduler using Deep Reinforcement Learning (DRL). Our scheduler will feature a built-in chatbot for collecting request information, a network prediction component to forecast incoming request loads, and an efficient scheduling system to minimize customer wait times. In addition, our capstone product will include a user-friendly graphical user interface (GUI) to ensure accessibility for all users, thereby enhancing the overall efficiency and effectiveness of customer service interactions.
