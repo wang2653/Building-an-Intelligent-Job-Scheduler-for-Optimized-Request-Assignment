@@ -1,0 +1,8 @@
+treatment_id,name,treatment_duration,resource_id
+1,Triage,7,1
+2,Registration,5.5,1
+3,Evaluation,14,2
+4,X-ray,12,3
+5,CT scan,29,4
+6,Consultation,15,2
+7,Discharge,3,1
