@@ -1,0 +1,17 @@
+# Gradio for building web interfaces
+gradio
+
+# PyTorch for deep learning
+torch
+
+# NumPy for numerical computations
+numpy
+
+# Pandas for data manipulation and analysis
+pandas
+
+# Matplotlib for plotting and visualization
+matplotlib
+
+# Seaborn for enhanced data visualizations, built on top of Matplotlib
+seaborn
