@@ -216,11 +216,20 @@ def load_patient_data(file_path):
 
 # def random_assign():
 
-# def action():
-#     action = {}
-    
-#     return state, new_state, reward, action
+def action(resource):
+    """
+    Selects the next patient to assign to a resource.
 
+    Args:
+        resource (Resource): The resource for which to select a patient.
+    """
+    # select the patient with the highest acuity level
+    if resource.waiting_is_empty():
+        return None
+    waiting_patients = resource.patientid_waiting_arr
+    # sort patients by acuity level
+    waiting_patients.sort(key=lambda pid: global_patient[pid].acuity_level)
+    return waiting_patients[0]  # return the patient with the highest acuity
 
 def init_simulation():
     
@@ -237,6 +246,7 @@ def init_simulation():
     
 def run_simulation():
 
+    init_simulation()
     current_time = 0
 
     while current_time <= TOTAL_SIMULATION_TIME:
@@ -245,6 +255,7 @@ def run_simulation():
         current_time = current_time + 1
         # update patient in treatment, look at each resource to see if patient finish treatment
         patient_new = []
+        
         for resource in global_medical_resource:
             patient_new.extend(resource.update_patient_in_treatment())
 
@@ -265,20 +276,5 @@ def run_simulation():
             # calculate reward
 
             # store old state, new state, reward and action
-
-     
-# class CNN(nn.Module):
-#     def __init__(self):
-#         self.conv1 = nn.Conv2d(in_channels=1, out_channels=16, kernel_size=3, padding=1)
-#         self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=3, padding=1)
-#         self.conv3 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1)
-#         self.fc = nn.Linear(64 * 3 * 3)
-#         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
-
-#     def forward(self, x):
-#         x = self.pool(F.relu(self.conv1(x)))
-#         x = self.pool(F.relu(self.conv2(x)))
-#         x = self.pool(F.relu(self.conv3(x)))
-#         x = x.view(-1, 64 * 3 * 3)
-#         x = self.fc(x)
-#         return x
+            
+run_simulation()
