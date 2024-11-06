@@ -92,6 +92,7 @@ class Resource:
     
     def update_patient_in_treatment(self):
         patient_finish_treatment = []
+        patients_to_remove = []
         
         for patient_id in self.patientid_in_treatment_arr:
             current_treatment_index = global_patient[patient_id].current_treatment_index
@@ -100,13 +101,16 @@ class Resource:
             current_treatment_totaltime = global_patient[patient_id].treatment_totaltime_arr[current_treatment_index]
 
             if current_treatment_time >= current_treatment_totaltime:
-                # move on to the next treatment 
-                global_patient[patient_id].current_treatment_index = global_patient[patient_id].current_treatment_index + 1
+                global_patient[patient_id].current_treatment_index += 1
                 global_patient[patient_id].current_treatment_time = 0
                 patient_finish_treatment.append(patient_id)
-                self.patientid_in_treatment_arr.remove(patient_id)
+                patients_to_remove.append(patient_id)
+        
+        for patient_id in patients_to_remove:
+            self.patientid_in_treatment_arr.remove(patient_id)
         
         return patient_finish_treatment
+
     
     def add_patient_to_waiting(self, patient_id):
         self.patientid_waiting_arr.append(patient_id)
@@ -332,7 +336,7 @@ def run_simulation():
 
         # if resource available and waiting line not empty then make an action for that resource
         for resource in global_medical_resource:
-            if (resource.resource_is_available() == True) and (resource.waiting_is_empty() == False):
+            while (resource.resource_is_available() == True) and (resource.waiting_is_empty() == False):
                 #take action for this resource
                 patient_id = action(resource)
 
