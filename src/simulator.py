@@ -13,23 +13,26 @@ import csv
 from queue import PriorityQueue
 
 '''Environment'''
-MEDICAL_RESOURCE_TYPE_ARR = ["NURSE", "DOCTOR", "XRAY", "CT"]
-MEDICAL_RESOURCE_NUM_ARR = [3, 3, 2, 1]  # Number of each resource type
-MEDICAL_TREATMENT_TYPE_ARR = [1,2,3,4,5,6,7]
+# according to the paper
+MEDICAL_RESOURCE_TYPE_ARR = ["DOCTOR", "NURSE", "XRAY", "CT"]
+MEDICAL_RESOURCE_NUM_ARR = [3, 5, 1, 1]  # Number of each resource type
+MEDICAL_TREATMENT_TYPE_ARR = [1,2,3,4,5,6,7,8,9]
 RESOURCE_TREATMENT_MAP = {
-    1: 'NURSE',
-    2: 'NURSE',
-    3: 'DOCTOR',
-    4: 'XRAY',
-    5: 'CT',
-    6: 'DOCTOR',
-    7: 'NURSE'
+    1: 'DOCTOR',    #Triage
+    2: 'NURSE',     #Registration
+    3: 'DOCTOR',    #Evaluation
+    4: 'NURSE',     #Laboratory
+    5: 'XRAY',      #X-ray
+    6: 'NURSE',     #Consultation
+    7: 'CT',        #CT scan
+    8: 'NURSE',     #Discharge
+    9: 'NURSE'      #Admission
 }
 ACUITY_WEIGHT_MAP = {
     1: 30,  # Acuity level 1
     2: 15,  # Acuity level 2
-    3: 10,  # Acuity level 3
-    4: 5, # Acuity level 4
+    3: 1,  # Acuity level 3
+    4: 1, # Acuity level 4
     5: 1  # Acuity level 5
 }
 
