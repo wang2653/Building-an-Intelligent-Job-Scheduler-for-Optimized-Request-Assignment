@@ -270,6 +270,7 @@ def action(resource):
     print("waiting:", waiting_patients)
     # sort patients by acuity level
     waiting_patients.sort(key=lambda pid: global_patient[pid].acuity_level)
+    print("most one:", waiting_patients[0])
     return waiting_patients[0]  # return the patient with the highest acuity
 
 def init_simulation():
