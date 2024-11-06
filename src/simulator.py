@@ -50,11 +50,11 @@ wait_time_arr = [] #minutes patient waited for each treatment, to be recorded af
 class Patient:
     def __init__(self, patient_id, arrival_time, acuity_level, treatment_plan_arr, treatment_totaltime_arr):
         # Preassigned in simulated data 
-        self.patient_id = patient_id              # Unique identifier for the patient
-        self.arrival_time = arrival_time          # Time of arrival
-        self.acuity_level = acuity_level          # Acuity level (integer 1 to 5)
-        self.treatment_plan_arr = treatment_plan_arr# List of treatments plan (integer 1 to 7)
-        self.treatment_totaltime_arr = treatment_totaltime_arr# List of treatments time (simulated in minutes)
+        self.patient_id = patient_id                            # Unique identifier for the patient
+        self.arrival_time = arrival_time                        # Time of arrival
+        self.acuity_level = acuity_level                        # Acuity level (integer 1 to 5)
+        self.treatment_plan_arr = treatment_plan_arr            # List of treatments plan (integer 1 to 7)
+        self.treatment_totaltime_arr = treatment_totaltime_arr  # List of treatments time (simulated in minutes)
         # Dynamically updating during simulation
         self.treatment_starttime_arr =[None] * len(treatment_plan_arr)          # List of wait times for each treatment (to be recorded)
         self.current_treatment_index = 0   # initilize to be 0 < len(treatment_plan_arr)
@@ -167,12 +167,13 @@ global_patient = {}
 # pattern_id : [treatment_1, treatment_2, ...] 
 global_treatment = {} 
 # treatment_id : duration
+# int : float
 global_treatment_duration = {}
 
 # run_simulation
 global_medical_resource = []
 
-def load_patient_data(file_path):
+def load_patient_data():
     """
         load data
     """
@@ -185,12 +186,14 @@ def load_patient_data(file_path):
 
     # initialize the global_treatment
     # pattern_id : [treatment_1, treatment_2]
-    with open(file_path["Treatment_Pattern"], mode='r') as file:
+
+    with open('./data/Treatment_Pattern.csv', mode='r') as file:
         reader = csv.reader(file)
 
         for row in reader: 
-            pattern_id = row['pattern_id']
-            global_treatment[pattern_id] = row[2:]
+            pattern_id = int(row[0])
+            global_treatment[pattern_id] = list(map(int, row[2:]))
+            
 
     # initialize the global_treatment_duration
     # treatment_id : duration
@@ -198,23 +201,24 @@ def load_patient_data(file_path):
         reader = csv.reader(file)
 
         for row in reader: 
-            treatment_id = row['treatment_id']
-            global_treatment_duration[treatment_id] = row[2]
+            treatment_id = int(row[0])
+            global_treatment_duration[treatment_id] = float(row[2])
             
+
     # initialize the global_patient
     with open(file_path["Patient"], mode='r') as file:
         reader = csv.reader(file)
 
         for row in reader:
-            patient_id = row['p_id']
-            arrival_time = row['arrival_time']
-            acuity_level = row['acuity_level']
-            treatment_plan_arr = global_treatment[row['pattern_id']]
-            treatment_totaltime_arr = [global_treatment_duration[pattern_id] for pattern_id in treatment_plan_arr]
+            patient_id = int(row[0])
+            arrival_time = row[2]
+            acuity_level = int(row[3])
+            treatment_plan_arr = list( map( int, global_treatment[int(row[4])] ) )
+            treatment_totaltime_arr = [global_treatment_duration[treatment_id] for treatment_id in treatment_plan_arr]
             global_patient[patient_id] = Patient(patient_id, arrival_time, acuity_level, treatment_plan_arr, treatment_totaltime_arr)
 
 
-# def random_assign():
+
 
 def action(resource):
     """
@@ -233,14 +237,17 @@ def action(resource):
 
 def init_simulation():
     
+    #initialize all Patient object
+    load_patient_data()
+
+
     #initialize all Resource object
     Medical_Resource_List = []
     for i in range(len(MEDICAL_RESOURCE_TYPE_ARR)):
         resource = Resource(MEDICAL_RESOURCE_TYPE_ARR[i], MEDICAL_RESOURCE_NUM_ARR[i])
         Medical_Resource_List.append(resource)
 
-    #initialize all Patient object
-    load_patient_data()
+    
 
     global_medical_resource = Medical_Resource_List
     

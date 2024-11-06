@@ -1,4 +1,3 @@
-treatment_id,name,treatment_duration,resource_id
 1,Triage,7,1
 2,Registration,5.5,1
 3,Evaluation,14,2

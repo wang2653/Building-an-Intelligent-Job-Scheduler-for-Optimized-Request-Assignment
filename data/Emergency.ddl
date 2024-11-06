@@ -27,7 +27,7 @@ CREATE TABLE Treatments (
 -- A treatement pattern has treatments_num treatments and 
 -- in the sequence of treatments_sequence.
 CREATE TABLE Treatment_patterns (
-	treatment_p_id INT PRIMARY KEY,
+	pattern_id INT PRIMARY KEY,
 	treatments_num INT NOT NULL,
 	treatments_sequence VARCHAR(200) NOT NULL
 );
