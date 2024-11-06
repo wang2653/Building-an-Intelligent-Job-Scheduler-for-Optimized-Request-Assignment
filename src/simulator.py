@@ -35,7 +35,28 @@ ACUITY_WEIGHT_MAP = {
 
 TOTAL_SIMULATION_TIME = 30 # minutes
 
-# Initialize counts
+# Patient object list 
+# {patient_id:Patient, ...} 
+global_patient = {}
+# {arrival_time , Patient, ...} 
+global_patient_by_time = PriorityQueue()
+# pattern_id : [treatment_id, treatment_id, ...] 
+global_treatment = {} 
+# treatment_id : duration
+# int : float
+global_treatment_duration = {}
+
+# import random
+# global_treatment_duration[treatment_id] = random.normalvariate(mean_duration, standard_deviation)
+
+# treatment_id : resource_id
+# int : int
+global_treatment_resource = {}
+
+# run_simulation
+global_medical_resource = []
+
+# counts
 num_acuity_levels = 5
 num_treatment_type = 7
 
@@ -140,12 +161,14 @@ class Resource:
             return [0,0,0,0,0,0,0,0,0,0,0,0]
         # acuity distrbution
         acuity_counts = [0,0,0,0,0]
+        # values are proportions (e.g., 0.5 means 50% of patients are at that acuity level)
         for patient_id in self.patientid_waiting_arr:
             acuity_index = global_patient[patient_id].acuity_level - 1
             acuity_counts[acuity_index] += 1
 
-        #treatment type distribution
+        # treatment Types: Represented by the next seven elements (positions 5 to 11).
         treatment_type_counts = [0,0,0,0,0,0,0]
+        # Each position corresponds to a treatment type from 1 to 7.
         for patient_id in self.patientid_waiting_arr:
             current_treatment_index = global_patient[patient_id].current_treatment_index
             current_treatment_type = global_patient[patient_id].treatment_plan_arr[current_treatment_index]-1
@@ -171,9 +194,6 @@ class Resource:
             treatment_type_counts[current_treatment_type] += 1
 
         return [float(distribution / total_patient_inTreatment) for distribution in (acuity_counts + treatment_type_counts)]
-    
-
-
 
 # Reward function
 def compute_reward(patient, current_time):
@@ -190,23 +210,6 @@ def compute_reward(patient, current_time):
     reward = {}
 
     return reward
-
-# Patient object list 
-# {patient_id:Patient, ...} 
-global_patient = {}
-# {arrival_time , Patient, ...} 
-global_patient_by_time = PriorityQueue()
-# pattern_id : [treatment_id, treatment_id, ...] 
-global_treatment = {} 
-# treatment_id : duration
-# int : float
-global_treatment_duration = {}
-# treatment_id : resource_id
-# int : int
-global_treatment_resource = {}
-
-# run_simulation
-global_medical_resource = []
 
 def load_patient_data():
     """
@@ -283,66 +286,68 @@ def init_simulation():
         resource = Resource(MEDICAL_RESOURCE_TYPE_ARR[i], MEDICAL_RESOURCE_NUM_ARR[i])
         global_medical_resource.append(resource)
 
-
 def run_simulation():
 
     init_simulation()
     current_time = 0
 
     while current_time <= TOTAL_SIMULATION_TIME:
-        # store old state
-        print('\ncurrent_time: ', current_time)
+        print(f'\n=== Time {current_time} ===')
 
         # update patient in treatment, look at each resource to see if patient finish treatment
         patient_new = []
-        
+
         for resource in global_medical_resource:
-            patient_new.extend(resource.update_patient_in_treatment())
+            patient_finished = resource.update_patient_in_treatment()
+            patient_new.extend(patient_finished)
 
         # look at simulation data to see if we have new patient at current time, add to patient_new
         while not global_patient_by_time.empty():
-            patient = global_patient_by_time.get()
-            print("Processing: (arrival_time, patient_id)")
-            print(patient)
-
-            if patient[0] == current_time:
-                patient_new.append(patient[1])
+            arrival_time, patient_id = global_patient_by_time.get()
+            if arrival_time == current_time:
+                print(f'New patient arrived: [Patient ID: {patient_id}]')
+                patient_new.append(patient_id)
             else:
-                global_patient_by_time.put(patient)
+                global_patient_by_time.put((arrival_time, patient_id))
                 break
 
-        print("new patients are:", patient_new)
+        if patient_new:
+            print(f'New patients are: {patient_new}')
 
         # assign patient to resources waiting que (according to mapping) if not reached end of treatment plan
         for patient_id in patient_new:
             # index of treatment_plan_arr
+            patient = global_patient[patient_id]
             current_treatment_index = global_patient[patient_id].current_treatment_index
             # not finish all treatments
-            if (current_treatment_index < len(global_patient[patient_id].treatment_plan_arr)):
+            if current_treatment_index < len(patient.treatment_plan_arr):
                 # upcoming treatment id 
-                current_treatment_id = global_patient[patient_id].treatment_plan_arr[current_treatment_index]
+                current_treatment_id = patient.treatment_plan_arr[current_treatment_index]
                 # the resource id of the upcoming treatment
                 resource_id = global_treatment_resource[current_treatment_id]
-                print("treatment_id:", current_treatment_id, "resource_id:", resource_id)
                 # assign patient to waiting queue of this resource
-                global_medical_resource[resource_id-1].add_patient_to_waiting(patient_id)
+                resource = global_medical_resource[resource_id - 1]
+                print(f'Patient {patient_id} assigned to resource {resource.medical_resource_type}')
+                resource.add_patient_to_waiting(patient_id)
 
         # check state
-        for i in global_medical_resource:
-            # print("distirbution of acuity(5) and treatment type(7)")
-            print("waiting: ", i.medical_resource_type, ":", i.get_waiting_state())
-            print("treating:", i.medical_resource_type, ":", i.get_inTreatment_state())
+        for resource in global_medical_resource:
+            waiting_state = resource.get_waiting_state()
+            treating_state = resource.get_inTreatment_state()
+            print(f'\nResource: {resource.medical_resource_type}')
+            print(f'  Waiting State: {waiting_state}')
+            print(f'  Treating State: {treating_state}')
 
         # update state 
 
         # if resource available and waiting line not empty then make an action for that resource
         for resource in global_medical_resource:
             while (resource.resource_is_available() == True) and (resource.waiting_is_empty() == False):
-                #take action for this resource
                 patient_id = action(resource)
+                if patient_id is not None:
+                    resource.add_patient_to_treatment(patient_id, current_time)
+                    print(f'Patient {patient_id} started treatment with {resource.medical_resource_type}')
 
-                resource.add_patient_to_treatment(patient_id, current_time)
-                
             # calculate reward
 
             # store old state, new state, reward and action
@@ -350,3 +355,4 @@ def run_simulation():
         current_time = current_time + 1
             
 run_simulation()
+
