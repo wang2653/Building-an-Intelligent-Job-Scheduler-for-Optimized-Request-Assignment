@@ -36,7 +36,7 @@ ACUITY_WEIGHT_MAP = {
     5: 1  # Acuity level 5
 }
 
-TOTAL_SIMULATION_TIME = 30 # minutes
+TOTAL_SIMULATION_TIME = 105 # minutes
 
 # Patient object list 
 # {patient_id:Patient, ...} 
@@ -58,6 +58,9 @@ global_treatment_resource = {}
 
 # run_simulation
 global_medical_resource = []
+
+# weighted waiting time of each patient
+global_weighted_waiting_time = []
 
 # counts
 num_acuity_levels = 5
@@ -289,6 +292,30 @@ def init_simulation():
         resource = Resource(MEDICAL_RESOURCE_TYPE_ARR[i], MEDICAL_RESOURCE_NUM_ARR[i])
         global_medical_resource.append(resource)
 
+def evaluation():
+    for key, value in global_patient.items():
+        print(f"{key}: {value.treatment_starttime_arr}")
+        print(f"{key}: {value.treatment_totaltime_arr}\n")
+
+        start_time = value.treatment_starttime_arr
+        total_time = value.treatment_totaltime_arr
+        arrival_time = value.arrival_time
+        acuity_level = value.acuity_level
+
+        # first treatment waiting time
+        waiting_time = 0
+        waiting_time += start_time[0] - arrival_time
+
+        # remaining treatments waiting time
+        for i in range(1, len(start_time)):
+            waiting_time += start_time[i] - (total_time[i-1] + start_time[i-1])
+        
+        global_weighted_waiting_time.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
+
+    print(global_weighted_waiting_time)
+    print(sum(global_weighted_waiting_time))
+    print(sum(global_weighted_waiting_time) / len(global_weighted_waiting_time))
+    
 def run_simulation():
 
     init_simulation()
@@ -333,13 +360,6 @@ def run_simulation():
                 print(f'Patient {patient_id} assigned to resource {resource.medical_resource_type}')
                 resource.add_patient_to_waiting(patient_id)
 
-        # check state
-        for resource in global_medical_resource:
-            waiting_state = resource.get_waiting_state()
-            treating_state = resource.get_inTreatment_state()
-            print(f'\nResource: {resource.medical_resource_type}')
-            print(f'  Waiting State: {waiting_state}')
-            print(f'  Treating State: {treating_state}')
 
         # update state 
 
@@ -355,7 +375,16 @@ def run_simulation():
 
             # store old state, new state, reward and action
         
-        current_time = current_time + 1
-            
-run_simulation()
+        # check state
+        for resource in global_medical_resource:
+            waiting_state = resource.get_waiting_state()
+            treating_state = resource.get_inTreatment_state()
+            print(f'\nResource: {resource.medical_resource_type}')
+            print(f'  Waiting State: {waiting_state}')
+            print(f'  Treating State: {treating_state}')
 
+
+        current_time = current_time + 1
+
+run_simulation()
+evaluation()
