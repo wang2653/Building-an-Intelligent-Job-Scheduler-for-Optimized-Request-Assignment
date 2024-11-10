@@ -15,7 +15,7 @@ from queue import PriorityQueue
 '''Environment'''
 # according to the paper
 MEDICAL_RESOURCE_TYPE_ARR = ["DOCTOR", "NURSE", "XRAY", "CT"]
-MEDICAL_RESOURCE_NUM_ARR = [3, 5, 1, 1]  # Number of each resource type
+MEDICAL_RESOURCE_NUM_ARR = [3, 3, 1, 1]  # Number of each resource type
 MEDICAL_TREATMENT_TYPE_ARR = [1,2,3,4,5,6,7,8,9]
 RESOURCE_TREATMENT_MAP = {
     1: 'DOCTOR',    #Triage
@@ -36,7 +36,7 @@ ACUITY_WEIGHT_MAP = {
     5: 1  # Acuity level 5
 }
 
-TOTAL_SIMULATION_TIME = 105 # minutes
+TOTAL_SIMULATION_TIME = 225 # minutes
 
 # Patient object list 
 # {patient_id:Patient, ...} 
@@ -265,7 +265,7 @@ def load_patient_data():
 
 
 
-def action(resource):
+def action_AA(resource):
     """
     Selects the next patient to assign to a resource.
 
@@ -279,8 +279,29 @@ def action(resource):
     print("waiting:", waiting_patients)
     # sort patients by acuity level
     waiting_patients.sort(key=lambda pid: global_patient[pid].acuity_level)
+
+    # patients with same acuity level
+    count = 0
+    for i in range(len(waiting_patients)):
+        if global_patient[waiting_patients[0]].acuity_level == global_patient[waiting_patients[i]].acuity_level:
+            count += 1
+    waiting_patients = waiting_patients[:count]
+   
+    waiting_patients.sort(key=lambda pid: global_patient[pid].arrival_time)
     print("most one:", waiting_patients[0])
-    return waiting_patients[0]  # return the patient with the highest acuity
+    return waiting_patients[0]  # return the patient with the highest acuity and the earliest arrival time
+
+def action_FCFS(resource):
+    # select the patient with the earliest arrival time
+    if resource.waiting_is_empty():
+        return None
+    
+    waiting_patients = resource.patientid_waiting_arr
+    print("waiting:", waiting_patients)
+    # sort patients by acuity level
+    waiting_patients.sort(key=lambda pid: global_patient[pid].arrival_time)
+    print("earliest one:", waiting_patients[0])
+    return waiting_patients[0]  # return the patient with the earliest arrival time
 
 def init_simulation():
     
@@ -312,9 +333,9 @@ def evaluation():
         
         global_weighted_waiting_time.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
 
-    print(global_weighted_waiting_time)
-    print(sum(global_weighted_waiting_time))
-    print(sum(global_weighted_waiting_time) / len(global_weighted_waiting_time))
+    print(f"weighted waiting time: {global_weighted_waiting_time}")
+    print(f"sum of weighted waiting time: {sum(global_weighted_waiting_time)}")
+    print(f"average of weighted waiting time: {sum(global_weighted_waiting_time) / len(global_weighted_waiting_time)}")
     
 def run_simulation():
 
@@ -366,7 +387,8 @@ def run_simulation():
         # if resource available and waiting line not empty then make an action for that resource
         for resource in global_medical_resource:
             while (resource.resource_is_available() == True) and (resource.waiting_is_empty() == False):
-                patient_id = action(resource)
+                # patient_id = action_FCFS(resource)
+                patient_id = action_AA(resource)
                 if patient_id is not None:
                     resource.add_patient_to_treatment(patient_id, current_time)
                     print(f'Patient {patient_id} started treatment with {resource.medical_resource_type}')
@@ -388,3 +410,4 @@ def run_simulation():
 
 run_simulation()
 evaluation()
+
