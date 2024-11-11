@@ -1,5 +1,11 @@
 import gradio as gr
 from PIL import Image
+from oauth2client import client, file, tools
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+import os
+import pickle
+
 
 # Read the CSS file
 with open("../assets/styles.css", "r") as css_file:
@@ -11,6 +17,36 @@ with open("../assets/styles.css", "r") as css_file:
 def edit_image(image):
     return image"""
 
+
+def login_with_google():
+    # Define the scopes required for the Google login
+    SCOPES = ['https://www.googleapis.com/auth/userinfo.profile']
+    creds = None
+
+    # Load credentials if they exist
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+
+    # Refresh or create credentials if they are not valid or do not exist
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+
+        # Save the credentials for future use
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    # Return a success message if the user is logged in
+    if creds:
+        return "Login successful with Google!"
+    else:
+        return "Login failed. Please try again."
+
+
 with gr.Blocks() as interface:
     gr.HTML(styles_css)  # Adding custom styles here
     with gr.Row(equal_height=True, elem_id="header_row"):
@@ -18,7 +54,8 @@ with gr.Blocks() as interface:
         gr.Button("Home", elem_id="home_btn", size="lg")
         gr.Button("About", elem_id="about_btn", size="lg")
         gr.Button("Contact", elem_id="contact_btn", size="lg")
-        gr.Button("Login", elem_id="login_btn", size="lg")
+        login_btn = gr.Button("Login", elem_id="login_btn", size="lg")
+    login_btn.click(fn=login_with_google)
     with gr.Row():
         with gr.Column(scale=1, min_width=400):
             gr.Markdown('<h1 style="font-size: 4em;">Explore Better Decision Making</h1>', elem_id="main_text")
