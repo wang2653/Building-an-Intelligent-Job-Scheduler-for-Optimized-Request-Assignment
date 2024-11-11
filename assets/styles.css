@@ -1,11 +1,30 @@
+#header_row {
+    display: flex;
+    align-items: center;
+}
+
 #page_title {
-    font-size: 3em;
-    flex-grow: 3;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    text-align: left;
+    flex-grow: 1;
 }
 
 #home_btn,
 #about_btn,
 #contact_btn,
 #login_btn {
-    flex-grow: 1;
+    font-size: 1em;
+    flex-grow: 0;
 }
+
+body {
+    font-family: 'Arail', sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+
