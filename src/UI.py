@@ -1,7 +1,29 @@
 import gradio as gr
 
-# Creating the main interface using Gradio Blocks
-with gr.Blocks(css="../assets/styles.css") as interface:
+# Injecting CSS directly into the HTML
+custom_css = """
+<style>
+        #page_title {
+        font-size: 3em;
+        flex-grow: 3;
+    }
+
+    #home_btn,
+    #about_btn,
+    #contact_btn,
+    #login_btn {
+        flex-grow: 1;
+    }
+</style>
+"""
+
+
+# Read the CSS file
+with open("../assets/styles.css", "r") as css_file:
+    styles_css = f"<style>{css_file.read()}</style>"
+
+with gr.Blocks() as interface:
+    gr.HTML(styles_css)  # Adding custom styles here
     with gr.Row():
         gr.Markdown("# Intelligent Scheduler for Emergence Department", elem_id="page_title")
         gr.Button("Home", elem_id="home_btn", size="lg")

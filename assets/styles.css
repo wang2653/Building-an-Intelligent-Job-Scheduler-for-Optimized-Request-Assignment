@@ -1,11 +1,11 @@
-h1#page_title {
+#page_title {
     font-size: 3em;
     flex-grow: 3;
 }
 
-button#home_btn,
-button#about_btn,
-button#contact_btn,
-button#login_btn {
+#home_btn,
+#about_btn,
+#contact_btn,
+#login_btn {
     flex-grow: 1;
 }
