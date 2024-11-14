@@ -17,6 +17,9 @@ with open("../assets/styles.css", "r") as css_file:
 def edit_image(image):
     return image"""
 
+def test_func(Patient_name, Acuity_level):
+    return "Hello, " + Patient_name + ", your acuity level is " + Acuity_level
+
 
 def login_with_google():
     # Define the scopes required for the Google login
@@ -62,6 +65,12 @@ with gr.Blocks() as interface:
             with gr.Row():
                 gr.Button("Get Started", elem_id="get_start_btn")
                 gr.Button("Learn More", elem_id="learn_more_btn")
+            doctor_interface = gr.Interface(
+                fn = test_func,
+                inputs=["text", "text"],
+                outputs=[gr.Textbox(label="Output", lines=5)],
+                flagging_mode="never"
+            )
         gr.Image(value="../static/emergency1.jpg", elem_id="main_image")
 
 interface.launch()
