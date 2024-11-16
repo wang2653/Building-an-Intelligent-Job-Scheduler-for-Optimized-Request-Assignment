@@ -1,0 +1,9 @@
+{
+    "wait_times": "The current average wait time is 30 minutes.",
+    "resource_availability": "All critical resources are fully available.",
+    "updates": "No new updates at this time.",
+    "contact_info": {
+        "phone": "123-456-7890",
+        "address": "123 Main St, Anytown, USA"
+    }
+}
