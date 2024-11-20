@@ -11,22 +11,23 @@
 
 import csv
 from queue import PriorityQueue
+import ast
 
 '''Environment'''
 # according to the paper
 MEDICAL_RESOURCE_TYPE_ARR = ["DOCTOR", "NURSE", "XRAY", "CT"]
-MEDICAL_RESOURCE_NUM_ARR = [3, 3, 1, 1]  # Number of each resource type
+MEDICAL_RESOURCE_NUM_ARR = [8, 7, 2, 2]  # Number of each resource type
 MEDICAL_TREATMENT_TYPE_ARR = [1,2,3,4,5,6,7,8,9]
 RESOURCE_TREATMENT_MAP = {
-    1: 'DOCTOR',    #Triage
-    2: 'NURSE',     #Registration
-    3: 'DOCTOR',    #Evaluation
-    4: 'NURSE',     #Laboratory
-    5: 'XRAY',      #X-ray
-    6: 'NURSE',     #Consultation
-    7: 'CT',        #CT scan
-    8: 'NURSE',     #Discharge
-    9: 'NURSE'      #Admission
+    1: 1,     # 'DOCTOR',    #Triage
+    2: 2,     # 'NURSE',     #Registration
+    3: 1,     # 'DOCTOR',    #Evaluation
+    4: 2,     # 'NURSE',     #Laboratory
+    5: 3,     # 'XRAY',      #X-ray
+    6: 2,     # 'NURSE',     #Consultation
+    7: 4,     # 'CT',        #CT scan
+    8: 2,     # 'NURSE',     #Discharge
+    9: 2,     # 'NURSE'      #Admission
 }
 ACUITY_WEIGHT_MAP = {
     1: 30,  # Acuity level 1
@@ -36,35 +37,25 @@ ACUITY_WEIGHT_MAP = {
     5: 1  # Acuity level 5
 }
 
-TOTAL_SIMULATION_TIME = 225 # minutes
+TOTAL_SIMULATION_TIME = 1500 # minutes
 
 # Patient object list 
 # {patient_id:Patient, ...} 
 global_patient = {}
 # {arrival_time , Patient, ...} 
 global_patient_by_time = PriorityQueue()
-# pattern_id : [treatment_id, treatment_id, ...] 
+# pattern_id : [treatment_id, treatment_id, ...] --
 global_treatment = {} 
 # treatment_id : duration
-# int : float
+# int : float --
 global_treatment_duration = {}
 
-# import random
-# global_treatment_duration[treatment_id] = random.normalvariate(mean_duration, standard_deviation)
-
-# treatment_id : resource_id
-# int : int
-global_treatment_resource = {}
 
 # run_simulation
 global_medical_resource = []
 
 # weighted waiting time of each patient
 global_weighted_waiting_time = []
-
-# counts
-num_acuity_levels = 5
-num_treatment_type = 7
 
 '''
 example Patient object, data read from simulated data:
@@ -87,6 +78,8 @@ class Patient:
         self.treatment_starttime_arr =[None] * len(treatment_plan_arr)          # List of wait times for each treatment (to be recorded)
         self.current_treatment_index = 0   # initilize to be 0 < len(treatment_plan_arr)
         self.current_treatment_time = 0 #initialize to be 0
+        self.treatment_remaining_time = 0 #initialize to be 0
+
 
 
 '''
@@ -164,7 +157,7 @@ class Resource:
         """
         total_patient_waiting = len(self.patientid_waiting_arr)
         if total_patient_waiting == 0:
-            return [0,0,0,0,0,0,0,0,0,0,0,0]
+            return [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         # acuity distrbution
         acuity_counts = [0,0,0,0,0]
         # values are proportions (e.g., 0.5 means 50% of patients are at that acuity level)
@@ -173,7 +166,7 @@ class Resource:
             acuity_counts[acuity_index] += 1
 
         # treatment Types: Represented by the next seven elements (positions 5 to 11).
-        treatment_type_counts = [0,0,0,0,0,0,0]
+        treatment_type_counts = [0,0,0,0,0,0,0,0,0]
         # Each position corresponds to a treatment type from 1 to 7.
         for patient_id in self.patientid_waiting_arr:
             current_treatment_index = global_patient[patient_id].current_treatment_index
@@ -185,7 +178,7 @@ class Resource:
     def get_inTreatment_state(self):
         total_patient_inTreatment = len(self.patientid_in_treatment_arr)
         if total_patient_inTreatment == 0:
-            return [0,0,0,0,0,0,0,0,0,0,0,0]
+            return [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         # acuity distrbution
         acuity_counts = [0,0,0,0,0]
         for patient_id in self.patientid_in_treatment_arr:
@@ -193,7 +186,7 @@ class Resource:
             acuity_counts[acuity_index] += 1
 
         #treatment type distribution
-        treatment_type_counts = [0,0,0,0,0,0,0]
+        treatment_type_counts = [0,0,0,0,0,0,0,0,0]
         for patient_id in self.patientid_in_treatment_arr:
             current_treatment_index = global_patient[patient_id].current_treatment_index
             current_treatment_type = global_patient[patient_id].treatment_plan_arr[current_treatment_index]-1
@@ -218,65 +211,32 @@ def compute_reward(patient, current_time):
     return reward
 
 def load_patient_data():
-    """
-        load data
-    """
-    file_path = {
-        "Treatment": "./data/Treatment.csv",
-        "Treatment_Pattern": "./data/Treatment_Pattern.csv",
-        "Patient": "./data/Patient.csv",
-        "Medical_resources": "./data/Medical_resources.csv"
-    }
 
-    # initialize the global_treatment
-    # pattern_id : [treatment_1, treatment_2]
+    file_path = "./data/patientdata8.csv"
 
-    with open('./data/Treatment_Pattern.csv', mode='r') as file:
-        reader = csv.reader(file)
+    with open(file_path, mode='r') as file:
+        csv_reader = csv.DictReader(file)
 
-        for row in reader: 
-            pattern_id = int(row[0])
-            global_treatment[pattern_id] = list(map(int, row[2:]))
-            
+        for row in csv_reader: 
+            patient_id = int(row['patient_id'])
+            arrival_time = int(row['arrival_time'])
+            acuity_level = int(row['acuity_level'])
+            # Convert to a list of integers
+            treatment_plan_arr = ast.literal_eval(row['treatment_plan_arr'])
+            treatment_totaltime_arr = ast.literal_eval(row['treatment_totaltime_arr'])
 
-    # initialize the global_treatment_duration
-    # treatment_id : duration
-    with open(file_path["Treatment"], mode='r') as file:
-        reader = csv.reader(file)
-
-        for row in reader: 
-            treatment_id = int(row[0])
-            global_treatment_duration[treatment_id] = float(row[2])
-            global_treatment_resource[treatment_id] = int(row[3])
-            
-
-    # initialize the global_patient
-    with open(file_path["Patient"], mode='r') as file:
-        reader = csv.reader(file)
-
-        for row in reader:
-            patient_id = int(row[0])
-            arrival_time = int(row[2])
-            acuity_level = int(row[3])
-            treatment_plan_arr = list( map( int, global_treatment[int(row[4])] ) )
-            treatment_totaltime_arr = [global_treatment_duration[treatment_id] for treatment_id in treatment_plan_arr]
             global_patient[patient_id] = Patient(patient_id, arrival_time, acuity_level, treatment_plan_arr, treatment_totaltime_arr)
             global_patient_by_time.put((arrival_time, patient_id))
 
 
 
 def action_AA(resource):
-    """
-    Selects the next patient to assign to a resource.
 
-    Args:
-        resource (Resource): The resource for which to select a patient.
-    """
     # select the patient with the highest acuity level
     if resource.waiting_is_empty():
         return None
     waiting_patients = resource.patientid_waiting_arr
-    print("waiting:", waiting_patients)
+
     # sort patients by acuity level
     waiting_patients.sort(key=lambda pid: global_patient[pid].acuity_level)
 
@@ -288,20 +248,60 @@ def action_AA(resource):
     waiting_patients = waiting_patients[:count]
    
     waiting_patients.sort(key=lambda pid: global_patient[pid].arrival_time)
-    print("most one:", waiting_patients[0])
+
     return waiting_patients[0]  # return the patient with the highest acuity and the earliest arrival time
 
+# select the patient with the earliest arrival time
 def action_FCFS(resource):
-    # select the patient with the earliest arrival time
+    
     if resource.waiting_is_empty():
         return None
     
     waiting_patients = resource.patientid_waiting_arr
-    print("waiting:", waiting_patients)
+
     # sort patients by acuity level
     waiting_patients.sort(key=lambda pid: global_patient[pid].arrival_time)
-    print("earliest one:", waiting_patients[0])
+
     return waiting_patients[0]  # return the patient with the earliest arrival time
+
+# select the patient with the shortest pattern remaining time
+def action_SRPT(resource):
+    if resource.waiting_is_empty():
+        return None
+    
+    waiting_patients = resource.patientid_waiting_arr
+
+    # sort patients by pattern remaining time
+    waiting_patients.sort(key=lambda pid: global_patient[pid].treatment_remaining_time)
+
+    return waiting_patients[0]  # return the patient with the shortest pattern remaining time
+
+# select the patient with the linear combination of weighted acuity and SRPT
+def action_AS(resource):
+    if resource.waiting_is_empty():
+        return None
+    
+    waiting_patients = resource.patientid_waiting_arr
+
+    # sort patients by pattern remaining time - weighted acuity level
+    waiting_patients.sort(key=lambda pid: (global_patient[pid].treatment_remaining_time - global_patient[pid].acuity_level * ACUITY_WEIGHT_MAP[global_patient[pid].acuity_level]))
+
+    return waiting_patients[0]  # return the patient with the linear combination of weighted acuity and SRPT
+
+# select the patient with the linear combination of weighted acuity and weighted waiting time
+def action_AW(resource, current_time):
+    if resource.waiting_is_empty():
+        return None
+    
+    waiting_patients = resource.patientid_waiting_arr
+    
+    # waiting_time_so_far = current_time - global_patient[pid].arrival_time - (sum(global_patient[pid].treatment_totaltime_arr) - global_patient[pid].treatment_remaining_time)
+    
+    # sort patients descending by weighted acuity level + weighted waiting time so far
+    waiting_patients.sort(key=lambda pid: (ACUITY_WEIGHT_MAP[global_patient[pid].acuity_level]) * (current_time - global_patient[pid].arrival_time - (sum(global_patient[pid].treatment_totaltime_arr) - global_patient[pid].treatment_remaining_time) + 1), reverse=True)
+
+    return waiting_patients[0]  # return the patient with the linear combination of weighted acuity and weighted waiting time
+
 
 def init_simulation():
     
@@ -315,8 +315,9 @@ def init_simulation():
 
 def evaluation():
     for key, value in global_patient.items():
+        print(f"{key}: {value.arrival_time}")
         print(f"{key}: {value.treatment_starttime_arr}")
-        print(f"{key}: {value.treatment_totaltime_arr}\n")
+        print(f"{key}: {value.treatment_totaltime_arr}")
 
         start_time = value.treatment_starttime_arr
         total_time = value.treatment_totaltime_arr
@@ -330,7 +331,8 @@ def evaluation():
         # remaining treatments waiting time
         for i in range(1, len(start_time)):
             waiting_time += start_time[i] - (total_time[i-1] + start_time[i-1])
-        
+            
+        print(f"{key}: {waiting_time} * {ACUITY_WEIGHT_MAP[acuity_level]}\n")
         global_weighted_waiting_time.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
 
     print(f"weighted waiting time: {global_weighted_waiting_time}")
@@ -343,7 +345,6 @@ def run_simulation():
     current_time = 0
 
     while current_time <= TOTAL_SIMULATION_TIME:
-        print(f'\n=== Time {current_time} ===')
 
         # update patient in treatment, look at each resource to see if patient finish treatment
         patient_new = []
@@ -356,13 +357,14 @@ def run_simulation():
         while not global_patient_by_time.empty():
             arrival_time, patient_id = global_patient_by_time.get()
             if arrival_time == current_time:
-                print(f'New patient arrived: [Patient ID: {patient_id}]')
+                # print(f'New patient arrived: [Patient ID: {patient_id}]')
                 patient_new.append(patient_id)
             else:
                 global_patient_by_time.put((arrival_time, patient_id))
                 break
 
         if patient_new:
+            print(f'\n=== Time {current_time} ===')
             print(f'New patients are: {patient_new}')
 
         # assign patient to resources waiting que (according to mapping) if not reached end of treatment plan
@@ -375,11 +377,18 @@ def run_simulation():
                 # upcoming treatment id 
                 current_treatment_id = patient.treatment_plan_arr[current_treatment_index]
                 # the resource id of the upcoming treatment
-                resource_id = global_treatment_resource[current_treatment_id]
+                resource_id = RESOURCE_TREATMENT_MAP[current_treatment_id]
                 # assign patient to waiting queue of this resource
                 resource = global_medical_resource[resource_id - 1]
                 print(f'Patient {patient_id} assigned to resource {resource.medical_resource_type}')
                 resource.add_patient_to_waiting(patient_id)
+
+                # calculate the total treatment pattern remaining time
+                remaining_time = 0
+                for i in range(current_treatment_index, len(patient.treatment_plan_arr)):
+                    remaining_time += patient.treatment_totaltime_arr[i]
+                patient.treatment_remaining_time = remaining_time
+                print(f'Patient {patient_id} remains {remaining_time}')
 
 
         # update state 
@@ -387,8 +396,12 @@ def run_simulation():
         # if resource available and waiting line not empty then make an action for that resource
         for resource in global_medical_resource:
             while (resource.resource_is_available() == True) and (resource.waiting_is_empty() == False):
-                # patient_id = action_FCFS(resource)
-                patient_id = action_AA(resource)
+                patient_id = action_FCFS(resource)
+                # patient_id = action_SRPT(resource)
+                # patient_id = action_AS(resource)
+                # patient_id = action_AW(resource, current_time)
+                # patient_id = action_AA(resource)
+            
                 if patient_id is not None:
                     resource.add_patient_to_treatment(patient_id, current_time)
                     print(f'Patient {patient_id} started treatment with {resource.medical_resource_type}')
@@ -398,12 +411,12 @@ def run_simulation():
             # store old state, new state, reward and action
         
         # check state
-        for resource in global_medical_resource:
-            waiting_state = resource.get_waiting_state()
-            treating_state = resource.get_inTreatment_state()
-            print(f'\nResource: {resource.medical_resource_type}')
-            print(f'  Waiting State: {waiting_state}')
-            print(f'  Treating State: {treating_state}')
+        # for resource in global_medical_resource:
+        #     waiting_state = resource.get_waiting_state()
+        #     treating_state = resource.get_inTreatment_state()
+        #     print(f'\nResource: {resource.medical_resource_type}')
+        #     print(f'  Waiting State: {waiting_state}')
+        #     print(f'  Treating State: {treating_state}')
 
 
         current_time = current_time + 1
