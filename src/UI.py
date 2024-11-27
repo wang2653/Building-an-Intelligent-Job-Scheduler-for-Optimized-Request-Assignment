@@ -19,8 +19,10 @@ def edit_image(image):
     return image"""
 
 # Basic test function for doctor interface
-def test_func(Patient_name, Acuity_level):
-    return "Hello, " + Patient_name + ", your acuity level is " + Acuity_level
+def test_func(Patient_name, Arrival_time, Acuity_level, Treatment_plan):
+    return ("Hello, " + Patient_name + ", you arrived at time " 
+            + Arrival_time + ". Your acuity level is " + Acuity_level
+            + ", and your treatment plan is " + Treatment_plan + '.')
 
 
 def login_with_google():
@@ -74,7 +76,7 @@ with gr.Blocks() as interface:
             # this defines the doctor interface
             doctor_interface = gr.Interface(
                 fn = test_func,# will replace to process_and_simulate later
-                inputs=["text", "text"],
+                inputs=["text", "text", "text", "text"],
                 outputs=[gr.Textbox(label="Output", lines=5)],
                 flagging_mode="never"
             )
