@@ -1,4 +1,5 @@
 import gradio as gr
+import pandas as pd
 from PIL import Image
 from oauth2client import client, file, tools
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -54,6 +55,8 @@ def login_with_google():
         return "Login failed. Please try again."
 
 
+df = pd.read_csv('../data/patientdata7.csv')
+
 with gr.Blocks() as interface:
     gr.HTML(styles_css)  # Adding custom styles here
 
@@ -66,13 +69,17 @@ with gr.Blocks() as interface:
 
     login_btn.click(fn=login_with_google)
     
-    with gr.Row():
-        with gr.Column(scale=1, min_width=400):
-            gr.Markdown('<h1 style="font-size: 4em;">Explore Better Decision Making</h1>', elem_id="main_text")
-            with gr.Row():
-                gr.Button("Get Started", elem_id="get_start_btn")
-                gr.Button("Learn More", elem_id="learn_more_btn")
-
+    with gr.Column():
+        with gr.Row():
+            with gr.Column():
+                gr.Markdown('<h1 style="font-size: 4em;">Explore Better Decision Making</h1>', elem_id="main_text")
+                
+                with gr.Row():
+                    gr.Button("Get Started", elem_id="get_start_btn")
+                    gr.Button("Learn More", elem_id="learn_more_btn")
+            gr.Image(value="../static/emergency1.jpg", elem_id="main_image")
+        
+        with gr.Row():
             # this defines the doctor interface
             doctor_interface = gr.Interface(
                 fn = test_func,# will replace to process_and_simulate later
@@ -81,6 +88,6 @@ with gr.Blocks() as interface:
                 flagging_mode="never"
             )
 
-        gr.Image(value="../static/emergency1.jpg", elem_id="main_image")
+            gr.Dataframe(value=df, label="Patient Data", elem_id="data_table")
 
 interface.launch()
