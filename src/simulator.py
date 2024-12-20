@@ -212,7 +212,7 @@ def compute_reward(patient, current_time):
 
 def load_patient_data():
 
-    file_path = "./data/patientdata8.csv"
+    file_path = "../data/patientdata8.csv"
 
     with open(file_path, mode='r') as file:
         csv_reader = csv.DictReader(file)

@@ -3,7 +3,7 @@ import gradio as gr
 import openai
 import asyncio
 
-openai.api_key = "APIHERE"
+# openai.api_key = "APIHERE"
 
 def add_message(history, message):
     if message:
