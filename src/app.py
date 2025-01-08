@@ -45,15 +45,26 @@ def login_with_google():
         return "Login failed. Please try again."
 
 # Basic test function for doctor interface
-def test_func(Patient_name, Arrival_time, Acuity_level, Treatment_plan):
-    return f"Hello, {Patient_name}, you arrived at time {Arrival_time}. Your acuity level is {Acuity_level}, and your treatment plan is {Treatment_plan}."
+def test_func(Patient_ID, Arrival_time, Acuity_level, Treatment_plan):
+    return f"Hello, {Patient_ID}, you arrived at time {Arrival_time}. Your acuity level is {Acuity_level}, and your treatment plan is {Treatment_plan}."
 
 # Home page
-@app.route('/')
+@app.route('/', method=['GET', 'POST'])
 def home():
+    test = None
+
+    if request.method == 'POST':
+        # Retrieve from inputs
+        patient_id = request.forms.get('Patient_ID')
+        arrival_time = request.forms.get('Arrival_time')
+        acuity_level = request.forms.get('Acuity_level')
+        treatment_plan = request.forms.get("Treatment_plan")
+
+        test = test_func(patient_id, arrival_time, acuity_level, treatment_plan)
+
     # Generate html table from dataset
     table_html = df.to_html(index=False, classes='data-table', escape=False)
-    return template('home.html', title="Intelligent Scheduler for Emergency Department", table_html=table_html)
+    return template('home.html', title="Intelligent Scheduler for Emergency Department", table_html=table_html, test=test)
 
 # About page
 @app.route('/about')

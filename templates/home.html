@@ -129,9 +129,9 @@
         </section>        
         <section>
             <h2>Submit Patient Details</h2>
-            <form action="/doctor" method="POST">
-                <label for="Patient_name">Patient Name</label>
-                <input type="text" id="Patient_name" name="Patient_name" required>
+            <form action="/" method="POST">
+                <label for="Patient_name">Patient ID</label>
+                <input type="text" id="Patient_ID" name="Patient_ID" required>
                 
                 <label for="Arrival_time">Arrival Time</label>
                 <input type="text" id="Arrival_time" name="Arrival_time" required>
@@ -144,6 +144,11 @@
                 
                 <button type="submit">Submit</button>
             </form>
+        </section>
+        <section>
+            <h2>Testing for data gathering</h2>
+            % if test:
+            <p style="font-size: 1.2rem; color: green;">{{test}}</p>
         </section>
     </main>
     <footer>
