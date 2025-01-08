@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def add_to_csv(patient_name, acuity_level):
     # implement your function here
     # this function is to receive two strings and add them to the .csv file

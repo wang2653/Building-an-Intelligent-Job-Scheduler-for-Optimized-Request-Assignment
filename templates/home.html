@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Scheduler for Emergency Department</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav {
+            margin-top: 1rem;
+        }
+        nav a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #007bff;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        nav a:hover {
+            background-color: #e2e6ea;
+        }
+        main {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem;
+        }
+        section {
+            flex: 1;
+            margin: 1rem;
+        }
+        .hero {
+            text-align: center;
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .buttons button {
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttons .btn-start {
+            background-color: #28a745;
+            color: white;
+        }
+        .buttons .btn-learn {
+            background-color: #17a2b8;
+            color: white;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        form {
+            margin-top: 2rem;
+        }
+        form input, form textarea, form button {
+            display: block;
+            margin: 1rem 0;
+        }
+        form button {
+            padding: 0.5rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Intelligent Scheduler for Emergency Department</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/doctor">Login</a>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h2>Explore Better Decision Making</h2>
+            <img src="../static/emergency1.jpg" alt="Emergency Department Image">
+            <div class="buttons">
+                <button class="btn-start">Get Started</button>
+                <button class="btn-learn">Learn More</button>
+            </div>
+        </section>
+        <section>
+            <h2>Patient Data</h2>
+            <div class="scrollable" style="max-height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+                {{!table_html}}
+            </div>
+        </section>        
+        <section>
+            <h2>Submit Patient Details</h2>
+            <form action="/doctor" method="POST">
+                <label for="Patient_name">Patient Name</label>
+                <input type="text" id="Patient_name" name="Patient_name" required>
+                
+                <label for="Arrival_time">Arrival Time</label>
+                <input type="text" id="Arrival_time" name="Arrival_time" required>
+                
+                <label for="Acuity_level">Acuity Level</label>
+                <input type="text" id="Acuity_level" name="Acuity_level" required>
+                
+                <label for="Treatment_plan">Treatment Plan</label>
+                <textarea id="Treatment_plan" name="Treatment_plan"></textarea>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Intelligent Scheduler Project</p>
+    </footer>
+</body>
+</html>
