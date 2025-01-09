@@ -6,10 +6,10 @@ html {
     scroll-behavior: smooth;
 }
 header {
-    background-color: #231c1a;
+    background-color: rgba(35, 28, 26, 0.8);
     height: 80px;
     width: 100%;
-    position: relative;
+    position: fixed;
 }
 h1 {
     color: white;
@@ -38,7 +38,7 @@ header a:hover {
 .explore {
     background-color: antiquewhite;
     color: white;
-    height: 85vh;
+    height: 105vh;
     background-image: url("../static/emergency1_dark.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -50,6 +50,7 @@ header a:hover {
 }
 .explore h2 {
     font-size: 60px;
+    margin-top: 80px;
 }
 .explore p {
     color: #fef7e6;
