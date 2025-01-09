@@ -1,0 +1,62 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+header {
+    background-color: #231c1a;
+    height: 80px;
+    width: 100%;
+    position: relative;
+}
+h1 {
+    color: white;
+    position: relative;
+    left: 60px;
+    top: 0;
+    line-height: 80px;
+}
+header ul {
+    position: absolute;
+    right: 5vw;
+    top: 0;
+    line-height: 80px;
+}
+header li {
+    display: inline;
+    margin-right: 4vw;
+}
+header a {
+    color: white;
+    text-decoration: none;
+}
+header a:hover {
+    text-decoration: underline;
+}
+.explore {
+    background-color: antiquewhite;
+    color: white;
+    height: 85vh;
+    background-image: url("../static/emergency1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.explore h2 {
+    font-size: 60px;
+}
+.explore p {
+    color: #fef7e6;
+    font-size: 18px;
+    margin: 25px 0;
+}
+.explore a {
+    color: white;
+    text-decoration: none;
+    border: 1px solid #acacac;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
