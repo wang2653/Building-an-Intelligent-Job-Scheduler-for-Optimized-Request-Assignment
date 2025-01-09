@@ -35,6 +35,16 @@ header a {
 header a:hover {
     text-decoration: underline;
 }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 .explore {
     background-color: antiquewhite;
     color: white;
@@ -51,6 +61,12 @@ header a:hover {
 .explore h2 {
     font-size: 60px;
     margin-top: 80px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 4s forwards;
+}
+.explore:hover h2 {
+    animation-delay: 0.5s;
 }
 .explore p {
     color: #fef7e6;

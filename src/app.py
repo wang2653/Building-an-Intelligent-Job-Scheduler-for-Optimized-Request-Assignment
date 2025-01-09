@@ -51,6 +51,11 @@ def test_func(Patient_ID, Arrival_time, Acuity_level, Treatment_plan):
 # Home page
 @app.route('/', method=['GET', 'POST'])
 def home():
+    return template('index.html')
+
+# Doctor interface
+@app.route('/doctor', method=['GET', 'POST'])
+def doctor():
     test = None
 
     if request.method == 'POST':
@@ -64,29 +69,7 @@ def home():
 
     # Generate html table from dataset
     table_html = df.to_html(index=False, classes='data-table', escape=False)
-    return template('home.html', title="Intelligent Scheduler for Emergency Department", table_html=table_html, test=test)
-
-# About page
-@app.route('/about')
-def about():
-    return template('about', title="About")
-
-# Contact page
-@app.route('/contact')
-def contact():
-    return template('contact', title="Contact")
-
-# Doctor interface
-@app.route('/doctor', method=['GET', 'POST'])
-def doctor_interface():
-    if request.method == 'POST':
-        Patient_name = request.forms.get('Patient_name')
-        Arrival_time = request.forms.get('Arrival_time')
-        Acuity_level = request.forms.get('Acuity_level')
-        Treatment_plan = request.forms.get('Treatment_plan')
-        result = test_func(Patient_name, Arrival_time, Acuity_level, Treatment_plan)
-        return template('doctor', title="Doctor Interface", result=result)
-    return template('doctor', title="Doctor Interface", result=None)
+    return template('doctor.html', title="Intelligent Scheduler for Emergency Department", table_html=table_html, test=test)
 
 # Run the application
 if __name__ == '__main__':
