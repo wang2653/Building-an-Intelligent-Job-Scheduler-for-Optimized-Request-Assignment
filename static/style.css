@@ -45,6 +45,21 @@ header a:hover {
         transform: translateY(0);
     }
 }
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+section {
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+}
 .explore {
     background-color: antiquewhite;
     color: white;
