@@ -55,11 +55,6 @@ header a:hover {
         transform: translateX(0px);
     }
 }
-section {
-    animation: appear linear;
-    animation-timeline: view();
-    animation-range: entry 0% cover 40%;
-}
 .explore {
     background-color: antiquewhite;
     color: white;
@@ -114,8 +109,32 @@ footer {
     align-items: center;
     font-size: 14px;
 }
+.demo-container {
+    height: 300vh;
+    position: relative;
+}
 .demo {
     display: flex;
+    height: 50vh;
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    justify-content: space-between;
+    padding: 2rem 8rem;
+    background-color: #000;
+    border: 1px solid #ccc;
+}
+.demo1 {
+    z-index: 1;
+    background-color: #f2d388;
+}
+.demo2 {
+    z-index: 2;
+    background-color: #c7efd9;
+}
+.demo3 {
+    z-index: 3;
+    background-color: #fad4d4;
 }
 .demo img {
     width: 50%;
