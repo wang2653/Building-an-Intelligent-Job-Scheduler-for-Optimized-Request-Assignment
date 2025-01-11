@@ -10,6 +10,7 @@ header {
     height: 80px;
     width: 100%;
     position: fixed;
+    z-index: 9999;
 }
 h1 {
     color: white;
@@ -67,6 +68,7 @@ header a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 25vh;
 }
 .explore h2 {
     font-size: 60px;
@@ -90,16 +92,7 @@ header a:hover {
     padding: 10px 20px;
     border-radius: 5px;
 }
-.slogan {
-    background-color: #485652;
-    color: white;
-    height: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    line-height: 1.8em;
-}
+
 footer {
     background-color: #000;
     color: #b7b7b7;
@@ -110,8 +103,11 @@ footer {
     font-size: 14px;
 }
 .demo-container {
-    height: 300vh;
+    height: 200vh;
     position: relative;
+    background:
+        url("../static/front_page_2.png") no-repeat center top;
+    background-size: cover;
 }
 .demo {
     display: flex;
@@ -161,6 +157,9 @@ footer {
     background-color: #ede9db;
     justify-content: space-between;
     padding: 100px 100px 80px;
+    position: relative;
+    margin-top: -30vh;
+    z-index: 3;
 }
 .contact div {
     width: 200px;
