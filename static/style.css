@@ -1,4 +1,5 @@
 * {
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
@@ -158,7 +159,7 @@ footer {
     justify-content: space-between;
     padding: 100px 100px 80px;
     position: relative;
-    margin-top: -30vh;
+    margin-top: -25vh;
     z-index: 3;
 }
 .contact div {
@@ -177,4 +178,138 @@ footer {
 .contact p {
     font-size: 14px;
     line-height: 1.6em;
+}
+
+/* Styling for the doc.html*/
+/* Container holds the sidebar and main content side by side */
+.doctor_container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: #f4f4f4;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.sidebar button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sidebar button:hover {
+    background-color: #e9e9e9;
+}
+
+/* Main content area (right side) */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header with doctor, patient, and search buttons */
+.header {
+    background-color: #ddd;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.header button {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.header button:hover {
+    color: #555;
+}
+
+/* Search bar (initially hidden, use JavaScript to show/hide) */
+.search-bar {
+    display: none;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar.show-search {
+    display: block;
+}
+
+  /* Content area for doctor/patient cards */
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* Scroll if content is too long */
+    display: flex;
+    flex-wrap: wrap; /* Wrap cards to next line */
+    gap: 10px;       /* Space between cards */
+    justify-content: flex-start;
+}
+
+.card {
+    width: calc(25% - 20px); /* 4 cards per row (100% / 4) minus some gap */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Responsive tweak for smaller screens */
+@media (max-width: 800px) {
+    .card {
+      width: calc(50% - 20px); /* 2 cards per row on smaller screens */
+    }
+}
+@media (max-width: 500px) {
+    .card {
+      width: 100%; /* 1 card per row on very small screens */
+    }
 }

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Doctor-Patient Management</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+<div class="doctor_container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <h2>Scheduler</h2>
+    <button>Add Doctor</button>
+    <button>Add Patient</button>
+    <button>Remove Doctor</button>
+    <button>Remove Patient</button>
+    <button>Edit Doctor</button>
+    <button>Edit Patient</button>
+    <!-- You can add more form fields or functionalities as needed -->
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main">
+    <!-- Header with Buttons -->
+    <div class="header">
+      <button id="doctorBtn">Doctor</button>
+      <button id="patientBtn">Patient</button>
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <!-- Search Bar (hidden by default) -->
+    <div class="search-bar" id="searchBar">
+      <input type="text" placeholder="Search..." />
+    </div>
+
+    <!-- Content to show Doctor/Patient cards -->
+    <div class="content" id="contentArea">
+      <!-- Default or initial content can be placed here -->
+      <!-- Will be replaced by JavaScript in this demo -->
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Default Photo">
+        <h3>Welcome</h3>
+        <p>Select Doctor or Patient</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Optional JavaScript for toggling content and search bar -->
+<script>
+  const doctorBtn = document.getElementById('doctorBtn');
+  const patientBtn = document.getElementById('patientBtn');
+  const searchBtn  = document.getElementById('searchBtn');
+  const searchBar  = document.getElementById('searchBar');
+  const contentArea= document.getElementById('contentArea');
+
+  // Show doctor cards when "Doctor" button is clicked
+  doctorBtn.addEventListener('click', () => {
+    // Hide search bar if open
+    searchBar.classList.remove('show-search');
+
+    // Replace content with "Doctor" cards (4 per row, scrolled if more)
+    contentArea.innerHTML = `
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Doctor Photo">
+        <h3>Dr. John</h3>
+        <p>Available</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Doctor Photo">
+        <h3>Dr. Smith</h3>
+        <p>On Leave</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Doctor Photo">
+        <h3>Dr. Jane</h3>
+        <p>Busy</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Doctor Photo">
+        <h3>Dr. Emily</h3>
+        <p>Available</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Doctor Photo">
+        <h3>Dr. Carter</h3>
+        <p>Available</p>
+      </div>
+      <!-- Add more doctor cards as needed -->
+    `;
+  });
+
+  // Show patient cards when "Patient" button is clicked
+  patientBtn.addEventListener('click', () => {
+    // Hide search bar if open
+    searchBar.classList.remove('show-search');
+
+    // Replace content with "Patient" cards
+    contentArea.innerHTML = `
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Patient Photo">
+        <h3>Patient 1</h3>
+        <p>Checkup Scheduled</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Patient Photo">
+        <h3>Patient 2</h3>
+        <p>Awaiting Results</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Patient Photo">
+        <h3>Patient 3</h3>
+        <p>Admitted</p>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Patient Photo">
+        <h3>Patient 4</h3>
+        <p>Discharged</p>
+      </div>
+      <!-- Add more patient cards as needed -->
+    `;
+  });
+
+  // Toggle the search bar visibility when "Search" button is clicked
+  searchBtn.addEventListener('click', () => {
+    searchBar.classList.toggle('show-search');
+  });
+</script>
+
+</body>
+</html>
+
