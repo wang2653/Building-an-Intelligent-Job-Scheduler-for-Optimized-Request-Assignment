@@ -53,6 +53,10 @@ def test_func(Patient_ID, Arrival_time, Acuity_level, Treatment_plan):
 def home():
     return template('index.html')
 
+@app.route('/login', method=['GET', 'POST'])
+def home():
+    return template('login.html')
+
 # Doctor interface
 @app.route('/doctor', method=['GET', 'POST'])
 def doctor():
