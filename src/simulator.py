@@ -424,3 +424,31 @@ def run_simulation():
 run_simulation()
 evaluation()
 
+def get_simulation_summary():
+    summary = {
+        "patients": [],
+        "resources": [],
+    }
+    
+    # Add patient details
+    for patient_id, patient in global_patient.items():
+        patient_info = {
+            "id": patient_id,
+            "arrival_time": patient.arrival_time,
+            "acuity_level": patient.acuity_level,
+            "treatment_plan": patient.treatment_plan_arr,
+            "remaining_treatment_time": patient.treatment_remaining_time
+        }
+        summary["patients"].append(patient_info)
+    
+    # Add resource details
+    for resource in global_medical_resource:
+        resource_info = {
+            "type": resource.medical_resource_type,
+            "available_slots": resource.medical_resource_num - len(resource.patientid_in_treatment_arr),
+            "patients_in_treatment": resource.patientid_in_treatment_arr,
+            "patients_waiting": resource.patientid_waiting_arr,
+        }
+        summary["resources"].append(resource_info)
+    
+    return summary

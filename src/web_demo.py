@@ -1,5 +1,5 @@
 import gradio as gr
-from Qwen2 import Qwen2
+from qwen2 import qwen2
 
 import os
 model_path = "D:/qwen"
@@ -10,7 +10,7 @@ if os.path.exists(model_path):
 else:
     print("Specified path does not exist.")
 
-llm = Qwen2()
+llm = qwen2()
 llm.load_model(model_path)
 
 def predict(query,history):
