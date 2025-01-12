@@ -79,7 +79,6 @@ header a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 25vh;
 }
 
 .explore h2 {
@@ -106,6 +105,44 @@ header a:hover {
     border: 1px solid #acacac;
     padding: 10px 20px;
     border-radius: 5px;
+}
+
+.advantage-container {
+    background-color: #3e3b32;
+    height: 90vh;
+}
+
+.advantage-container > h2 {
+    color: white;
+    font-size: 40px;
+    padding-top: 50px;
+    padding-left: 50px;
+}
+
+.advantage {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 200px 80px;
+    position: relative;
+    
+}
+
+.advantage div {
+    width: 200px;
+    text-align: center;
+}
+
+.advantage img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.advantage p {
+    color: white;
+    font-size: 20px;
+    line-height: 1.6em;
+    padding-top: 10px;
 }
 
 footer {
