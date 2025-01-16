@@ -29,10 +29,10 @@ class qwen2(LLM):
         self.temperature = temperature
         self.top_p = top_p
 
-    @property
     def _llm_type(self) -> str:
         return "qwen2"
     
+    # load pretrained model
     def load_model(self, model_name_or_path=None):
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name_or_path,
@@ -43,62 +43,65 @@ class qwen2(LLM):
             torch_dtype="auto",
             device_map="auto"
         )
+
+    # handles conversation
     def chat_stream(self, model, tokenizer, query: str, history: list):
+        special_responses = {
+            "Who are you?": "I am the Intelligent Scheduler Chatbot designed to assist with patients, including providing insights about emergency department.",
+            "What is my current status?": "I dont know yet"
+        }
+
+        if query in special_responses:
+            response = special_responses[query]
+            messages = history + [{"role": "user", "content": query}, {"role": "assistant", "content": response}]
+            return response, messages
+
         with torch.no_grad():
-            # retrieve simulation data
-            simulation_summary = get_simulation_summary()
-            patients = simulation_summary["patients"]
-            resources = simulation_summary["resources"]
-
-            # Sort patients by acuity
-            patients.sort(key=lambda p: p["acuity_level"], reverse=True)
-
-            # Generate a concise summary
-            top_patients = [
-                f"Patient #{p['id']} (Acuity: {p['acuity_level']}, Remaining Time: {p['remaining_treatment_time']})"
-                for p in patients[:3]
-            ]
-            top_resources = [
-                f"{r['type']} (Available: {r['available_slots']})"
-                for r in resources
-            ]
-
-            system_content = f"""
-            Current Status:
-            Top Patients: {', '.join(top_patients)}
-            Resources: {', '.join(top_resources)}
-            """
-
-            # Build conversation
-            messages = [
-                {"role": "system", "content": system_content},
-                *[
-                    {"role": msg['role'], "content": msg['content']}
-                    for msg in history
-                ],
-                {"role": "user", "content": query}
-            ]
-
-            # Generate model output
+            
+            # add system role instructions for the model's behavior
+            messages = [{'role': 'system', 'content': '###role\n You are a general practitioner with a wealth of general medical knowledge, and you are very good at answering health questions accurately in an easy-to-understand way. ###goal\n You provide accurate, professional and easy-to-understand answers through your medical knowledge. \nAll your answers should have a medical evidence to ensure accuracy and reliability.'}]
+            for item in history:
+                if item['role'] == 'user':
+                    if item.get('content'):
+                        messages.append({'role': 'user', 'content': item['content']})
+                if item['role'] == 'assistant':
+                    if item.get('content'):
+                        messages.append({'role': 'assistant', 'content': item['content']})
+                                 
+            # reconstructs conversation history
+            messages.append({'role': 'user', 'content': query})
+            
+            # formats messages into a single string for model input.
             text = tokenizer.apply_chat_template(
                 messages,
                 tokenize=False,
                 add_generation_prompt=True
             )
+                                    
+            # tokenizes and sends inputs to device
             model_inputs = tokenizer([text], return_tensors="pt").to(self.device)
+            
+            # generates response using model parameters.
             generated_ids = model.generate(
                 **model_inputs,
                 max_new_tokens=self.max_new_tokens,
                 top_p=self.top_p,
                 temperature=self.temperature
             )
+            generated_ids = [
+                output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+            ]
+
+            # generates response using model parameters.
             response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+            
+            messages.append({'role': 'assistant', 'content': response})
 
-        return response, messages
+        return response ,messages
 
+    # chat logic
     def _call(self, prompt: str ,stop: Optional[List[str]] = ["<|user|>"]):
         response, self.history = self.chat_stream(self.model, self.tokenizer, prompt, self.history)
-
         return response
     
     def query_only(self, query):
