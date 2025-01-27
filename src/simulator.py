@@ -212,7 +212,7 @@ def compute_reward(patient, current_time):
 
 def load_patient_data():
 
-    file_path = "../data/patientdata8.csv"
+    file_path = "../data/NEWpatientdata7.csv"
 
     with open(file_path, mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -396,10 +396,12 @@ def run_simulation():
         # if resource available and waiting line not empty then make an action for that resource
         for resource in global_medical_resource:
             while (resource.resource_is_available() == True) and (resource.waiting_is_empty() == False):
-                patient_id = action_FCFS(resource)
+                # 135.71
+                # patient_id = action_FCFS(resource)
                 # patient_id = action_SRPT(resource)
                 # patient_id = action_AS(resource)
-                # patient_id = action_AW(resource, current_time)
+                # 51
+                patient_id = action_AW(resource, current_time)
                 # patient_id = action_AA(resource)
             
                 if patient_id is not None:
