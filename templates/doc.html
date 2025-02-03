@@ -108,33 +108,24 @@
 
   // Show patient cards when "Patient" button is clicked
   patientBtn.addEventListener('click', () => {
-    // Hide search bar if open
     searchBar.classList.remove('show-search');
-
-    // Replace content with "Patient" cards
-    contentArea.innerHTML = `
-      <div class="card">
-        <img src="https://via.placeholder.com/80" alt="Patient Photo">
-        <h3>Patient 1</h3>
-        <p>Checkup Scheduled</p>
-      </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/80" alt="Patient Photo">
-        <h3>Patient 2</h3>
-        <p>Awaiting Results</p>
-      </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/80" alt="Patient Photo">
-        <h3>Patient 3</h3>
-        <p>Admitted</p>
-      </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/80" alt="Patient Photo">
-        <h3>Patient 4</h3>
-        <p>Discharged</p>
-      </div>
-      <!-- Add more patient cards as needed -->
-    `;
+    fetch('/get_patients')
+      .then(response => response.json())
+      .then(data => {
+        let patientHTML = '';
+        data.forEach(patient => {
+          patientHTML += `
+            <div class="card">
+              <img src="https://via.placeholder.com/80" alt="Patient Photo">
+              <h3>Patient ${patient.patient_id}</h3>
+              <p>Arrival Time: ${patient.arrival_time}</p>
+              <p>Acuity Level: ${patient.acuity_level}</p>
+              <p>Treatment Plan: ${patient.treatment_plan_arr}</p>
+            </div>
+          `;
+        });
+        contentArea.innerHTML = patientHTML;
+      });
   });
 
   // Toggle the search bar visibility when "Search" button is clicked

@@ -13,7 +13,7 @@ app = Bottle()
 TEMPLATE_PATH.insert(0, "../templates")
 
 # Load the patient database
-df = pd.read_csv('../data/patientdata7.csv')
+df = pd.read_csv('../data/NEWpatientdata7.csv')
 users_df = pd.read_csv('../data/user_accounts.csv')
 
 # Route for serving static files
@@ -51,7 +51,12 @@ def login():
 # Doctor interface
 @app.route('/doctor', method=['GET', 'POST'])
 def doctor():
-    return template('doc.html')
+    patient_data = df.to_dict(orient="records")
+    return template('doc.html', patients = patient_data)
+
+@app.route('/get_patients')
+def get_patients():
+    return df.to_json(orient="records")
 
 # Run the application
 if __name__ == '__main__':
