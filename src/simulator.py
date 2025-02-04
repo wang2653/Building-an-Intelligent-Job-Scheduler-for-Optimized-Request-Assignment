@@ -12,11 +12,12 @@
 import csv
 from queue import PriorityQueue
 import ast
+import time
 
 '''Environment'''
 # according to the paper
 MEDICAL_RESOURCE_TYPE_ARR = ["DOCTOR", "NURSE", "XRAY", "CT"]
-MEDICAL_RESOURCE_NUM_ARR = [8, 7, 2, 2]  # Number of each resource type
+MEDICAL_RESOURCE_NUM_ARR = [2, 2, 1, 1]  # Number of each resource type
 MEDICAL_TREATMENT_TYPE_ARR = [1,2,3,4,5,6,7,8,9]
 RESOURCE_TREATMENT_MAP = {
     1: 1,     # 'DOCTOR',    #Triage
@@ -29,6 +30,17 @@ RESOURCE_TREATMENT_MAP = {
     8: 2,     # 'NURSE',     #Discharge
     9: 2,     # 'NURSE'      #Admission
 }
+TREATMENT_MAP = {
+    1: "Triage",
+    2: "Registration",
+    3: "Evaluation",
+    4: "Laboratory",
+    5: "X-ray",
+    6: "Consultation",
+    7: "CT scan",
+    8: "Discharge",
+    9: "Admission"
+}
 ACUITY_WEIGHT_MAP = {
     1: 30,  # Acuity level 1
     2: 15,  # Acuity level 2
@@ -37,19 +49,16 @@ ACUITY_WEIGHT_MAP = {
     5: 1  # Acuity level 5
 }
 
-TOTAL_SIMULATION_TIME = 1500 # minutes
+TOTAL_SIMULATION_TIME = 950 # minutes
 
 # Patient object list 
 # {patient_id:Patient, ...} 
 global_patient = {}
 # {arrival_time , Patient, ...} 
 global_patient_by_time = PriorityQueue()
-# pattern_id : [treatment_id, treatment_id, ...] --
-global_treatment = {} 
-# treatment_id : duration
-# int : float --
-global_treatment_duration = {}
 
+# current patients in the ED
+current_patients = set()
 
 # run_simulation
 global_medical_resource = []
@@ -194,25 +203,10 @@ class Resource:
 
         return [float(distribution / total_patient_inTreatment) for distribution in (acuity_counts + treatment_type_counts)]
 
-# Reward function
-def compute_reward(patient, current_time):
-    """
-    Computes the reward when assigning a patient to a resource.
-    
-    Args:
-        patient (Patient): The patient being assigned.
-        current_time (float): Current time in minutes.
-    
-    Returns:
-        float: Reward value.
-    """
-    reward = {}
-
-    return reward
 
 def load_patient_data():
 
-    file_path = "../data/NEWpatientdata7.csv"
+    file_path = "./data/NEWpatientdata7.csv"
 
     with open(file_path, mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -337,8 +331,33 @@ def evaluation():
 
     print(f"weighted waiting time: {global_weighted_waiting_time}")
     print(f"sum of weighted waiting time: {sum(global_weighted_waiting_time)}")
+    print(f"max of weighted waiting time: {max(global_weighted_waiting_time)}")
     print(f"average of weighted waiting time: {sum(global_weighted_waiting_time) / len(global_weighted_waiting_time)}")
     
+def compute_waiting_time(patient_id, current_time):
+    start_time = global_patient[patient_id].treatment_starttime_arr
+    total_time = global_patient[patient_id].treatment_totaltime_arr
+    arrival_time = global_patient[patient_id].arrival_time
+
+
+    # first treatment waiting time
+    if start_time[0] == None:
+        return current_time - arrival_time
+
+    waiting_time = 0
+    waiting_time += start_time[0] - arrival_time
+
+    # remaining treatments waiting time
+    for i in range(1, len(start_time)):
+      if start_time[i] != None:
+        waiting_time += start_time[i] - (total_time[i-1] + start_time[i-1])
+      else:
+        waiting_time += max((current_time - (total_time[i-1] + start_time[i-1])), 0)
+        break
+
+    # print(f"{patient_id}: {waiting_time} * {ACUITY_WEIGHT_MAP[acuity_level]}\n")
+    return waiting_time
+
 def run_simulation():
 
     init_simulation()
@@ -390,28 +409,52 @@ def run_simulation():
                 patient.treatment_remaining_time = remaining_time
                 print(f'Patient {patient_id} remains {remaining_time}')
 
+                current_patients.add(patient_id)
+            else:
+                current_patients.discard(patient_id)
+
 
         # update state 
-
         # if resource available and waiting line not empty then make an action for that resource
         for resource in global_medical_resource:
             while (resource.resource_is_available() == True) and (resource.waiting_is_empty() == False):
-                # 135.71
                 # patient_id = action_FCFS(resource)
                 # patient_id = action_SRPT(resource)
                 # patient_id = action_AS(resource)
-                # 51
-                patient_id = action_AW(resource, current_time)
-                # patient_id = action_AA(resource)
+                # patient_id = action_AW(resource, current_time)
+                patient_id = action_AA(resource)
             
                 if patient_id is not None:
                     resource.add_patient_to_treatment(patient_id, current_time)
                     print(f'Patient {patient_id} started treatment with {resource.medical_resource_type}')
 
-            # calculate reward
+        current_patients_info = []
+        for patient_id in current_patients:
+            current_treatment_index = global_patient[patient_id].current_treatment_index
+            current_treatment_id = global_patient[patient_id].treatment_plan_arr[current_treatment_index]
 
-            # store old state, new state, reward and action
-        
+            # current_time, patient_id, acuity_level, waiting_time, current_treatment, remaining_time, status(1: in treatment; 0: waiting)
+            patient_info = []
+            patient_info.append(current_time)
+            patient_info.append(patient_id)
+            patient_info.append(global_patient[patient_id].acuity_level)
+            patient_info.append(compute_waiting_time(patient_id, current_time))
+            patient_info.append(TREATMENT_MAP[current_treatment_id])
+            patient_info.append(global_patient[patient_id].treatment_remaining_time)
+
+            if global_patient[patient_id].current_treatment_time > 0:
+                patient_info.append(1)
+            else:
+                patient_info.append(0)
+
+            current_patients_info.append(patient_info)
+
+        # write the current patients info into the file
+        with open("./data/current_patients_info.csv.csv", mode="w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["current_time", "patient_id", "acuity_level", "waiting_time", "current_treatment", "remaining_time", "status"])  # Writing header
+            writer.writerows(current_patients_info)
+
         # check state
         # for resource in global_medical_resource:
         #     waiting_state = resource.get_waiting_state()
@@ -422,9 +465,11 @@ def run_simulation():
 
 
         current_time = current_time + 1
+        time.sleep(1)
 
 run_simulation()
-evaluation()
+# evaluation()
+
 
 def get_simulation_summary():
     summary = {

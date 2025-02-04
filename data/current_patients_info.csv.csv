@@ -1,0 +1,2 @@
+current_time,patient_id,acuity_level,waiting_time,current_treatment,remaining_time,status
+3,1,4,0,Evaluation,84,0
