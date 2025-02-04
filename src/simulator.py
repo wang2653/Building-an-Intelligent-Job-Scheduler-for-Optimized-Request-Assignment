@@ -206,7 +206,7 @@ class Resource:
 
 def load_patient_data():
 
-    file_path = "./data/NEWpatientdata7.csv"
+    file_path = "../data/NEWpatientdata7.csv"
 
     with open(file_path, mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -450,7 +450,7 @@ def run_simulation():
             current_patients_info.append(patient_info)
 
         # write the current patients info into the file
-        with open("./data/current_patients_info.csv.csv", mode="w", newline="") as file:
+        with open("../data/current_patients_info.csv", mode="w", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(["current_time", "patient_id", "acuity_level", "waiting_time", "current_treatment", "remaining_time", "status"])  # Writing header
             writer.writerows(current_patients_info)

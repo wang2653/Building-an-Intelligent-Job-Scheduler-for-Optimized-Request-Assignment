@@ -75,9 +75,18 @@
   const searchBtn  = document.getElementById('searchBtn');
   const searchBar  = document.getElementById('searchBar');
   const contentArea= document.getElementById('contentArea');
+  let currentView = 'default'; // Track current view
+  let patientInterval = null;  // Store interval ID
 
   // Show doctor cards when "Doctor" button is clicked
   doctorBtn.addEventListener('click', () => {
+    console.log("Doctor button clicked. Switching to doctor view.");
+    currentView = 'doctor'; // Track current view
+    if (patientInterval) {
+        console.log("Clearing patient auto-refresh interval.");
+        clearInterval(patientInterval); // Stop auto-refresh when switching to doctor
+        patientInterval = null;
+    }
     // Hide search bar if open
     searchBar.classList.remove('show-search');
 
@@ -127,30 +136,61 @@
     `;
   });
 
-  // Show patient cards when "Patient" button is clicked
-  patientBtn.addEventListener('click', () => {
-    searchBar.classList.remove('show-search');
+  let currentPatients = []; // Store current patient data to detect changes
+
+function updatePatients() {
+    if (currentView !== 'patient') return; // Stop updates if not in patient view
+
     fetch('/get_patients')
       .then(response => response.json())
-      .then(data => {
+      .then(newPatients => {
+        // Compare with previous data, update only if changed
+        if (JSON.stringify(newPatients) === JSON.stringify(currentPatients)) {
+            console.log("No changes in patient data, skipping update.");
+            return;
+        }
+
+        console.log("New patient data detected, updating view.");
+        currentPatients = newPatients; // Store new data
+
         let patientHTML = '';
-        data.forEach(patient => {
+        newPatients.forEach(patient => {
           patientHTML += `
             <div class="card">
               <img src="https://via.placeholder.com/80" alt="Patient Photo">
               <h3>Patient ${patient.patient_id}</h3>
-              <p>Arrival Time: ${patient.arrival_time}</p>
               <p>Acuity Level: ${patient.acuity_level}</p>
-              <p>Treatment Plan: ${patient.treatment_plan_arr}</p>
+              <p>Waiting Time: ${patient.waiting_time}</p>
+              <p>Current Treatment: ${patient.current_treatment}</p>
+              <p>Remaining Time: ${patient.remaining_time}</p>
+              <p>Status: ${patient.status}</p>
             </div>
           `;
         });
         contentArea.innerHTML = patientHTML;
       });
+}
+
+
+  // Show patient cards when "Patient" button is clicked
+  patientBtn.addEventListener('click', () => {
+    console.log("Patient button clicked. Switching to patient view.");
+    currentView = 'patient'; // Track current view
+    if (patientInterval) {
+        console.log("Clearing existing interval before starting a new one.");
+        clearInterval(patientInterval);
+    }
+    searchBar.classList.remove('show-search');
+    updatePatients();
+
+    // Fetch new patient data every 1 seconds
+    patientInterval = setInterval(updatePatients, 1000);
+    console.log("Started auto-refresh interval for patients.");
   });
 
   // Toggle the search bar visibility when "Search" button is clicked
   searchBtn.addEventListener('click', () => {
+    console.log("Search button clicked. Toggling search bar.");
     searchBar.classList.toggle('show-search');
   });
 </script>
