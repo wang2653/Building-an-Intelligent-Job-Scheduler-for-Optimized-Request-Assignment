@@ -13,6 +13,7 @@ import csv
 from queue import PriorityQueue
 import ast
 import time
+from collections import deque
 
 '''Environment'''
 # according to the paper
@@ -50,6 +51,10 @@ ACUITY_WEIGHT_MAP = {
 }
 
 TOTAL_SIMULATION_TIME = 950 # minutes
+
+# record the last paitent id to check new added patient 
+LAST_PATIENT_ID = 0
+
 
 # Patient object list 
 # {patient_id:Patient, ...} 
@@ -222,7 +227,27 @@ def load_patient_data():
             global_patient[patient_id] = Patient(patient_id, arrival_time, acuity_level, treatment_plan_arr, treatment_totaltime_arr)
             global_patient_by_time.put((arrival_time, patient_id))
 
+def add_new_manually():
+    file_path = "./data/NEWpatientdata7.csv"
 
+    with open(file_path, mode='r') as file:
+        # only read the last line
+        last_line  = deque(csv.DictReader(file), maxlen=1)
+        row = last_line[0]
+        patient_id = int(row['patient_id'])
+        print("last line: ", patient_id)
+
+        if LAST_PATIENT_ID != patient_id:
+            arrival_time = int(row['arrival_time'])
+            acuity_level = int(row['acuity_level'])
+            # Convert to a list of integers
+            treatment_plan_arr = ast.literal_eval(row['treatment_plan_arr'])
+            treatment_totaltime_arr = ast.literal_eval(row['treatment_totaltime_arr'])
+
+            global_patient[patient_id] = Patient(patient_id, arrival_time, acuity_level, treatment_plan_arr, treatment_totaltime_arr)
+            global_patient_by_time.put((arrival_time, patient_id))
+
+            LAST_PATIENT_ID = patient_id
 
 def action_AA(resource):
 
@@ -364,6 +389,7 @@ def run_simulation():
     current_time = 0
 
     while current_time <= TOTAL_SIMULATION_TIME:
+        add_new_manually()
 
         # update patient in treatment, look at each resource to see if patient finish treatment
         patient_new = []
