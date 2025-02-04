@@ -3,21 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <title>Doctor-Patient Management</title>
-  <link rel="stylesheet" href="../static/style.css">
+  <link rel="stylesheet" type="text/css" href="../static/style.css">
 </head>
 <body>
 
 <div class="doctor-container">
   <!-- Left Sidebar -->
   <div class="sidebar">
-    <h2>Scheduler</h2>
-    <button>Add Doctor</button>
-    <button>Add Patient</button>
-    <button>Remove Doctor</button>
-    <button>Remove Patient</button>
-    <button>Edit Doctor</button>
-    <button>Edit Patient</button>
-    <!-- You can add more form fields or functionalities as needed -->
+    <h2>Scheduler Panel</h2>
+    <div class="panel-selection">
+      <a href="#doctor">Doctor</a>
+      <a href="#patient">Patient</a>
+    </div>
+
+
+    <div id="doctor"></div>
+    <div id="patient"></div>
+
+    <div class="panel doctor-panel">
+        <form method="post">
+        <input type="text" name="name" required>
+        <input type="text" name="availability">
+        <button>Add/Edit Doctor</button>
+        <button>Remove Doctor</button>
+      </form>
+    </div>
+
+    <div class="panel patient-panel">
+      <form method="post">
+        <input type="text" name="id" required>
+        <input type="text" name="arrival_time">
+        <input type="text" name="acuity_level">
+        <input type="text" name="treatment_plan">
+        <button>Add/Edit Patient</button>
+        <button>Remove Patient</button>
+      </form>
+    </div>
   </div>
 
   <!-- Main Content Area -->

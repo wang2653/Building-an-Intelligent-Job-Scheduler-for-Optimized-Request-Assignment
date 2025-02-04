@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selection Bar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Selection Bar */
+        .selection-bar {
+            display: flex;
+            justify-content: center;
+            background-color: #007bff;
+            padding: 10px 0;
+        }
+
+        .selection-bar a {
+            text-decoration: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid transparent;
+            transition: background 0.3s, border 0.3s;
+        }
+
+        .selection-bar a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Content Sections - Hidden by Default */
+        .content {
+            display: none;
+            padding: 20px;
+        }
+
+        /* Show the correct section when targeted */
+        #doctor:target ~ .doctor-section,
+        #patient:target ~ .patient-section {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Selection Bar -->
+    <div class="selection-bar">
+        <a href="#doctor">Doctor</a>
+        <a href="#patient">Patient</a>
+    </div>
+
+    <!-- Invisible anchors as targets -->
+    <div id="doctor"></div>
+    <div id="patient"></div>
+
+    <!-- Sections (Initially Hidden) -->
+    <div class="content doctor-section">
+        <h2>Doctor Information</h2>
+        <p>Details about the doctor...</p>
+    </div>
+
+    <div class="content patient-section">
+        <h2>Patient Information</h2>
+        <p>Details about the patient...</p>
+    </div>
+
+</body>
+</html>
+
