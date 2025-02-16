@@ -190,6 +190,11 @@ footer {
     background-color: #fad4d4;
 }
 
+.demo4 {
+    z-index: 4;
+    background-color: #0056b3;
+}
+
 .demo img {
     width: 50%;
 }
@@ -304,6 +309,10 @@ footer {
 
 .panel {
     display: none;
+}
+
+.button-top{
+    margin-top: 20px;
 }
 
 #doctor:target ~ .doctor-panel,

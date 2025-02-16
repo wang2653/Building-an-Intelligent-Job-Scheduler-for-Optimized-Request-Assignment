@@ -22,21 +22,31 @@
   
       <div class="panel doctor-panel">
           <form method="post">
-          <input type="text" name="name" required>
-          <input type="text" name="availability">
-          <button>Add/Edit Doctor</button>
-          <button>Remove Doctor</button>
+            <label>Doctor Name</label>
+            <input type="text" name="name" required>
+            <label>Availability</label>
+            <input type="text" name="availability">
+            <div class="button-top">
+              <button>Add/Edit Doctor</button>
+              <button>Remove Doctor</button>
+            </div>
         </form>
       </div>
   
       <div class="panel patient-panel">
         <form method="post">
+          <label>Patient ID</label>
           <input type="text" name="id" required>
+          <label>Arrivial Time</label>
           <input type="text" name="arrival_time">
+          <label>Acuity Level</label>
           <input type="text" name="acuity_level">
+          <label>Treatment Plan</label>
           <input type="text" name="treatment_plan">
-          <button>Add/Edit Patient</button>
-          <button>Remove Patient</button>
+          <div class="button-top">
+            <button>Add/Edit Patient</button>
+            <button>Remove Patient</button>
+          </div>
         </form>
       </div>
     </div>
@@ -119,22 +129,22 @@ const doctorCardsHTML = `
     <p>Available</p>
   </div>
   <div class="card">
-    <img src="../static/doc5.jpeg" alt="Doctor Photo">
+    <img src="../static/doc9.jpg" alt="Doctor Photo">
     <h3>Dr. Carter</h3>
     <p>Available</p>
   </div>
   <div class="card">
-    <img src="../static/doc6.jpeg" alt="Doctor Photo">
+    <img src="../static/doc10.jpg" alt="Doctor Photo">
     <h3>Dr. Li</h3>
     <p>Available</p>
   </div>
   <div class="card">
-    <img src="../static/doc7.jpeg" alt="Doctor Photo">
+    <img src="../static/doc12.jpg" alt="Doctor Photo">
     <h3>Dr. Helen</h3>
     <p>Available</p>
   </div>
   <div class="card">
-    <img src="../static/doc8.jpeg" alt="Doctor Photo">
+    <img src="../static/doc13.jpg" alt="Doctor Photo">
     <h3>Dr. Virgil</h3>
     <p>Available</p>
   </div>
