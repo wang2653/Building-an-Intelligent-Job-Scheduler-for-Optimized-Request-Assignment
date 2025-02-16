@@ -1,74 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selection Bar</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-
-        /* Selection Bar */
-        .selection-bar {
-            display: flex;
-            justify-content: center;
-            background-color: #007bff;
-            padding: 10px 0;
-        }
-
-        .selection-bar a {
-            text-decoration: none;
-            padding: 10px 20px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            border: 2px solid transparent;
-            transition: background 0.3s, border 0.3s;
-        }
-
-        .selection-bar a:hover {
-            background-color: #0056b3;
-        }
-
-        /* Content Sections - Hidden by Default */
-        .content {
-            display: none;
-            padding: 20px;
-        }
-
-        /* Show the correct section when targeted */
-        #doctor:target ~ .doctor-section,
-        #patient:target ~ .patient-section {
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Doctor-Patient Management</title>
+  <link rel="stylesheet" type="text/css" href="../static/style.css">
 </head>
 <body>
 
-    <!-- Selection Bar -->
-    <div class="selection-bar">
-        <a href="#doctor">Doctor</a>
-        <a href="#patient">Patient</a>
+<div class="doctor-container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <h2>Scheduler Panel</h2>
+    <div class="panel-selection">
+      <a href=" ">Doctor</a>
+      <a href="#patient">Patient</a>
     </div>
 
-    <!-- Invisible anchors as targets -->
     <div id="doctor"></div>
     <div id="patient"></div>
 
-    <!-- Sections (Initially Hidden) -->
-    <div class="content doctor-section">
-        <h2>Doctor Information</h2>
-        <p>Details about the doctor...</p>
+    <div class="panel doctor-panel">
+      <form method="post">
+        <input type="text" name="name" required>
+        <input type="text" name="availability">
+        <button>Add/Edit Doctor</button>
+        <button>Remove Doctor</button>
+      </form>
     </div>
 
-    <div class="content patient-section">
-        <h2>Patient Information</h2>
-        <p>Details about the patient...</p>
+    <div class="panel patient-panel">
+      <form method="post">
+        <input type="text" name="id" required>
+        <input type="text" name="arrival_time">
+        <input type="text" name="acuity_level">
+        <input type="text" name="treatment_plan">
+        <button>Add/Edit Patient</button>
+        <button>Remove Patient</button>
+      </form>
     </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main">
+    <div class="header">
+      <button id="doctorBtn">Doctor</button>
+      <button id="patientBtn">Patient</button>
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <div class="search-bar" id="searchBar">
+      <input type="text" placeholder="Search..." />
+    </div>
+
+    <div class="content" id="contentArea">
+      <div class="card">
+        <img src="https://via.placeholder.com/80" alt="Default Photo">
+        <h3>Welcome</h3>
+        <p>Select Doctor or Patient</p >
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const doctorBtn = document.getElementById('doctorBtn');
+  const patientBtn = document.getElementById('patientBtn');
+  const searchBtn  = document.getElementById('searchBtn');
+  const searchBar  = document.getElementById('searchBar');
+  const contentArea= document.getElementById('contentArea');
+
+  // Show doctor cards when "Doctor" button is clicked
+  doctorBtn.addEventListener('click', () => {
+    searchBar.classList.remove('show-search');
+
+    contentArea.innerHTML = `
+      <div class="card">
+        < img src="../static/doc1.jpeg" alt="Doctor Photo">
+        <h3>Dr. John</h3>
+        <p>Available</p >
+      </div>
+      <div class="card">
+        < img src="../static/doc2.jpeg" alt="Doctor Photo">
+        <h3>Dr. Smith</h3>
+        <p>On Leave</p >
+      </div>
+      <div class="card">
+        < img src="../static/doc3.jpeg" alt="Doctor Photo">
+        <h3>Dr. Jane</h3>
+        <p>Busy</p >
+      </div>
+      <div class="card">
+        < img src="../static/doc4.jpeg" alt="Doctor Photo">
+        <h3>Dr. Emily</h3>
+        <p>Available</p >
+      </div>
+      <div class="card">
+        < img src="../static/doc5.jpeg" alt="Doctor Photo">
+        <h3>Dr. Carter</h3>
+        <p>Available</p >
+      </div>
+      <div class="card">
+        < img src="../static/doc6.jpeg" alt="Doctor Photo">
+        <h3>Dr. Li</h3>
+        <p>Available</p >
+      </div>
+      <div class="card">
+        < img src="../static/doc7.jpeg" alt="Doctor Photo">
+        <h3>Dr. Helen</h3>
+        <p>Available</p >
+      </div>
+      <div class="card">
+        < img src="../static/doc8.jpeg" alt="Doctor Photo">
+        <h3>Dr. Virgil</h3>
+        <p>Available</p >
+      </div>
+    `;
+  });
+
+  // Show patient cards when "Patient" button is clicked
+  patientBtn.addEventListener('click', () => {
+    searchBar.classList.remove('show-search');
+
+    fetch('/get_patients')
+      .then(response => response.json())
+      .then(data => {
+        let patientHTML = '';
+        data.forEach(patient => {
+          patientHTML += `
+            <div class="card">
+              < img src="https://via.placeholder.com/80" alt="Patient Photo">
+              <h3>Patient ${patient.patient_id}</h3>
+              <p>Arrival Time: ${patient.arrival_time}</p >
+              <p>Acuity Level: ${patient.acuity_level}</p >
+              <p>Treatment Plan: ${patient.treatment_plan_arr}</p >
+            </div>
+          `;
+        });
+        contentArea.innerHTML = patientHTML;
+      })
+      .catch(error => console.error('Error fetching patient data:', error));
+  });
+
+  // Toggle the search bar visibility when "Search" button is clicked
+  searchBtn.addEventListener('click', () => {
+    searchBar.classList.toggle('show-search');
+  });
+});
+</script>
 
 </body>
 </html>

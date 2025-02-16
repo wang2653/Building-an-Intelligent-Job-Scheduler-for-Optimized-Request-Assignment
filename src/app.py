@@ -51,7 +51,7 @@ def login():
 @app.route('/doctor', method=['GET', 'POST'])
 def doctor():
     
-    return template('doc.html', )
+    return template('doc.html')
 
 @app.route('/get_patients')
 def get_patients():

@@ -228,7 +228,7 @@ def load_patient_data():
             global_patient_by_time.put((arrival_time, patient_id))
 
 def add_new_manually():
-    file_path = "./data/NEWpatientdata7.csv"
+    file_path = "../data/NEWpatientdata7.csv"
 
     with open(file_path, mode='r') as file:
         # only read the last line
@@ -389,7 +389,7 @@ def run_simulation():
     current_time = 0
 
     while current_time <= TOTAL_SIMULATION_TIME:
-        add_new_manually()
+        # add_new_manually()
 
         # update patient in treatment, look at each resource to see if patient finish treatment
         patient_new = []
