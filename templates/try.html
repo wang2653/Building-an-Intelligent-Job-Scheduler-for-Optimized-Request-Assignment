@@ -3,153 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <title>Doctor-Patient Management</title>
-  <link rel="stylesheet" type="text/css" href="../static/style.css">
+  <link rel="stylesheet" type="text/css" href="../static/try.css">
 </head>
 <body>
-
-<div class="doctor-container">
-  <!-- Left Sidebar -->
   <div class="sidebar">
-    <h2>Scheduler Panel</h2>
-    <div class="panel-selection">
-      <a href=" ">Doctor</a>
-      <a href="#patient">Patient</a>
+    <!-- Top section: user photo, name, etc. -->
+    <div class="login-status">
+      <img src="../static/momo1.jpeg" alt="User Photo" class="user-photo" />
+      <p class="user-name">Admin</p>
+      <p class="user-email">admin@example.com</p>
     </div>
-
-    <div id="doctor"></div>
-    <div id="patient"></div>
-
-    <div class="panel doctor-panel">
+  
+    <!-- Navigation / panel selection in the middle -->
+    <nav class="nav-links">
+      <a href="#" id="doctor-link">Doctor</a>
+      <a href="#" id="patient-link">Patient</a>
+    </nav>
+  
+    <!-- Doctor Panel (hidden by default) -->
+    <div id="doctor-panel" class="panel doctor-panel">
       <form method="post">
+        <label>Doctor Name</label>
         <input type="text" name="name" required>
+        <label>Availability</label>
         <input type="text" name="availability">
-        <button>Add/Edit Doctor</button>
-        <button>Remove Doctor</button>
+        <div class="button-group">
+          <button>Add/Edit Doctor</button>
+          <button>Remove Doctor</button>
+        </div>
       </form>
     </div>
-
-    <div class="panel patient-panel">
+  
+    <!-- Patient Panel (hidden by default) -->
+    <div id="patient-panel" class="panel patient-panel">
       <form method="post">
+        <label>Patient ID</label>
         <input type="text" name="id" required>
+        <label>Arrivial Time</label>
         <input type="text" name="arrival_time">
+        <label>Acuity Level</label>
         <input type="text" name="acuity_level">
+        <label>Treatment Plan</label>
         <input type="text" name="treatment_plan">
-        <button>Add/Edit Patient</button>
-        <button>Remove Patient</button>
+        <div class="button-group">
+          <button>Add/Edit Patient</button>
+          <button>Remove Patient</button>
+        </div>
       </form>
     </div>
-  </div>
-
-  <!-- Main Content Area -->
-  <div class="main">
-    <div class="header">
-      <button id="doctorBtn">Doctor</button>
-      <button id="patientBtn">Patient</button>
-      <button id="searchBtn">Search</button>
-    </div>
-
-    <div class="search-bar" id="searchBar">
-      <input type="text" placeholder="Search..." />
-    </div>
-
-    <div class="content" id="contentArea">
-      <div class="card">
-        <img src="https://via.placeholder.com/80" alt="Default Photo">
-        <h3>Welcome</h3>
-        <p>Select Doctor or Patient</p >
-      </div>
+  
+    <!-- Logout link at the bottom -->
+    <div class="logout">
+      <a href="/" class="logout-link">Logout</a>
     </div>
   </div>
-</div>
-
-<!-- JavaScript -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const doctorBtn = document.getElementById('doctorBtn');
-  const patientBtn = document.getElementById('patientBtn');
-  const searchBtn  = document.getElementById('searchBtn');
-  const searchBar  = document.getElementById('searchBar');
-  const contentArea= document.getElementById('contentArea');
-
-  // Show doctor cards when "Doctor" button is clicked
-  doctorBtn.addEventListener('click', () => {
-    searchBar.classList.remove('show-search');
-
-    contentArea.innerHTML = `
-      <div class="card">
-        < img src="../static/doc1.jpeg" alt="Doctor Photo">
-        <h3>Dr. John</h3>
-        <p>Available</p >
-      </div>
-      <div class="card">
-        < img src="../static/doc2.jpeg" alt="Doctor Photo">
-        <h3>Dr. Smith</h3>
-        <p>On Leave</p >
-      </div>
-      <div class="card">
-        < img src="../static/doc3.jpeg" alt="Doctor Photo">
-        <h3>Dr. Jane</h3>
-        <p>Busy</p >
-      </div>
-      <div class="card">
-        < img src="../static/doc4.jpeg" alt="Doctor Photo">
-        <h3>Dr. Emily</h3>
-        <p>Available</p >
-      </div>
-      <div class="card">
-        < img src="../static/doc5.jpeg" alt="Doctor Photo">
-        <h3>Dr. Carter</h3>
-        <p>Available</p >
-      </div>
-      <div class="card">
-        < img src="../static/doc6.jpeg" alt="Doctor Photo">
-        <h3>Dr. Li</h3>
-        <p>Available</p >
-      </div>
-      <div class="card">
-        < img src="../static/doc7.jpeg" alt="Doctor Photo">
-        <h3>Dr. Helen</h3>
-        <p>Available</p >
-      </div>
-      <div class="card">
-        < img src="../static/doc8.jpeg" alt="Doctor Photo">
-        <h3>Dr. Virgil</h3>
-        <p>Available</p >
-      </div>
-    `;
-  });
-
-  // Show patient cards when "Patient" button is clicked
-  patientBtn.addEventListener('click', () => {
-    searchBar.classList.remove('show-search');
-
-    fetch('/get_patients')
-      .then(response => response.json())
-      .then(data => {
-        let patientHTML = '';
-        data.forEach(patient => {
-          patientHTML += `
-            <div class="card">
-              < img src="https://via.placeholder.com/80" alt="Patient Photo">
-              <h3>Patient ${patient.patient_id}</h3>
-              <p>Arrival Time: ${patient.arrival_time}</p >
-              <p>Acuity Level: ${patient.acuity_level}</p >
-              <p>Treatment Plan: ${patient.treatment_plan_arr}</p >
-            </div>
-          `;
-        });
-        contentArea.innerHTML = patientHTML;
-      })
-      .catch(error => console.error('Error fetching patient data:', error));
-  });
-
-  // Toggle the search bar visibility when "Search" button is clicked
-  searchBtn.addEventListener('click', () => {
-    searchBar.classList.toggle('show-search');
-  });
-});
-</script>
-
+  
+  <!-- SCRIPT: toggles visibility of panels -->
+  <script>
+    // 1. Get references to the key elements by their IDs:
+    const doctorLink = document.getElementById('doctor-link');
+    const patientLink = document.getElementById('patient-link');
+    const doctorPanel = document.getElementById('doctor-panel');
+    const patientPanel = document.getElementById('patient-panel');
+  
+    // 2. By default, hide both panels. (We do this in JS just in case
+    //    you want to set them visible in HTML or if no CSS is loaded.)
+    doctorPanel.style.display = 'none';
+    patientPanel.style.display = 'none';
+  
+    // 3. Add click event listeners to the two links:
+    //    When the user clicks "Doctor," only show the Doctor panel.
+    doctorLink.addEventListener('click', function(e) {
+      e.preventDefault();        // Prevents the link from jumping to a new page.
+      doctorPanel.style.display = 'block';  // Show Doctor panel.
+      patientPanel.style.display = 'none';  // Hide Patient panel.
+    });
+  
+    //    When the user clicks "Patient," only show the Patient panel.
+    patientLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      patientPanel.style.display = 'block'; 
+      doctorPanel.style.display = 'none';
+    });
+  </script>
+  
+  
 </body>
 </html>
 

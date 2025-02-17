@@ -10,30 +10,35 @@
   <div class="doctor-container">
     <!-- Left Sidebar -->
     <div class="sidebar">
-      <h2>Scheduler Panel</h2>
-      <div class="panel-selection">
-        <a href="#doctor">Doctor</a>
-        <a href="#patient">Patient</a>
+      <!-- Top section: user photo, name, etc. -->
+      <div class="login-status">
+        <img src="../static/momo1.jpeg" alt="User Photo" class="user-photo" />
+        <p class="user-name">Admin</p>
+        <p class="user-email">admin@example.com</p>
       </div>
-  
-  
-      <div id="doctor"></div>
-      <div id="patient"></div>
-  
-      <div class="panel doctor-panel">
-          <form method="post">
-            <label>Doctor Name</label>
-            <input type="text" name="name" required>
-            <label>Availability</label>
-            <input type="text" name="availability">
-            <div class="button-top">
-              <button>Add/Edit Doctor</button>
-              <button>Remove Doctor</button>
-            </div>
+    
+      <!-- Navigation / panel selection in the middle -->
+      <nav class="nav-links">
+        <a href="#" id="doctor-link">Doctor</a>
+        <a href="#" id="patient-link">Patient</a>
+      </nav>
+    
+      <!-- Doctor Panel (hidden by default) -->
+      <div id="doctor-panel" class="panel doctor-panel">
+        <form method="post">
+          <label>Doctor Name</label>
+          <input type="text" name="name" required>
+          <label>Availability</label>
+          <input type="text" name="availability">
+          <div class="button-group">
+            <button>Add/Edit Doctor</button>
+            <button>Remove Doctor</button>
+          </div>
         </form>
       </div>
-  
-      <div class="panel patient-panel">
+    
+      <!-- Patient Panel (hidden by default) -->
+      <div id="patient-panel" class="panel patient-panel">
         <form method="post">
           <label>Patient ID</label>
           <input type="text" name="id" required>
@@ -43,13 +48,47 @@
           <input type="text" name="acuity_level">
           <label>Treatment Plan</label>
           <input type="text" name="treatment_plan">
-          <div class="button-top">
+          <div class="button-group">
             <button>Add/Edit Patient</button>
             <button>Remove Patient</button>
           </div>
         </form>
       </div>
+    
+      <!-- Logout link at the bottom -->
+      <div class="logout">
+        <a href="/" class="logout-link">Logout</a>
+      </div>
     </div>
+    
+    <!-- SCRIPT: toggles visibility of panels -->
+    <script>
+      // 1. Get references to the key elements by their IDs:
+      const doctorLink = document.getElementById('doctor-link');
+      const patientLink = document.getElementById('patient-link');
+      const doctorPanel = document.getElementById('doctor-panel');
+      const patientPanel = document.getElementById('patient-panel');
+    
+      // 2. By default, hide both panels. (We do this in JS just in case
+      //    you want to set them visible in HTML or if no CSS is loaded.)
+      doctorPanel.style.display = 'none';
+      patientPanel.style.display = 'none';
+    
+      // 3. Add click event listeners to the two links:
+      //    When the user clicks "Doctor," only show the Doctor panel.
+      doctorLink.addEventListener('click', function(e) {
+        e.preventDefault();        // Prevents the link from jumping to a new page.
+        doctorPanel.style.display = 'block';  // Show Doctor panel.
+        patientPanel.style.display = 'none';  // Hide Patient panel.
+      });
+    
+      //    When the user clicks "Patient," only show the Patient panel.
+      patientLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        patientPanel.style.display = 'block'; 
+        doctorPanel.style.display = 'none';
+      });
+    </script>
   
     <!-- Main Content Area -->
     <div class="main">
