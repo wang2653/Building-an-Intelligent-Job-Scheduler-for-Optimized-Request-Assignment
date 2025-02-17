@@ -61,25 +61,24 @@
       </div>
     </div>
     
-    <!-- SCRIPT: toggles visibility of panels -->
+    <!-- SCRIPT: toggles visibility of sidebar panels (Doctor/Patient) -->
     <script>
-      // 1. Get references to the key elements by their IDs:
+      // 1. Get references to the key elements by their IDs in the sidebar:
       const doctorLink = document.getElementById('doctor-link');
       const patientLink = document.getElementById('patient-link');
       const doctorPanel = document.getElementById('doctor-panel');
       const patientPanel = document.getElementById('patient-panel');
     
-      // 2. By default, hide both panels. (We do this in JS just in case
-      //    you want to set them visible in HTML or if no CSS is loaded.)
+      // 2. By default, hide both panels.
       doctorPanel.style.display = 'none';
       patientPanel.style.display = 'none';
     
-      // 3. Add click event listeners to the two links:
+      // 3. Add click event listeners to the two links in the sidebar:
       //    When the user clicks "Doctor," only show the Doctor panel.
       doctorLink.addEventListener('click', function(e) {
-        e.preventDefault();        // Prevents the link from jumping to a new page.
-        doctorPanel.style.display = 'block';  // Show Doctor panel.
-        patientPanel.style.display = 'none';  // Hide Patient panel.
+        e.preventDefault();        
+        doctorPanel.style.display = 'block';  
+        patientPanel.style.display = 'none';  
       });
     
       //    When the user clicks "Patient," only show the Patient panel.
@@ -92,16 +91,19 @@
   
     <!-- Main Content Area -->
     <div class="main">
-      <!-- Header with Buttons -->
+      <!-- Top section in the main content: Search Bar + Filter Buttons -->
       <div class="header">
-        <button id="doctorBtn">Doctor</button>
-        <button id="patientBtn">Patient</button>
-        <button id="searchBtn">Search</button>
-      </div>
-  
-      <!-- Search Bar (hidden by default) -->
-      <div class="search-bar" id="searchBar">
-        <input type="text" placeholder="Search..." />
+        <!-- Always visible search bar -->
+        <input
+          type="text"
+          placeholder="Search..."
+          class="search-input"
+          id="searchBar"
+        />
+        <button id="searchButton">Search</button>
+        <!-- Doctor/Patient Filter Buttons -->
+        <button id="doctorBtn">Doctor Filter</button>
+        <button id="patientBtn">Patient Filter</button>
       </div>
   
       <!-- Content to show Doctor/Patient cards -->
@@ -111,155 +113,158 @@
         <div class="card">
           <img src="https://via.placeholder.com/80" alt="Default Photo">
           <h3>Welcome</h3>
-          <p>Select Doctor or Patient</p>
+          <p>Select a filter: Doctor or Patient</p>
         </div>
       </div>
     </div>
   </div>
 
-<script>
-  const doctorBtn = document.getElementById('doctorBtn');
-  const patientBtn = document.getElementById('patientBtn');
-  const searchBtn  = document.getElementById('searchBtn');
-  const searchBar  = document.getElementById('searchBar');
-  const contentArea= document.getElementById('contentArea');
-  let currentView = 'default';
-  let patientInterval = null;
-  
-  const maxPatients = 200;
-  let patientCards = [];
-  
-// Show doctor cards when "Doctor" button is clicked
-doctorBtn.addEventListener('click', () => {
-    console.log("Doctor button clicked. Switching to doctor view.");
-    currentView = 'doctor'; 
-    if (patientInterval) {
-        clearInterval(patientInterval); 
-        patientInterval = null;
-    }
-    searchBar.classList.remove('show-search');
-  
-    // Hide patient cards
-    patientCards.forEach(card => card.style.display = 'none');
+  <!-- SCRIPT: toggles main content cards (Doctor vs. Patient) -->
+  <script>
+    const doctorBtn   = document.getElementById('doctorBtn');
+    const patientBtn  = document.getElementById('patientBtn');
+    const searchBar   = document.getElementById('searchBar');
+    const contentArea = document.getElementById('contentArea');
     
-    // Display doctor cards
-    contentArea.innerHTML = doctorCardsHTML;
-});
+    let currentView    = 'default';
+    let patientInterval = null;
+    const maxPatients   = 200;
+    let patientCards    = [];
 
-const doctorCardsHTML = `
-  <div class="card">
-    <img src="../static/doc1.jpeg" alt="Doctor Photo">
-    <h3>Dr. John</h3>
-    <p>Available</p>
-  </div>
-  <div class="card">
-    <img src="../static/doc2.jpeg" alt="Doctor Photo">
-    <h3>Dr. Smith</h3>
-    <p>On Leave</p>
-  </div>
-  <div class="card">
-    <img src="../static/doc3.jpeg" alt="Doctor Photo">
-    <h3>Dr. Jane</h3>
-    <p>Busy</p>
-  </div>
-  <div class="card">
-    <img src="../static/doc4.jpeg" alt="Doctor Photo">
-    <h3>Dr. Emily</h3>
-    <p>Available</p>
-  </div>
-  <div class="card">
-    <img src="../static/doc9.jpg" alt="Doctor Photo">
-    <h3>Dr. Carter</h3>
-    <p>Available</p>
-  </div>
-  <div class="card">
-    <img src="../static/doc10.jpg" alt="Doctor Photo">
-    <h3>Dr. Li</h3>
-    <p>Available</p>
-  </div>
-  <div class="card">
-    <img src="../static/doc12.jpg" alt="Doctor Photo">
-    <h3>Dr. Helen</h3>
-    <p>Available</p>
-  </div>
-  <div class="card">
-    <img src="../static/doc13.jpg" alt="Doctor Photo">
-    <h3>Dr. Virgil</h3>
-    <p>Available</p>
-  </div>
-`;
+    // Doctor card markup
+    const doctorCardsHTML = `
+      <div class="card">
+        <img src="../static/doc1.jpeg" alt="Doctor Photo">
+        <h3>Dr. John</h3>
+        <p>Available</p>
+      </div>
+      <div class="card">
+        <img src="../static/doc2.jpeg" alt="Doctor Photo">
+        <h3>Dr. Smith</h3>
+        <p>On Leave</p>
+      </div>
+      <div class="card">
+        <img src="../static/doc3.jpeg" alt="Doctor Photo">
+        <h3>Dr. Jane</h3>
+        <p>Busy</p>
+      </div>
+      <div class="card">
+        <img src="../static/doc4.jpeg" alt="Doctor Photo">
+        <h3>Dr. Emily</h3>
+        <p>Available</p>
+      </div>
+      <div class="card">
+        <img src="../static/doc9.jpg" alt="Doctor Photo">
+        <h3>Dr. Carter</h3>
+        <p>Available</p>
+      </div>
+      <div class="card">
+        <img src="../static/doc10.jpg" alt="Doctor Photo">
+        <h3>Dr. Li</h3>
+        <p>Available</p>
+      </div>
+      <div class="card">
+        <img src="../static/doc12.jpg" alt="Doctor Photo">
+        <h3>Dr. Helen</h3>
+        <p>Available</p>
+      </div>
+      <div class="card">
+        <img src="../static/doc13.jpg" alt="Doctor Photo">
+        <h3>Dr. Virgil</h3>
+        <p>Available</p>
+      </div>
+    `;
 
-
-  function createPatientCards() {
-      contentArea.innerHTML = '';
+    // Generate all possible patient cards (but keep them hidden initially)
+    function createPatientCards() {
+      contentArea.innerHTML = ''; // Clear out any existing content
       for (let i = 0; i < maxPatients; i++) {
-          const card = document.createElement('div');
-          card.className = 'card patient-card';
-          card.style.display = 'none';
-          card.innerHTML = `
-              <img src="https://via.placeholder.com/80" alt="Patient Photo">
-              <h3 id="patient-id-${i}">Patient</h3>
-              <p id="acuity-${i}">Acuity Level: </p>
-              <p id="waiting-${i}">Waiting Time: </p>
-              <p id="treatment-${i}">Current Treatment: </p>
-              <p id="remaining-${i}">Remaining Time: </p>
-              <p id="status-${i}">Status: </p>
-          `;
-          contentArea.appendChild(card);
-          patientCards.push(card);
-      }
-  }
-  
-  function updatePatients() {
-      if (currentView !== 'patient') return;
-  
-      fetch('/get_patients')
-          .then(response => response.json())
-          .then(newPatients => {
-              for (let i = 0; i < maxPatients; i++) {
-                  if (i < newPatients.length) {
-                      document.getElementById(`patient-id-${i}`).innerText = `Patient ${newPatients[i].patient_id}`;
-                      document.getElementById(`acuity-${i}`).innerText = `Acuity Level: ${newPatients[i].acuity_level}`;
-                      document.getElementById(`waiting-${i}`).innerText = `Waiting Time: ${newPatients[i].waiting_time}`;
-                      document.getElementById(`treatment-${i}`).innerText = `Current Treatment: ${newPatients[i].current_treatment}`;
-                      document.getElementById(`remaining-${i}`).innerText = `Remaining Time: ${newPatients[i].remaining_time}`;
-                      document.getElementById(`status-${i}`).innerText = `Status: ${newPatients[i].status}`;
-                      patientCards[i].style.display = 'block';
-                  } else {
-                      patientCards[i].style.display = 'none';
-                  }
-              }
-          });
-  }
-  
-  createPatientCards();
-  
-  patientBtn.addEventListener('click', () => {
-    console.log("Patient button clicked. Switching to patient view.");
-    currentView = 'patient';
-    if (patientInterval) {
-        clearInterval(patientInterval);
-    }
-    searchBar.classList.remove('show-search');
-
-    // Clear doctor cards
-    contentArea.innerHTML = ''; 
-    
-    // Append patient cards but keep them hidden initially
-    patientCards.forEach(card => {
-        card.style.display = 'none'; // Keep all patient cards hidden initially
+        const card = document.createElement('div');
+        card.className = 'card patient-card';
+        card.style.display = 'none'; // hidden by default
+        card.innerHTML = `
+          <img src="https://via.placeholder.com/80" alt="Patient Photo">
+          <h3 id="patient-id-${i}">Patient</h3>
+          <p id="acuity-${i}">Acuity Level: </p>
+          <p id="waiting-${i}">Waiting Time: </p>
+          <p id="treatment-${i}">Current Treatment: </p>
+          <p id="remaining-${i}">Remaining Time: </p>
+          <p id="status-${i}">Status: </p>
+        `;
         contentArea.appendChild(card);
+        patientCards.push(card);
+      }
+    }
+
+    // Update the displayed patient info by fetching from the server
+    function updatePatients() {
+      // Only update if we are in 'patient' view
+      if (currentView !== 'patient') return;
+      
+      fetch('/get_patients')
+        .then(response => response.json())
+        .then(newPatients => {
+          for (let i = 0; i < maxPatients; i++) {
+            if (i < newPatients.length) {
+              document.getElementById(`patient-id-${i}`).innerText = `Patient ${newPatients[i].patient_id}`;
+              document.getElementById(`acuity-${i}`).innerText = `Acuity Level: ${newPatients[i].acuity_level}`;
+              document.getElementById(`waiting-${i}`).innerText = `Waiting Time: ${newPatients[i].waiting_time}`;
+              document.getElementById(`treatment-${i}`).innerText = `Current Treatment: ${newPatients[i].current_treatment}`;
+              document.getElementById(`remaining-${i}`).innerText = `Remaining Time: ${newPatients[i].remaining_time}`;
+              document.getElementById(`status-${i}`).innerText = `Status: ${newPatients[i].status}`;
+              patientCards[i].style.display = 'block';
+            } else {
+              patientCards[i].style.display = 'none';
+            }
+          }
+        });
+    }
+
+    // Create patient card elements in DOM once
+    createPatientCards();
+
+    // Doctor Filter button -> show doctor cards
+    doctorBtn.addEventListener('click', () => {
+      console.log("Doctor Filter clicked. Switching to doctor view.");
+      currentView = 'doctor'; 
+      
+      // Clear any running update intervals for patients
+      if (patientInterval) {
+        clearInterval(patientInterval);
+        patientInterval = null;
+      }
+      
+      // Hide all patient cards
+      patientCards.forEach(card => card.style.display = 'none');
+
+      // Insert doctor cards
+      contentArea.innerHTML = doctorCardsHTML;
     });
 
-    // First update ensures only the correct number of cards are shown
-    updatePatients();
+    // Patient Filter button -> show patient cards
+    patientBtn.addEventListener('click', () => {
+      console.log("Patient Filter clicked. Switching to patient view.");
+      currentView = 'patient';
 
-    // Start the update interval
-    patientInterval = setInterval(updatePatients, 1000);
-  });
-</script>
+      // Clear out the content area first
+      contentArea.innerHTML = ''; 
+
+      // Then attach the patient cards back in
+      patientCards.forEach(card => {
+        card.style.display = 'none'; 
+        contentArea.appendChild(card);
+      });
+
+      // First update to display the correct # of patient cards
+      updatePatients();
+
+      // Start the auto-update loop (every second)
+      patientInterval = setInterval(updatePatients, 1000);
+    });
+  </script>
 
 </body>
 </html>
+
 
 

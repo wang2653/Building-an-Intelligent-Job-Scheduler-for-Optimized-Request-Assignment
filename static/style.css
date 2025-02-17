@@ -390,6 +390,7 @@ footer {
 .header {
     background-color: #ddd;
     padding: 10px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -408,23 +409,9 @@ footer {
     color: #555;
 }
 
-/* Search bar (initially hidden, use JavaScript to show/hide) */
-.search-bar {
-    display: none;
-    background-color: #fafafa;
-    border-bottom: 1px solid #ccc;
-    padding: 10px;
-}
-
-.search-bar input {
-    width: 50%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.search-bar.show-search {
-    display: block;
+.search-input {
+    height: 30px;
+    width: 300px;
 }
 
   /* Content area for doctor/patient cards */
