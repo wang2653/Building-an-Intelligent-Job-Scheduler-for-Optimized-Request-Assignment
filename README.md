@@ -57,10 +57,9 @@ The Intelligent Job Scheduler integrates a Deep Reinforcement Learning (DRL) mod
 
 1️⃣ Clone the repository:  
 
-'''bash
+'''bash  
 git clone https://github.com/wang2653/Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment.git  
 cd Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment  
-'''
 
 2️⃣ Install dependencies:  
 
