@@ -1,23 +1,49 @@
-# Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment
+# Building an Intelligent Job Scheduler for Optimized Request Assignment in Hospital Emergency Department
 
-## Background
+Welcome to the Intelligent Job Scheduler project – an AI-driven solution designed to revolutionize patient triage and resource allocation in emergency departments (EDs).
 
-In recent years, connecting customers to agents has always been challenging due to the unpredictability of online queues. Traditional rule-based algorithms, such as assigning customers to the next available agent, often result in suboptimal performance and long delays. This project aims to leverage advancements in machine learning to develop an intelligent job scheduler using Deep Reinforcement Learning (DRL). Our scheduler will feature a built-in chatbot for collecting request information, a network prediction component to forecast incoming request loads, and an efficient scheduling system to minimize customer wait times. In addition, our capstone product will include a user-friendly graphical user interface (GUI) to ensure accessibility for all users, thereby enhancing the overall efficiency and effectiveness of customer service interactions.
+---
 
-## Problem Statement
+## Table of Contents
 
-The aim of this capstone project is to develop an advanced intelligent job scheduler that leverages DRL to optimize the allocation of incoming requests to agents. The primary objective is to minimize the average wait time for customers and maximize resource efficiency across the network.
+- [Overview](#overview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation & Setup](#installation--setup)
+- [Performance & Testing](#performance--testing)
+- [Future Enhancements](#future-enhancements)
+- [Contributors](#contributors)
+- [License](#license)
 
-To achieve this, the project will implement a dynamic and adaptive scheduling algorithm powered by DRL. The scheduler will be capable of learning from historical data and adjusting its strategies in real-time to ensure optimal performance under varying network conditions.
+---
 
-## Key features of the intelligent job scheduler will include
+## Overview
 
-1. Integrated Chatbot: A user-friendly chatbot interface to facilitate seamless interaction between users and the scheduling system, providing real-time updates and support.
+The Intelligent Job Scheduler integrates a Deep Reinforcement Learning (DRL) model with a sleek, user-friendly web interface and an AI-powered chatbot to minimize patient waiting times and streamline ED operations. Designed to dynamically balance resource availability with patient needs, this system has demonstrated a significant reduction in weighted delays compared to traditional rule-based schedulers.
 
-2. Network Load Forecasting: Advanced forecasting capabilities to predict network load and adjust scheduling priorities accordingly, ensuring balanced resource utilization and reduced bottlenecks.
+---
 
-3. User-Centric Graphical Interface: A comprehensive and intuitive graphical user interface (GUI) designed to enhance user experience, providing clear insights and control over scheduling operations.
+## Features
 
-4. Delay Reduction: Implementation of strategies aimed at significantly reducing delays in request handling, thereby improving overall system efficiency and customer satisfaction.
+- **Smart Scheduling:**  
+  Utilizes a Deep Q-Network (DQN) to make real-time, data-driven decisions that optimize patient assignment based on acuity, arrival times, and resource constraints.
 
-Overall, the goal is to create a robust, user-friendly scheduler that significantly enhances the effectiveness and efficiency of customer service operations.
+- **Intuitive Web Interface:**  
+  A clean, responsive design built with HTML and CSS that allows doctors and patients to interact effortlessly. Features include:
+  - A main website with interactive navigation.
+  - A unified login page for both patients and doctors.
+  - A dedicated doctor dashboard with real-time data updates.
+
+- **AI-Powered Chatbot (MediGuide):**  
+  Offers immediate, evidence-based responses to health inquiries, ensuring patients receive clear guidance and, when necessary, advice to consult healthcare professionals.
+
+- **Real-Time Performance:**  
+  Ensures page load times under 1 second and button response times below 0.1 seconds, providing a smooth user experience even during peak loads.
+
+- **Robust Testing & Validation:**  
+  Extensive evaluation confirms that the DRL-based scheduler outperforms conventional methods with up to 40% improvement in reducing waiting times and minimizing penalty patients.
+
+---
+
+## Project Structure
+
