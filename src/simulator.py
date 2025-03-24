@@ -1,3 +1,11 @@
+# Copyright: University of Toronto ECE496 Project 2024105
+
+# This code simulates an Emergency Department (ED) environment using Deep Reinforcement Learning. 
+# It models the flow of patients through various medical treatments, managed by different types of medical 
+# The goal of this project is to develop a user-friendly job scheduler that reaches three segmented objectives, 
+# which are minimizing patient waiting times, maximizing resource utilization, and prioritizing high-severity
+# cases in real-time. Then, let’s go through the project requirements.
+
 import csv
 from queue import PriorityQueue
 import ast
@@ -28,6 +36,7 @@ RESOURCE_TREATMENT_MAP = {
     8: 2,     # 'NURSE',     #Discharge
     9: 2,     # 'NURSE'      #Admission
 }
+
 TREATMENT_MAP = {
     1: "Triage",
     2: "Registration",
@@ -303,7 +312,7 @@ class Resource:
 
 def load_patient_data():
 
-    file_path = "./data/NEWpatient10.csv"
+    file_path = "./data/NEWpatientdata10.csv"
 
     with open(file_path, mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -321,7 +330,7 @@ def load_patient_data():
             LAST_PATIENT_ID[0] = patient_id
 
 def add_new_manually():
-    file_path = "./data/NEWpatient10.csv"
+    file_path = "./data/NEWpatientdata10.csv"
 
     with open(file_path, mode='r') as file:
         # only read the last line
@@ -736,65 +745,65 @@ def run_simulation(agent):
 
 
 
-        # current_patients_info = []
-        # for patient_id in current_patients:
-        #     current_treatment_index = global_patient[patient_id].current_treatment_index
-        #     current_treatment_id = global_patient[patient_id].treatment_plan_arr[current_treatment_index]
+        current_patients_info = []
+        for patient_id in current_patients:
+            current_treatment_index = global_patient[patient_id].current_treatment_index
+            current_treatment_id = global_patient[patient_id].treatment_plan_arr[current_treatment_index]
 
-        #     # current_time, patient_id, acuity_level, waiting_time, current_treatment, remaining_time, status(1: in treatment; 0: waiting)
-        #     patient_info = []
-        #     patient_info.append(current_time)
-        #     patient_info.append(patient_id)
-        #     patient_info.append(global_patient[patient_id].acuity_level)
-        #     patient_info.append(compute_waiting_time(patient_id, current_time))
-        #     patient_info.append(TREATMENT_MAP[current_treatment_id])
-        #     patient_info.append(global_patient[patient_id].treatment_remaining_time)
+            # current_time, patient_id, acuity_level, waiting_time, current_treatment, remaining_time, status(1: in treatment; 0: waiting)
+            patient_info = []
+            patient_info.append(current_time)
+            patient_info.append(patient_id)
+            patient_info.append(global_patient[patient_id].acuity_level)
+            patient_info.append(compute_waiting_time(patient_id, current_time))
+            patient_info.append(TREATMENT_MAP[current_treatment_id])
+            patient_info.append(global_patient[patient_id].treatment_remaining_time)
 
-        #     if global_patient[patient_id].current_treatment_time > 0:
-        #         patient_info.append(1)
-        #     else:
-        #         patient_info.append(0)
+            if global_patient[patient_id].current_treatment_time > 0:
+                patient_info.append(1)
+            else:
+                patient_info.append(0)
 
-        #     current_patients_info.append(patient_info)
+            current_patients_info.append(patient_info)
 
-        # # write the current patients info into the file
-        # with open("./data/current_patients_info.csv", mode="w", newline="") as file:
-        #     writer = csv.writer(file)
-        #     writer.writerow(["current_time", "patient_id", "acuity_level", "waiting_time", "current_treatment", "remaining_time", "status"])  # Writing header
-        #     writer.writerows(current_patients_info)
+        # write the current patients info into the file
+        with open("./data/current_patients_info.csv", mode="w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["current_time", "patient_id", "acuity_level", "waiting_time", "current_treatment", "remaining_time", "status"])  # Writing header
+            writer.writerows(current_patients_info)
 
-        # resources_info = []
-        # treatments_info = []
-        # for resource in global_medical_resource:    
-        #     if resource.medical_resource_type == "DOCTOR":  
-        #         resources_info.extend(resource.doctor_arr)
-        #         treatments_info.extend(resource.doctor_treatment_arr)
+        resources_info = []
+        treatments_info = []
+        for resource in global_medical_resource:    
+            if resource.medical_resource_type == "DOCTOR":  
+                resources_info.extend(resource.doctor_arr)
+                treatments_info.extend(resource.doctor_treatment_arr)
 
-        #     if resource.medical_resource_type == "NURSE":  
-        #         resources_info.extend(resource.nurse_arr)
-        #         treatments_info.extend(resource.nurse_treatment_arr)
-        #     if resource.medical_resource_type == "XRAY":  
-        #         resources_info.extend(resource.xray_arr)
-        #         treatments_info.extend(resource.xray_treatment_arr)
+            if resource.medical_resource_type == "NURSE":  
+                resources_info.extend(resource.nurse_arr)
+                treatments_info.extend(resource.nurse_treatment_arr)
+            if resource.medical_resource_type == "XRAY":  
+                resources_info.extend(resource.xray_arr)
+                treatments_info.extend(resource.xray_treatment_arr)
 
-        #     if resource.medical_resource_type == "CT":  
-        #         resources_info.extend(resource.ct_arr)
-        #         treatments_info.extend(resource.ct_treatment_arr)
+            if resource.medical_resource_type == "CT":  
+                resources_info.extend(resource.ct_arr)
+                treatments_info.extend(resource.ct_treatment_arr)
 
 
-        # current_resources_info = []
-        # current_resources_info.append(resources_info)
-        # current_resources_info.append(treatments_info)
+        current_resources_info = []
+        current_resources_info.append(resources_info)
+        current_resources_info.append(treatments_info)
 
-        # # write the current doctors info into the file
-        # with open("./data/current_doctors_info.csv", mode="w", newline="") as file:
-        #     writer = csv.writer(file)
-        #     writer.writerow(["doctor_1", "doctor_2", "doctor_3", "doctor_4", "doctor_5", "doctor_6", "doctor_7", "doctor_8"])  # Writing header
-        #     writer.writerows(current_resources_info)
+        # write the current doctors info into the file
+        with open("./data/current_doctors_info.csv", mode="w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["doctor_1", "doctor_2", "doctor_3", "doctor_4", "doctor_5", "doctor_6", "doctor_7", "doctor_8"])  # Writing header
+            writer.writerows(current_resources_info)
 
 
         current_time = current_time + 1
-        # time.sleep(1)
+        time.sleep(1)
 
 
 
