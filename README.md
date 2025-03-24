@@ -40,13 +40,13 @@ The Intelligent Job Scheduler integrates a Deep Reinforcement Learning (DRL) mod
 
 ## 💻 Project Structure
 📂 Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment  
- ├── 📂 data/              # Simulated data 
- ├── 📂 src/               
-   ├── 📂 simulator.py     # DRL scheduler & hospital simulation (Python)
-   ├── 📂 web_demo.py      # AI chatbot for patient assistance
-   ├── 📂 app.py           # Web interface (HTML, CSS, JavaScript)
+ ├── 📂 data/              # Simulated data  
+ ├── 📂 src/  
+   ├── 📂 simulator.py     # DRL scheduler & hospital simulation (Python)  
+   ├── 📂 web_demo.py      # AI chatbot for patient assistance  
+   ├── 📂 app.py           # Web interface (HTML, CSS, JavaScript)  
  ├── 📂 static/            # Model and UI testing scripts  
- ├── 📂 templates/         # Web sections
+ ├── 📂 templates/         # Web sections  
  ├── 📜 README.md          # Project documentation  
  ├── 📜 requirements.txt   # Dependencies list  
  └── 📜 LICENSE            # Project license  
@@ -56,24 +56,30 @@ The Intelligent Job Scheduler integrates a Deep Reinforcement Learning (DRL) mod
 ## ⚙️ Installation & Setup
 1️⃣ Clone the repository:
 
+
 git clone https://github.com/wang2653/Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment.git
 cd Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment
 
+
 2️⃣ Install dependencies:
+
 
 pip install -r requirements.txt
 
+
 3️⃣ Run the frontend server:
+
 
 cd src
 python app.py
+
 
 4️⃣ Access the web app: Open http://localhost:8000 in your browser.
 
 ---
 
 ## System Block Diagram
-![image](https://github.com/user-attachments/assets/fc1b6349-249f-4e55-b936-fd3d01dad087)
+<img src="https://github.com/user-attachments/assets/fc1b6349-249f-4e55-b936-fd3d01dad087" width="500">
 
 ---
 
