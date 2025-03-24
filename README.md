@@ -53,25 +53,27 @@ The Intelligent Job Scheduler integrates a Deep Reinforcement Learning (DRL) mod
 
 ---
 
-## ⚙️ Installation & Setup
+## ⚙️ Installation & Setup  
+
 1️⃣ Clone the repository:  
 
 '''bash
 git clone https://github.com/wang2653/Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment.git  
 cd Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment  
-
+'''
 
 2️⃣ Install dependencies:  
 
-```bash
+'''bash
 pip install -r requirements.txt
-
+'''
 
 3️⃣ Run the frontend server:  
 
 '''bash
 cd src  
 python app.py  
+'''
 
 4️⃣ Access the web app: Open http://localhost:8000 in your browser.
 
