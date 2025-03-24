@@ -44,7 +44,7 @@ The Intelligent Job Scheduler integrates a Deep Reinforcement Learning (DRL) mod
  ├── 📂 src/  
     ├── 📜 simulator.py     # DRL scheduler & hospital simulation (Python)  
     ├── 📜 web_demo.py      # AI chatbot for patient assistance  
-    ├── 📜 app.py           # Web interface (HTML, CSS, JavaScript)
+    ├── 📜 app.py           # Web interface (HTML, CSS, JavaScript)  
  ├── 📂 static/            # Model and UI testing scripts  
  ├── 📂 templates/         # Web sections  
  ├── 📜 README.md          # Project documentation  
