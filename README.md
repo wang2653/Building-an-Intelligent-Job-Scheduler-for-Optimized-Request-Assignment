@@ -40,13 +40,13 @@ The Intelligent Job Scheduler integrates a Deep Reinforcement Learning (DRL) mod
 
 ## 💻 Project Structure
 📂 Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment  
- ├── 📂 data/              # Simulated data  
- ├── 📂 src/               # DRL scheduler & hospital simulation (Python)   
- ├── 📂 static/            # Model and UI testing scripts  
- ├── 📂 templates/         # Web sections  
- ├── 📜 README.md          # Project documentation  
- ├── 📜 requirements.txt   # Dependencies list  
- └── 📜 LICENSE            # Project license  
+ ├── 📂 data/  
+ ├── 📂 src/  
+ ├── 📂 static/  
+ ├── 📂 templates/  
+ ├── 📜 README.md  
+ ├── 📜 requirements.txt  
+ └── 📜 LICENSE  
 
 ---
 
