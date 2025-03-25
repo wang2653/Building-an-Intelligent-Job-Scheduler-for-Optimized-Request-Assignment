@@ -493,8 +493,9 @@ footer {
     flex: 1;
     padding: 20px;
     overflow-y: auto; /* Scroll if content is too long */
-    display: flex;
+    display: block;
     box-sizing: border-box;
+    width: 100%;
 }
 
 #doctor-cards-container,

@@ -20,20 +20,20 @@
       <!-- Navigation / panel selection in the middle -->
       <nav class="nav-links">
         <h3>Control Panel</h3>
-        <a href="#" id="doctor-link">Doctor</a>
+        <a href="#" id="doctor-link">Staff</a>
         <a href="#" id="patient-link">Patient</a>
       </nav>
     
       <!-- Doctor Panel (hidden by default) -->
       <div id="doctor-panel" class="panel doctor-panel" style="display: none;">
         <form method="post">
-          <label>Doctor Name</label>
+          <label>Staff Name</label>
           <input type="text" name="name" required>
-          <label>Availability</label>
+          <label>Position</label>
           <input type="text" name="availability">
           <div class="button-group">
-            <button>Add/Edit Doctor</button>
-            <button>Remove Doctor</button>
+            <button>Add/Edit Staff</button>
+            <button>Remove Staff</button>
           </div>
         </form>
       </div>
@@ -61,6 +61,33 @@
         <a href="/" class="logout-link">Logout</a>
       </div>
     </div>
+
+    <script>
+      // 1. Get references to the key elements by their IDs in the sidebar:
+      const doctorLink = document.getElementById('doctor-link');
+      const patientLink = document.getElementById('patient-link');
+      const doctorPanel = document.getElementById('doctor-panel');
+      const patientPanel = document.getElementById('patient-panel');
+    
+      // 2. By default, hide both panels.
+      doctorPanel.style.display = 'none';
+      patientPanel.style.display = 'none';
+    
+      // 3. Add click event listeners to the two links in the sidebar:
+      //    When the user clicks "Doctor," only show the Doctor panel.
+      doctorLink.addEventListener('click', function(e) {
+        e.preventDefault();        
+        doctorPanel.style.display = 'block';  
+        patientPanel.style.display = 'none';  
+      });
+    
+      //    When the user clicks "Patient," only show the Patient panel.
+      patientLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        patientPanel.style.display = 'block'; 
+        doctorPanel.style.display = 'none';
+      });
+    </script>
     
     <!-- Main Content Area -->
     <div class="main">
@@ -68,7 +95,7 @@
       <div class="header">
         <input type="text" placeholder="Search..." class="search-input" id="searchBar" />
         <button id="searchButton">Search</button>
-        <button id="doctorBtn">Doctor</button>
+        <button id="doctorBtn">Staff</button>
         <button id="patientBtn">Patient</button>
       </div>
   
@@ -79,49 +106,57 @@
           <!-- 8 Doctors -->
           <div class="card" id="resource-0">
             <img src="../static/doc1.jpeg" alt="Doctor 1">
-            <h3>Doctor 1</h3>
+            <h3>Alexander Morgan</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-0">Status: ???</p>
             <p id="task-0">Task: ???</p>
           </div>
           <div class="card" id="resource-1">
-            <img src="../static/doc2.jpeg" alt="Doctor 2">
-            <h3>Doctor 2</h3>
+            <img src="../static/doc9.jpg" alt="Doctor 2">
+            <h3>Amelia Brooks</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-1">Status: ???</p>
             <p id="task-1">Task: ???</p>
           </div>
           <div class="card" id="resource-2">
-            <img src="../static/doc3.jpeg" alt="Doctor 3">
-            <h3>Doctor 3</h3>
+            <img src="../static/doc10.jpg" alt="Doctor 3">
+            <h3>Charlotte Hayes</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-2">Status: ???</p>
             <p id="task-2">Task: ???</p>
           </div>
           <div class="card" id="resource-3">
             <img src="../static/doc4.jpeg" alt="Doctor 4">
-            <h3>Doctor 4</h3>
+            <h3>Ryan Blake</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-3">Status: ???</p>
             <p id="task-3">Task: ???</p>
           </div>
           <div class="card" id="resource-4">
-            <img src="../static/doc9.jpg" alt="Doctor 5">
-            <h3>Doctor 5</h3>
+            <img src="../static/doc5.jpeg" alt="Doctor 5">
+            <h3>Thomas Maxwell</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-4">Status: ???</p>
             <p id="task-4">Task: ???</p>
           </div>
           <div class="card" id="resource-5">
-            <img src="../static/doc10.jpg" alt="Doctor 6">
-            <h3>Doctor 6</h3>
+            <img src="../static/doc6.jpeg" alt="Doctor 6">
+            <h3>William Dalton</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-5">Status: ???</p>
             <p id="task-5">Task: ???</p>
           </div>
           <div class="card" id="resource-6">
             <img src="../static/doc12.jpg" alt="Doctor 7">
-            <h3>Doctor 7</h3>
+            <h3>Grace Ellis</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-6">Status: ???</p>
             <p id="task-6">Task: ???</p>
           </div>
           <div class="card" id="resource-7">
             <img src="../static/doc13.jpg" alt="Doctor 8">
-            <h3>Doctor 8</h3>
+            <h3>Quinn Taylor</h3>
+            <h3>Position: Doctor</h3>
             <p id="status-7">Status: ???</p>
             <p id="task-7">Task: ???</p>
           </div>
@@ -129,57 +164,66 @@
           <!-- 7 Nurses -->
           <div class="card" id="resource-8">
             <img src="../static/nurse1.jpg" alt="Nurse 1">
-            <h3>Nurse 1</h3>
+            <h3>Fiona Summers</h3>
+            <h3>Position: Nurse</h3>
             <p id="status-8">Status: ???</p>
             <p id="task-8">Task: ???</p>
           </div>
           <div class="card" id="resource-9">
             <img src="../static/nurse2.jpg" alt="Nurse 2">
-            <h3>Nurse 2</h3>
+            <h3>Daisy Monroe</h3>
+            <h3>Position: Nurse</h3>
             <p id="status-9">Status: ???</p>
             <p id="task-9">Task: ???</p>
           </div>
           <div class="card" id="resource-10">
             <img src="../static/nurse3.jpg" alt="Nurse 3">
-            <h3>Nurse 3</h3>
+            <h3>Bella Crawford</h3>
+            <h3>Position: Nurse</h3>
             <p id="status-10">Status: ???</p>
             <p id="task-10">Task: ???</p>
           </div>
           <div class="card" id="resource-11">
             <img src="../static/nurse4.jpg" alt="Nurse 4">
-            <h3>Nurse 4</h3>
+            <h3>Samuel Turner</h3>
+            <h3>Position: Nurse</h3>
             <p id="status-11">Status: ???</p>
             <p id="task-11">Task: ???</p>
           </div>
           <div class="card" id="resource-12">
             <img src="../static/nurse5.jpg" alt="Nurse 5">
-            <h3>Nurse 5</h3>
+            <h3>Hannah Parker</h3>
+            <h3>Position: Nurse</h3>
             <p id="status-12">Status: ???</p>
             <p id="task-12">Task: ???</p>
           </div>
           <div class="card" id="resource-13">
             <img src="../static/nurse6.jpg" alt="Nurse 6">
-            <h3>Nurse 6</h3>
+            <h3>Lily Bennett</h3>
+            <h3>Position: Nurse</h3>
             <p id="status-13">Status: ???</p>
             <p id="task-13">Task: ???</p>
           </div>
           <div class="card" id="resource-14">
             <img src="../static/nurse7.jpg" alt="Nurse 7">
-            <h3>Nurse 7</h3>
+            <h3>Mia Hart</h3>
+            <h3>Position: Nurse</h3>
             <p id="status-14">Status: ???</p>
             <p id="task-14">Task: ???</p>
           </div>
 
           <!-- 2 X-Ray -->
           <div class="card" id="resource-15">
-            <img src="../static/xray1.jpg" alt="X-Ray 1">
-            <h3>X-Ray 1</h3>
+            <img src="../static/X-RAY1.jpg" alt="X-Ray 1">
+            <h3>Patrick Walsh</h3>
+            <h3>Position: X-Ray Technician</h3>
             <p id="status-15">Status: ???</p>
             <p id="task-15">Task: ???</p>
           </div>
           <div class="card" id="resource-16">
-            <img src="../static/xray2.jpg" alt="X-Ray 2">
-            <h3>X-Ray 2</h3>
+            <img src="../static/X-RAY2.jpg" alt="X-Ray 2">
+            <h3>Oliver Dean</h3>
+            <h3>Position: X-Ray Technician</h3>
             <p id="status-16">Status: ???</p>
             <p id="task-16">Task: ???</p>
           </div>
@@ -187,13 +231,15 @@
           <!-- 2 CT -->
           <div class="card" id="resource-17">
             <img src="../static/ct1.jpg" alt="CT 1">
-            <h3>CT 1</h3>
+            <h3>Jack Sullivan</h3>
+            <h3>Position: CT Technician</h3>
             <p id="status-17">Status: ???</p>
             <p id="task-17">Task: ???</p>
           </div>
           <div class="card" id="resource-18">
             <img src="../static/ct2.jpg" alt="CT 2">
-            <h3>CT 2</h3>
+            <h3>Katherine Shaw</h3>
+            <h3>Position: CT Technician</h3>
             <p id="status-18">Status: ???</p>
             <p id="task-18">Task: ???</p>
           </div>
