@@ -500,7 +500,7 @@ footer {
 
 #doctor-cards-container,
 #patient-cards-container {
-    display: flex !important;
+    display: flex;
     width: 100%;
     flex-wrap: wrap;     /* wrap cards onto new lines */
     gap: 10px;           /* space between cards */

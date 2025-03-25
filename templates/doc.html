@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <title>Doctor-Patient Management</title>
   <link rel="stylesheet" type="text/css" href="../static/style.css">
+  <style>
+    /* Reusable class to hide an element */
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -25,7 +31,7 @@
       </nav>
     
       <!-- Doctor Panel (hidden by default) -->
-      <div id="doctor-panel" class="panel doctor-panel" style="display: none;">
+      <div id="doctor-panel" class="panel doctor-panel hidden">
         <form method="post">
           <label>Staff Name</label>
           <input type="text" name="name" required>
@@ -39,7 +45,7 @@
       </div>
     
       <!-- Patient Panel (hidden by default) -->
-      <div id="patient-panel" class="panel patient-panel" style="display: none;">
+      <div id="patient-panel" class="panel patient-panel hidden">
         <form method="post">
           <label>Patient ID</label>
           <input type="text" name="id" required>
@@ -63,35 +69,28 @@
     </div>
 
     <script>
-      // 1. Get references to the key elements by their IDs in the sidebar:
+      // Sidebar panel toggling using the .hidden class.
       const doctorLink = document.getElementById('doctor-link');
       const patientLink = document.getElementById('patient-link');
       const doctorPanel = document.getElementById('doctor-panel');
       const patientPanel = document.getElementById('patient-panel');
     
-      // 2. By default, hide both panels.
-      doctorPanel.style.display = 'none';
-      patientPanel.style.display = 'none';
-    
-      // 3. Add click event listeners to the two links in the sidebar:
-      //    When the user clicks "Doctor," only show the Doctor panel.
       doctorLink.addEventListener('click', function(e) {
         e.preventDefault();        
-        doctorPanel.style.display = 'block';  
-        patientPanel.style.display = 'none';  
+        doctorPanel.classList.remove('hidden');  
+        patientPanel.classList.add('hidden');  
       });
     
-      //    When the user clicks "Patient," only show the Patient panel.
       patientLink.addEventListener('click', function(e) {
         e.preventDefault();
-        patientPanel.style.display = 'block'; 
-        doctorPanel.style.display = 'none';
+        patientPanel.classList.remove('hidden'); 
+        doctorPanel.classList.add('hidden');
       });
     </script>
     
     <!-- Main Content Area -->
     <div class="main">
-      <!-- Top section in the main content: Search Bar + Filter Buttons -->
+      <!-- Header with buttons -->
       <div class="header">
         <input type="text" placeholder="Search..." class="search-input" id="searchBar" />
         <button id="searchButton">Search</button>
@@ -246,7 +245,7 @@
         </div>
 
         <!-- Patient Cards Container (empty initially) -->
-        <div id="patient-cards-container" style="display: none;">
+        <div id="patient-cards-container" class="hidden">
           <!-- Patient cards will be dynamically created here -->
         </div>
       </div>
@@ -255,7 +254,7 @@
 
   <!-- SCRIPT: Toggling Views and Auto-Updates -->
   <script>
-    // Get DOM elements
+    // Get DOM elements for view toggling
     const doctorBtn = document.getElementById('doctorBtn');
     const patientBtn = document.getElementById('patientBtn');
     const doctorCardsContainer = document.getElementById('doctor-cards-container');
@@ -337,8 +336,8 @@
     // Toggle to doctor view
     doctorBtn.addEventListener('click', () => {
       currentView = 'doctor';
-      doctorCardsContainer.style.display = 'block';
-      patientCardsContainer.style.display = 'none';
+      doctorCardsContainer.classList.remove('hidden');
+      patientCardsContainer.classList.add('hidden');
       if (patientInterval) {
         clearInterval(patientInterval);
         patientInterval = null;
@@ -352,8 +351,8 @@
     // Toggle to patient view
     patientBtn.addEventListener('click', () => {
       currentView = 'patient';
-      doctorCardsContainer.style.display = 'none';
-      patientCardsContainer.style.display = 'block';
+      doctorCardsContainer.classList.add('hidden');
+      patientCardsContainer.classList.remove('hidden');
       if (doctorInterval) {
         clearInterval(doctorInterval);
         doctorInterval = null;
@@ -366,8 +365,8 @@
     });
 
     // On page load, default to doctor view
-    doctorCardsContainer.style.display = 'block';
-    patientCardsContainer.style.display = 'none';
+    doctorCardsContainer.classList.remove('hidden');
+    patientCardsContainer.classList.add('hidden');
     updateMedicalResources();
     doctorInterval = setInterval(updateMedicalResources, 1000);
   </script>
