@@ -500,7 +500,7 @@ footer {
 
 #doctor-cards-container,
 #patient-cards-container {
-    display: flex;
+    display: flex !important;
     width: 100%;
     flex-wrap: wrap;     /* wrap cards onto new lines */
     gap: 10px;           /* space between cards */
@@ -509,7 +509,7 @@ footer {
 }
 
 .card {
-    width: calc(25% - 10px); /* 4 cards per row (100% / 4) minus some gap */
+    width: calc(25% - 12px); /* 4 cards per row (100% / 4) minus some gap */
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -536,17 +536,7 @@ footer {
     color: #666;
 }
 
-/* Responsive tweak for smaller screens */
-@media (max-width: 800px) {
-    .card {
-      width: calc(50% - 20px); /* 2 cards per row on smaller screens */
-    }
-}
-@media (max-width: 500px) {
-    .card {
-      width: 100%; /* 1 card per row on very small screens */
-    }
-}
+
 
 /* Styling for the login.html*/
 /**/
