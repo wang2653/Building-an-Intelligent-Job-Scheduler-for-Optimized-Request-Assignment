@@ -25,7 +25,7 @@
       </nav>
     
       <!-- Doctor Panel (hidden by default) -->
-      <div id="doctor-panel" class="panel doctor-panel">
+      <div id="doctor-panel" class="panel doctor-panel" style="display: none;">
         <form method="post">
           <label>Doctor Name</label>
           <input type="text" name="name" required>
@@ -39,7 +39,7 @@
       </div>
     
       <!-- Patient Panel (hidden by default) -->
-      <div id="patient-panel" class="panel patient-panel">
+      <div id="patient-panel" class="panel patient-panel" style="display: none;">
         <form method="post">
           <label>Patient ID</label>
           <input type="text" name="id" required>
@@ -62,127 +62,196 @@
       </div>
     </div>
     
-    <!-- SCRIPT: toggles visibility of sidebar panels (Doctor/Patient) -->
-    <script>
-      // 1. Get references to the key elements by their IDs in the sidebar:
-      const doctorLink = document.getElementById('doctor-link');
-      const patientLink = document.getElementById('patient-link');
-      const doctorPanel = document.getElementById('doctor-panel');
-      const patientPanel = document.getElementById('patient-panel');
-    
-      // 2. By default, hide both panels.
-      doctorPanel.style.display = 'none';
-      patientPanel.style.display = 'none';
-    
-      // 3. Add click event listeners to the two links in the sidebar:
-      //    When the user clicks "Doctor," only show the Doctor panel.
-      doctorLink.addEventListener('click', function(e) {
-        e.preventDefault();        
-        doctorPanel.style.display = 'block';  
-        patientPanel.style.display = 'none';  
-      });
-    
-      //    When the user clicks "Patient," only show the Patient panel.
-      patientLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        patientPanel.style.display = 'block'; 
-        doctorPanel.style.display = 'none';
-      });
-    </script>
-  
     <!-- Main Content Area -->
     <div class="main">
       <!-- Top section in the main content: Search Bar + Filter Buttons -->
       <div class="header">
-        <!-- Always visible search bar -->
-        <input
-          type="text"
-          placeholder="Search..."
-          class="search-input"
-          id="searchBar"
-        />
+        <input type="text" placeholder="Search..." class="search-input" id="searchBar" />
         <button id="searchButton">Search</button>
-        <!-- Doctor/Patient Filter Buttons -->
         <button id="doctorBtn">Doctor</button>
         <button id="patientBtn">Patient</button>
       </div>
   
-      <!-- Content to show Doctor/Patient cards -->
+      <!-- Content Area with Two Containers -->
       <div class="content" id="contentArea">
-        <!-- Default or initial content can be placed here -->
-        <!-- Will be replaced by JavaScript in this demo -->
-        <div class="card">
-          <img src="https://via.placeholder.com/80" alt="Default Photo">
-          <h3>Welcome</h3>
-          <p>Select a filter: Doctor or Patient</p>
+        <!-- Doctor Cards Container (fixed cards) -->
+        <div id="doctor-cards-container">
+          <!-- 8 Doctors -->
+          <div class="card" id="resource-0">
+            <img src="../static/doc1.jpeg" alt="Doctor 1">
+            <h3>Doctor 1</h3>
+            <p id="status-0">Status: ???</p>
+            <p id="task-0">Task: ???</p>
+          </div>
+          <div class="card" id="resource-1">
+            <img src="../static/doc2.jpeg" alt="Doctor 2">
+            <h3>Doctor 2</h3>
+            <p id="status-1">Status: ???</p>
+            <p id="task-1">Task: ???</p>
+          </div>
+          <div class="card" id="resource-2">
+            <img src="../static/doc3.jpeg" alt="Doctor 3">
+            <h3>Doctor 3</h3>
+            <p id="status-2">Status: ???</p>
+            <p id="task-2">Task: ???</p>
+          </div>
+          <div class="card" id="resource-3">
+            <img src="../static/doc4.jpeg" alt="Doctor 4">
+            <h3>Doctor 4</h3>
+            <p id="status-3">Status: ???</p>
+            <p id="task-3">Task: ???</p>
+          </div>
+          <div class="card" id="resource-4">
+            <img src="../static/doc9.jpg" alt="Doctor 5">
+            <h3>Doctor 5</h3>
+            <p id="status-4">Status: ???</p>
+            <p id="task-4">Task: ???</p>
+          </div>
+          <div class="card" id="resource-5">
+            <img src="../static/doc10.jpg" alt="Doctor 6">
+            <h3>Doctor 6</h3>
+            <p id="status-5">Status: ???</p>
+            <p id="task-5">Task: ???</p>
+          </div>
+          <div class="card" id="resource-6">
+            <img src="../static/doc12.jpg" alt="Doctor 7">
+            <h3>Doctor 7</h3>
+            <p id="status-6">Status: ???</p>
+            <p id="task-6">Task: ???</p>
+          </div>
+          <div class="card" id="resource-7">
+            <img src="../static/doc13.jpg" alt="Doctor 8">
+            <h3>Doctor 8</h3>
+            <p id="status-7">Status: ???</p>
+            <p id="task-7">Task: ???</p>
+          </div>
+
+          <!-- 7 Nurses -->
+          <div class="card" id="resource-8">
+            <img src="../static/nurse1.jpg" alt="Nurse 1">
+            <h3>Nurse 1</h3>
+            <p id="status-8">Status: ???</p>
+            <p id="task-8">Task: ???</p>
+          </div>
+          <div class="card" id="resource-9">
+            <img src="../static/nurse2.jpg" alt="Nurse 2">
+            <h3>Nurse 2</h3>
+            <p id="status-9">Status: ???</p>
+            <p id="task-9">Task: ???</p>
+          </div>
+          <div class="card" id="resource-10">
+            <img src="../static/nurse3.jpg" alt="Nurse 3">
+            <h3>Nurse 3</h3>
+            <p id="status-10">Status: ???</p>
+            <p id="task-10">Task: ???</p>
+          </div>
+          <div class="card" id="resource-11">
+            <img src="../static/nurse4.jpg" alt="Nurse 4">
+            <h3>Nurse 4</h3>
+            <p id="status-11">Status: ???</p>
+            <p id="task-11">Task: ???</p>
+          </div>
+          <div class="card" id="resource-12">
+            <img src="../static/nurse5.jpg" alt="Nurse 5">
+            <h3>Nurse 5</h3>
+            <p id="status-12">Status: ???</p>
+            <p id="task-12">Task: ???</p>
+          </div>
+          <div class="card" id="resource-13">
+            <img src="../static/nurse6.jpg" alt="Nurse 6">
+            <h3>Nurse 6</h3>
+            <p id="status-13">Status: ???</p>
+            <p id="task-13">Task: ???</p>
+          </div>
+          <div class="card" id="resource-14">
+            <img src="../static/nurse7.jpg" alt="Nurse 7">
+            <h3>Nurse 7</h3>
+            <p id="status-14">Status: ???</p>
+            <p id="task-14">Task: ???</p>
+          </div>
+
+          <!-- 2 X-Ray -->
+          <div class="card" id="resource-15">
+            <img src="../static/xray1.jpg" alt="X-Ray 1">
+            <h3>X-Ray 1</h3>
+            <p id="status-15">Status: ???</p>
+            <p id="task-15">Task: ???</p>
+          </div>
+          <div class="card" id="resource-16">
+            <img src="../static/xray2.jpg" alt="X-Ray 2">
+            <h3>X-Ray 2</h3>
+            <p id="status-16">Status: ???</p>
+            <p id="task-16">Task: ???</p>
+          </div>
+
+          <!-- 2 CT -->
+          <div class="card" id="resource-17">
+            <img src="../static/ct1.jpg" alt="CT 1">
+            <h3>CT 1</h3>
+            <p id="status-17">Status: ???</p>
+            <p id="task-17">Task: ???</p>
+          </div>
+          <div class="card" id="resource-18">
+            <img src="../static/ct2.jpg" alt="CT 2">
+            <h3>CT 2</h3>
+            <p id="status-18">Status: ???</p>
+            <p id="task-18">Task: ???</p>
+          </div>
+        </div>
+
+        <!-- Patient Cards Container (empty initially) -->
+        <div id="patient-cards-container" style="display: none;">
+          <!-- Patient cards will be dynamically created here -->
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SCRIPT: toggles main content cards (Doctor vs. Patient) -->
+  <!-- SCRIPT: Toggling Views and Auto-Updates -->
   <script>
-    const doctorBtn   = document.getElementById('doctorBtn');
-    const patientBtn  = document.getElementById('patientBtn');
-    const searchBar   = document.getElementById('searchBar');
-    const contentArea = document.getElementById('contentArea');
-    
-    let currentView    = 'default';
+    // Get DOM elements
+    const doctorBtn = document.getElementById('doctorBtn');
+    const patientBtn = document.getElementById('patientBtn');
+    const doctorCardsContainer = document.getElementById('doctor-cards-container');
+    const patientCardsContainer = document.getElementById('patient-cards-container');
+
+    let currentView = 'doctor';
+    let doctorInterval = null;
     let patientInterval = null;
-    const maxPatients   = 200;
-    let patientCards    = [];
+    let patientCards = [];
+    const maxPatients = 200;
 
-    // Doctor card markup
-    const doctorCardsHTML = `
-      <div class="card">
-        <img src="../static/doc1.jpeg" alt="Doctor Photo">
-        <h3>Dr. John</h3>
-        <p>Available</p>
-      </div>
-      <div class="card">
-        <img src="../static/doc2.jpeg" alt="Doctor Photo">
-        <h3>Dr. Smith</h3>
-        <p>On Leave</p>
-      </div>
-      <div class="card">
-        <img src="../static/doc3.jpeg" alt="Doctor Photo">
-        <h3>Dr. Jane</h3>
-        <p>Busy</p>
-      </div>
-      <div class="card">
-        <img src="../static/doc4.jpeg" alt="Doctor Photo">
-        <h3>Dr. Emily</h3>
-        <p>Available</p>
-      </div>
-      <div class="card">
-        <img src="../static/doc9.jpg" alt="Doctor Photo">
-        <h3>Dr. Carter</h3>
-        <p>Available</p>
-      </div>
-      <div class="card">
-        <img src="../static/doc10.jpg" alt="Doctor Photo">
-        <h3>Dr. Li</h3>
-        <p>Available</p>
-      </div>
-      <div class="card">
-        <img src="../static/doc12.jpg" alt="Doctor Photo">
-        <h3>Dr. Helen</h3>
-        <p>Available</p>
-      </div>
-      <div class="card">
-        <img src="../static/doc13.jpg" alt="Doctor Photo">
-        <h3>Dr. Virgil</h3>
-        <p>Available</p>
-      </div>
-    `;
+    // Update fixed doctor/resource cards from /get_doctors
+    function updateMedicalResources() {
+      if (currentView !== 'doctor') return;
+      fetch('/get_doctors')
+        .then(res => res.json())
+        .then(data => {
+          // data.resources is an array of 19 objects {status, task}
+          for (let i = 0; i < data.resources.length; i++) {
+            const resStatus = data.resources[i].status;
+            const resTask = data.resources[i].task;
+            const statusEl = document.getElementById(`status-${i}`);
+            const taskEl = document.getElementById(`task-${i}`);
+            if (parseInt(resStatus) === 0) {
+              statusEl.innerText = "Status: Available";
+              taskEl.innerText = "Task: 0";
+            } else {
+              statusEl.innerText = `Status: Occupied (Patient ${resStatus})`;
+              taskEl.innerText = `Task: ${resTask}`;
+            }
+          }
+        });
+    }
 
-    // Generate all possible patient cards (but keep them hidden initially)
+    // Create patient cards inside the patient container
     function createPatientCards() {
-      contentArea.innerHTML = ''; // Clear out any existing content
+      patientCardsContainer.innerHTML = ''; // clear container
+      patientCards = [];
       for (let i = 0; i < maxPatients; i++) {
-        const card = document.createElement('div');
+        let card = document.createElement('div');
         card.className = 'card patient-card';
-        card.style.display = 'none'; // hidden by default
+        card.style.display = 'none';
         card.innerHTML = `
           <img src="https://via.placeholder.com/80" alt="Patient Photo">
           <h3 id="patient-id-${i}">Patient</h3>
@@ -192,16 +261,14 @@
           <p id="remaining-${i}">Remaining Time: </p>
           <p id="status-${i}">Status: </p>
         `;
-        contentArea.appendChild(card);
+        patientCardsContainer.appendChild(card);
         patientCards.push(card);
       }
     }
 
-    // Update the displayed patient info by fetching from the server
+    // Update patient cards using /get_patients
     function updatePatients() {
-      // Only update if we are in 'patient' view
       if (currentView !== 'patient') return;
-      
       fetch('/get_patients')
         .then(response => response.json())
         .then(newPatients => {
@@ -221,51 +288,43 @@
         });
     }
 
-    // Create patient card elements in DOM once
-    createPatientCards();
-
-    // Doctor Filter button -> show doctor cards
+    // Toggle to doctor view
     doctorBtn.addEventListener('click', () => {
-      console.log("Doctor Filter clicked. Switching to doctor view.");
-      currentView = 'doctor'; 
-      
-      // Clear any running update intervals for patients
+      currentView = 'doctor';
+      doctorCardsContainer.style.display = 'block';
+      patientCardsContainer.style.display = 'none';
       if (patientInterval) {
         clearInterval(patientInterval);
         patientInterval = null;
       }
-      
-      // Hide all patient cards
-      patientCards.forEach(card => card.style.display = 'none');
-
-      // Insert doctor cards
-      contentArea.innerHTML = doctorCardsHTML;
+      updateMedicalResources();
+      if (!doctorInterval) {
+        doctorInterval = setInterval(updateMedicalResources, 1000);
+      }
     });
 
-    // Patient Filter button -> show patient cards
+    // Toggle to patient view
     patientBtn.addEventListener('click', () => {
-      console.log("Patient Filter clicked. Switching to patient view.");
       currentView = 'patient';
-
-      // Clear out the content area first
-      contentArea.innerHTML = ''; 
-
-      // Then attach the patient cards back in
-      patientCards.forEach(card => {
-        card.style.display = 'none'; 
-        contentArea.appendChild(card);
-      });
-
-      // First update to display the correct # of patient cards
+      doctorCardsContainer.style.display = 'none';
+      patientCardsContainer.style.display = 'block';
+      if (doctorInterval) {
+        clearInterval(doctorInterval);
+        doctorInterval = null;
+      }
+      createPatientCards();
       updatePatients();
-
-      // Start the auto-update loop (every second)
-      patientInterval = setInterval(updatePatients, 1000);
+      if (!patientInterval) {
+        patientInterval = setInterval(updatePatients, 1000);
+      }
     });
+
+    // On page load, default to doctor view
+    doctorCardsContainer.style.display = 'block';
+    patientCardsContainer.style.display = 'none';
+    updateMedicalResources();
+    doctorInterval = setInterval(updateMedicalResources, 1000);
   </script>
 
 </body>
 </html>
-
-
-

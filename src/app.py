@@ -58,6 +58,23 @@ def get_patients():
     df = pd.read_csv('../data/current_patients_info.csv')
     return df.to_json(orient="records")
 
+@app.route('/get_doctors')
+def get_doctors():
+    # Skip the first row and only read the next two rows (which have 19 columns)
+    df = pd.read_csv('../data/current_doctors_info.csv', header=None, skiprows=1, nrows=2)
+    # Row 0 (after skipping) is the statuses; row 1 is the tasks.
+    status_list = df.iloc[0].tolist()
+    task_list   = df.iloc[1].tolist()
+
+    resources = []
+    # Loop over 19 columns
+    for i in range(19):
+        resources.append({
+            "status": int(status_list[i]),  # convert numpy.int64 to int
+            "task": str(task_list[i])         # ensure task is a string
+        })
+    return {"resources": resources}
+
 # Run the application
 if __name__ == '__main__':
     run(app, host='localhost', port=8080, debug=True)

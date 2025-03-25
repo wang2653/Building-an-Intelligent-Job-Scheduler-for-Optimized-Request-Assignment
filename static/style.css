@@ -18,10 +18,10 @@ header {
 
 /* Dropdown container */
 header li.dropdown {
-    position: relative;       /* anchor for the absolutely positioned menu */
-    display: inline-block;    /* needed so the submenu can center below the link */
-    margin-right: 4vw;        /* keep the same spacing as your other nav items */
-    line-height: normal;      /* override the 80px line-height here */
+    position: relative;
+    display: inline-block;
+    margin-right: 4vw;    
+    line-height: normal;      
 }
 
 
@@ -32,7 +32,7 @@ header li.dropdown {
     padding: 8px 16px;
     border-radius: 4px;
     text-decoration: none;
-    vertical-align: middle;   /* keeps it nicely aligned in the nav bar */
+    vertical-align: middle;
     transition: background-color 0.2s ease;
   }
   
@@ -43,38 +43,37 @@ header li.dropdown {
   
   /* Dropdown content */
   .dropdown-content {
-    display: none;            /* hidden by default */
+    display: none;
     position: absolute;
-    top: 100%;                /* directly below the button (no extra gap) */
-    left: 50%;                /* start at 50% horizontally */
-    transform: translateX(-50%); /* shift left to center it under the button */
+    top: 100%; 
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #333;
     border-radius: 4px;
-    min-width: 100%;         /* narrower width; adjust as needed */
+    min-width: 100%;
     margin: 0;
     padding: 0;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    z-index: 999;             /* ensure it stays above other elements */
+    z-index: 999; 
   }
   
   .dropdown-content a {
     display: block;
-    padding: 6px 12px;   /* smaller padding for a tighter look */
+    padding: 6px 12px;
     color: #fff;
     text-decoration: none;
-    text-align: center;    /* align text to the left, if desired */
-    white-space: nowrap; /* prevent wrapping onto multiple lines */
-    line-height: normal; /* keep link text snug */
+    text-align: center;
+    white-space: nowrap;
+    line-height: normal;
   }
 
   /* Links inside the dropdown */
   .dropdown-content li {
     list-style: none;
-    margin: 0;      /* Override top-level li margin */
+    margin: 0;
     padding: 0;
   }
-  
-  /* Show the dropdown on hover */
+
   .dropdown:hover .dropdown-content {
     display: block;
   }
@@ -495,13 +494,21 @@ footer {
     padding: 20px;
     overflow-y: auto; /* Scroll if content is too long */
     display: flex;
-    flex-wrap: wrap; /* Wrap cards to next line */
-    gap: 10px;       /* Space between cards */
+    box-sizing: border-box;
+}
+
+#doctor-cards-container,
+#patient-cards-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;     /* wrap cards onto new lines */
+    gap: 10px;           /* space between cards */
     justify-content: flex-start;
+    box-sizing: border-box;
 }
 
 .card {
-    width: calc(25% - 20px); /* 4 cards per row (100% / 4) minus some gap */
+    width: calc(25% - 10px); /* 4 cards per row (100% / 4) minus some gap */
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
