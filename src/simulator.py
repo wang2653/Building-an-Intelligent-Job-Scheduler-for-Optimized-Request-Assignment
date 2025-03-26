@@ -833,7 +833,7 @@ def run_simulation(agent):
 
 
         current_time = current_time + 1
-        time.sleep(0.01)
+        time.sleep(0.3)
 
 
 
