@@ -771,9 +771,15 @@ def run_simulation(agent):
             current_treatment_index = global_patient[patient_id].current_treatment_index
             if current_treatment_index == len(global_patient[patient_id].treatment_plan_arr):
                 treatment_name = "Done"
+                status = 2
             else:
                 current_treatment_id = global_patient[patient_id].treatment_plan_arr[current_treatment_index]
                 treatment_name = TREATMENT_MAP[current_treatment_id]
+
+                if global_patient[patient_id].current_treatment_time > 0:
+                    status = 1
+                else:
+                    status = 0
 
             # current_time, patient_id, acuity_level, waiting_time, current_treatment, remaining_time, status(1: in treatment; 0: waiting)
             patient_info = []
@@ -782,11 +788,8 @@ def run_simulation(agent):
             patient_info.append(global_patient[patient_id].acuity_level)
             patient_info.append(compute_waiting_time(patient_id, current_time))
             patient_info.append(treatment_name)
-
-            if global_patient[patient_id].current_treatment_time > 0:
-                patient_info.append(1)
-            else:
-                patient_info.append(0)
+            patient_info.append(status)
+            
 
             current_patients_info.append(patient_info)
 
@@ -830,7 +833,7 @@ def run_simulation(agent):
 
 
         current_time = current_time + 1
-        time.sleep(1)
+        time.sleep(0.01)
 
 
 
