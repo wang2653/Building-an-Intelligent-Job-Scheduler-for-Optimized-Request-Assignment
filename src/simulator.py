@@ -304,7 +304,7 @@ class Resource:
 
 def load_patient_data():
 
-    file_path = "./data/NEWpatient10.csv"
+    file_path = "./data/NEWpatientdata10.csv"
 
     with open(file_path, mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -322,7 +322,7 @@ def load_patient_data():
             LAST_PATIENT_ID[0] = patient_id
 
 def add_new_manually():
-    file_path = "./data/NEWpatient10.csv"
+    file_path = "./data/NEWpatientdata10.csv"
 
     with open(file_path, mode='r') as file:
         # only read the last line
