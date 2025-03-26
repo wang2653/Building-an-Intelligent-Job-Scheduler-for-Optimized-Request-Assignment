@@ -1,11 +1,3 @@
-# Copyright: University of Toronto ECE496 Project 2024105
-
-# This code simulates an Emergency Department (ED) environment using Deep Reinforcement Learning. 
-# It models the flow of patients through various medical treatments, managed by different types of medical 
-# The goal of this project is to develop a user-friendly job scheduler that reaches three segmented objectives, 
-# which are minimizing patient waiting times, maximizing resource utilization, and prioritizing high-severity
-# cases in real-time. Then, let’s go through the project requirements.
-
 import csv
 from queue import PriorityQueue
 import ast
@@ -36,7 +28,6 @@ RESOURCE_TREATMENT_MAP = {
     8: 2,     # 'NURSE',     #Discharge
     9: 2,     # 'NURSE'      #Admission
 }
-
 TREATMENT_MAP = {
     1: "Triage",
     2: "Registration",
@@ -83,6 +74,7 @@ global_patient_by_time = PriorityQueue()
 
 # current patients in the ED
 current_patients = set()
+all_current_patients = set()
 
 # run_simulation
 global_medical_resource = []
@@ -312,7 +304,7 @@ class Resource:
 
 def load_patient_data():
 
-    file_path = "./data/NEWpatientdata10.csv"
+    file_path = "./data/NEWpatient10.csv"
 
     with open(file_path, mode='r') as file:
         csv_reader = csv.DictReader(file)
@@ -330,7 +322,7 @@ def load_patient_data():
             LAST_PATIENT_ID[0] = patient_id
 
 def add_new_manually():
-    file_path = "./data/NEWpatientdata10.csv"
+    file_path = "./data/NEWpatient10.csv"
 
     with open(file_path, mode='r') as file:
         # only read the last line
@@ -341,7 +333,7 @@ def add_new_manually():
 
         last_id = LAST_PATIENT_ID[0]
         if patient_id != last_id:
-            print("asdasd/n")
+            # print("asdasd/n")
             arrival_time = int(row['arrival_time'])
             acuity_level = int(row['acuity_level'])
             # Convert to a list of integers
@@ -490,7 +482,7 @@ def compute_waiting_time(patient_id, current_time):
         waiting_time += max((current_time - (total_time[i-1] + start_time[i-1])), 0)
         break
 
-    # print(f"{patient_id}: {waiting_time} * {ACUITY_WEIGHT_MAP[acuity_level]}\n")
+    
     return waiting_time
 
 
@@ -706,9 +698,10 @@ def run_simulation(agent):
                 for i in range(current_treatment_index, len(patient.treatment_plan_arr)):
                     remaining_time += patient.treatment_totaltime_arr[i]
                 patient.treatment_remaining_time = remaining_time
-                print(f'Patient {patient_id} remains {remaining_time}')
+                # print(f'Patient {patient_id} remains {remaining_time}')
 
                 current_patients.add(patient_id)
+                all_current_patients.add(patient_id)
             else:
                 current_patients.discard(patient_id)
 
@@ -771,6 +764,40 @@ def run_simulation(agent):
             writer = csv.writer(file)
             writer.writerow(["current_time", "patient_id", "acuity_level", "waiting_time", "current_treatment", "remaining_time", "status"])  # Writing header
             writer.writerows(current_patients_info)
+            
+
+        current_patients_info = []
+        for patient_id in all_current_patients:
+            current_treatment_index = global_patient[patient_id].current_treatment_index
+            if current_treatment_index == len(global_patient[patient_id].treatment_plan_arr):
+                treatment_name = "Done"
+            else:
+                current_treatment_id = global_patient[patient_id].treatment_plan_arr[current_treatment_index]
+                treatment_name = TREATMENT_MAP[current_treatment_id]
+
+            # current_time, patient_id, acuity_level, waiting_time, current_treatment, remaining_time, status(1: in treatment; 0: waiting)
+            patient_info = []
+            patient_info.append(current_time)
+            patient_info.append(patient_id)
+            patient_info.append(global_patient[patient_id].acuity_level)
+            patient_info.append(compute_waiting_time(patient_id, current_time))
+            patient_info.append(treatment_name)
+
+            if global_patient[patient_id].current_treatment_time > 0:
+                patient_info.append(1)
+            else:
+                patient_info.append(0)
+
+            current_patients_info.append(patient_info)
+
+        # write the current patients info into the file
+        with open("./data/all_patients_info.csv", mode="w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["current_time", "patient_id", "acuity_level", "waiting_time", "current_treatment", "status"])  # Writing header
+            writer.writerows(current_patients_info)
+
+
+
 
         resources_info = []
         treatments_info = []
@@ -803,7 +830,7 @@ def run_simulation(agent):
 
 
         current_time = current_time + 1
-        time.sleep(1)
+        time.sleep(0.01)
 
 
 
