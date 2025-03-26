@@ -50,7 +50,38 @@ def login():
 # Doctor interface
 @app.route('/doctor', method=['GET', 'POST'])
 def doctor():
-    
+    if request.method == 'POST':
+        action = request.forms.get('action')
+        print(f"Action: {action}")
+
+        if action == 'add':
+            patient_id = request.forms.get('id')
+            arrival_time = request.forms.get('arrival_time')
+            acuity_level = request.forms.get('acuity_level')
+            treatment_plan = request.forms.get('treatment_plan')
+            treatment_time = request.forms.get('treatment_time')
+
+            print(f"Received: ID={patient_id}, Arrival={arrival_time}, Acuity={acuity_level}, Plan={treatment_plan}, Time={treatment_time}")
+
+            treatment_plan_arr = "[" + treatment_plan + "]"
+            treatment_time_arr = "[" + treatment_time + "]"
+
+            new_row = {
+                "patient_id": patient_id,
+                "arrival_time": arrival_time,
+                "acuity_level": acuity_level,
+                "treatment_plan_arr": treatment_plan_arr,
+                "treatment_totaltime_arr": treatment_time_arr
+            }
+
+            df = pd.read_csv('../data/NEWpatientdata10.csv')
+            df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+            df.to_csv('../data/NEWpatientdata10.csv', index=False)
+            print("Row added.")
+
+        elif action == 'remove':
+            pass
+
     return template('doc.html')
 
 @app.route('/get_patients')

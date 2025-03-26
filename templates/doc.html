@@ -48,16 +48,18 @@
       <div id="patient-panel" class="panel patient-panel hidden">
         <form method="post">
           <label>Patient ID</label>
-          <input type="text" name="id" required>
+          <input type="text" name="id" required placeholder="Integer e.g. 17">
           <label>Arrivial Time</label>
-          <input type="text" name="arrival_time">
+          <input type="text" name="arrival_time" placeholder="Integer e.g. 22">
           <label>Acuity Level</label>
-          <input type="text" name="acuity_level">
+          <input type="text" name="acuity_level" placeholder="Integer from 1-5">
           <label>Treatment Plan</label>
-          <input type="text" name="treatment_plan">
+          <input type="text" name="treatment_plan" placeholder="Array e.g. 1, 2, 3, 8">
+          <label>Treatment Time</label>
+          <input type="text" name="treatment_time" placeholder="Array e.g. 1, 1, 8, 22">
           <div class="button-group">
-            <button>Add/Edit Patient</button>
-            <button>Remove Patient</button>
+            <button type="submit" name="action" value="add">Add/Edit Patient</button>
+            <button type="submit" name="action" value="remove">Remove Patient</button>
           </div>
         </form>
       </div>
@@ -304,7 +306,7 @@
           <p id="waiting-${i}">Waiting Time: </p>
           <p id="treatment-${i}">Current Treatment: </p>
           <p id="remaining-${i}">Remaining Time: </p>
-          <p id="status-${i}">Status: </p>
+          <p id="patient-status-${i}">Status: </p>
         `;
         patientCardsContainer.appendChild(card);
         patientCards.push(card);
@@ -324,7 +326,13 @@
               document.getElementById(`waiting-${i}`).innerText = `Waiting Time: ${newPatients[i].waiting_time}`;
               document.getElementById(`treatment-${i}`).innerText = `Current Treatment: ${newPatients[i].current_treatment}`;
               document.getElementById(`remaining-${i}`).innerText = `Remaining Time: ${newPatients[i].remaining_time}`;
-              document.getElementById(`status-${i}`).innerText = `Status: ${newPatients[i].status}`;
+              let statusText = newPatients[i].status == 1 ? "In Treatment" : "Waiting";
+              const statusElement = document.getElementById(`patient-status-${i}`);
+              if (statusElement) {
+                statusElement.innerText = `Status: ${statusText}`;
+              }
+
+
               patientCards[i].style.display = 'block';
             } else {
               patientCards[i].style.display = 'none';
@@ -358,7 +366,7 @@
         doctorInterval = null;
       }
       createPatientCards();
-      updatePatients();
+      setTimeout(updatePatients, 10);
       if (!patientInterval) {
         patientInterval = setInterval(updatePatients, 1000);
       }

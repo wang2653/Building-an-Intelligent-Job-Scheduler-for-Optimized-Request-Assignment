@@ -701,12 +701,12 @@ def run_simulation(agent):
                 # print(f'Patient {patient_id} assigned to resource {resource.medical_resource_type}')
                 resource.add_patient_to_waiting(patient_id)
 
-                # # calculate the total treatment pattern remaining time
-                # remaining_time = 0
-                # for i in range(current_treatment_index, len(patient.treatment_plan_arr)):
-                #     remaining_time += patient.treatment_totaltime_arr[i]
-                # patient.treatment_remaining_time = remaining_time
-                # print(f'Patient {patient_id} remains {remaining_time}')
+                # calculate the total treatment pattern remaining time
+                remaining_time = 0
+                for i in range(current_treatment_index, len(patient.treatment_plan_arr)):
+                    remaining_time += patient.treatment_totaltime_arr[i]
+                patient.treatment_remaining_time = remaining_time
+                print(f'Patient {patient_id} remains {remaining_time}')
 
                 current_patients.add(patient_id)
             else:
@@ -803,7 +803,7 @@ def run_simulation(agent):
 
 
         current_time = current_time + 1
-        time.sleep(1)
+        time.sleep(0.1)
 
 
 
