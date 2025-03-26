@@ -38,7 +38,7 @@
           <label>Position</label>
           <input type="text" name="availability">
           <div class="button-group">
-            <button>Add/Edit Staff</button>
+            <button>Add Staff</button>
             <button>Remove Staff</button>
           </div>
         </form>
@@ -58,7 +58,7 @@
           <label>Treatment Time</label>
           <input type="text" name="treatment_time" placeholder="e.g. 1, 1, 8, 22">
           <div class="button-group">
-            <button type="submit" name="action" value="add">Add/Edit Patient</button>
+            <button type="submit" name="action" value="add">Add Patient</button>
             <button type="submit" name="action" value="remove">Remove Patient</button>
           </div>
         </form>
@@ -303,7 +303,7 @@
         card.className = 'card patient-card';
         card.style.display = 'none';
         card.innerHTML = `
-          <img src="https://via.placeholder.com/80" alt="Patient Photo">
+          <img src="../static/standard portrait.png" alt="Patient Photo">
           <h3 id="patient-id-${i}">Patient</h3>
           <p id="acuity-${i}">Acuity Level: </p>
           <p id="waiting-${i}">Waiting Time: </p>
@@ -432,7 +432,7 @@
             const card = document.createElement('div');
             card.className = 'card patient-card';
             card.innerHTML = `
-              <img src="https://via.placeholder.com/80" alt="Patient Photo">
+              <img src="../static/standard portrait.png" alt="Patient Photo">
               <h3>Patient ${patient.patient_id}</h3>
               <p>Acuity Level: ${patient.acuity_level}</p>
               <p>Waiting Time: ${patient.waiting_time}</p>

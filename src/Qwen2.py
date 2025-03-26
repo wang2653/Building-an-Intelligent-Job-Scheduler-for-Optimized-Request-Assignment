@@ -1,7 +1,6 @@
 from langchain.llms.base import LLM
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from typing import ClassVar, List, Optional
-from simulator import get_simulation_summary
 
 import torch
 
@@ -13,7 +12,7 @@ import torch
 #     print("No CUDA devices available")
 
 class qwen2(LLM):
-    max_new_tokens: int = 1920
+    max_new_tokens: int = 512
     temperature: float  = 0.9
     top_p: float = 0.8
     tokenizer: object = None
@@ -21,7 +20,7 @@ class qwen2(LLM):
     history: List = []
     device: ClassVar[torch.device] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    def __init__(self,max_new_tokens = 1920,
+    def __init__(self,max_new_tokens = 512,
                       temperature = 0.9,
                       top_p = 0.8):
         super().__init__()

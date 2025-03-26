@@ -412,28 +412,28 @@ def evaluation_final():
             waiting_time += start_time[i] - (total_time[i-1] + start_time[i-1])
 
         # print(f"{key}: {waiting_time} * {ACUITY_WEIGHT_MAP[acuity_level]}\n")
-        global_weighted_waiting_time.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
+        global_weighted_waiting_time.append(waiting_time)
         if (acuity_level == 1):
-            acuity_1.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
+            acuity_1.append(waiting_time)
         elif (acuity_level == 2):
-            acuity_2.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
+            acuity_2.append(waiting_time)
         elif (acuity_level == 3):
-            acuity_3.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
+            acuity_3.append(waiting_time)
         elif (acuity_level == 4):
-            acuity_4.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
+            acuity_4.append(waiting_time)
         elif (acuity_level == 5):
-            acuity_5.append(ACUITY_WEIGHT_MAP[acuity_level] * waiting_time)
+            acuity_5.append(waiting_time)
 
     # print(f"weighted waiting time: {global_weighted_waiting_time}")
     # print(f"sum of weighted waiting time: {sum(global_weighted_waiting_time)}")
-    print(f"acuity_1 average of weighted waiting time: {sum(acuity_1) / len(acuity_1)}")
-    print(f"acuity_2 average of weighted waiting time: {sum(acuity_2) / len(acuity_2)}")
-    print(f"acuity_3 average of weighted waiting time: {sum(acuity_3) / len(acuity_3)}")
-    print(f"acuity_4 average of weighted waiting time: {sum(acuity_4) / len(acuity_4)}")
-    print(f"acuity_5 average of weighted waiting time: {sum(acuity_5) / len(acuity_5)}")
+    print(f"acuity_1 average of waiting time: {sum(acuity_1) / len(acuity_1)}")
+    print(f"acuity_2 average of waiting time: {sum(acuity_2) / len(acuity_2)}")
+    print(f"acuity_3 average of waiting time: {sum(acuity_3) / len(acuity_3)}")
+    print(f"acuity_4 average of waiting time: {sum(acuity_4) / len(acuity_4)}")
+    print(f"acuity_5 average of waiting time: {sum(acuity_5) / len(acuity_5)}")
 
-    print(f"average of weighted waiting time: {sum(global_weighted_waiting_time) / len(global_weighted_waiting_time)}")
-    print(global_weighted_waiting_time)
+    print(f"average of waiting time: {sum(global_weighted_waiting_time) / len(global_weighted_waiting_time)}")
+    # print(global_weighted_waiting_time)
 
 # Reward function
 def compute_reward(patient_id, current_time):
@@ -834,6 +834,7 @@ def run_simulation(agent):
 
         current_time = current_time + 1
         time.sleep(0.3)
+        # time.sleep(0.01)
 
 
 
