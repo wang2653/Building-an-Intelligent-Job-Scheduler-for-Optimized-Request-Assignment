@@ -1,0 +1,6 @@
+current_time,patient_id,acuity_level,waiting_time,current_treatment,status
+35,1,2,0,Laboratory,1
+35,2,2,0,Consultation,1
+35,3,5,0,Laboratory,1
+35,4,5,0,Evaluation,1
+35,5,2,0,Registration,0

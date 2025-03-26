@@ -121,7 +121,7 @@ def search_patients():
         return []
 
     # 2. Read current patient info
-    df = pd.read_csv('../data/current_patients_info.csv')
+    df = pd.read_csv('../data/all_patients_info.csv')
 
     # 3. Filter for the matching patient_id (convert to int if needed)
     #    e.g. if patient_id is a string, cast to int, or compare as string if your CSV uses strings
