@@ -106,6 +106,12 @@ def get_doctors():
         })
     return {"resources": resources}
 
+@app.route('/get_current_time')
+def get_current_time():
+    df = pd.read_csv('../data/current_patients_info.csv')
+    current_time_value = df.iloc[0]['current_time']
+    return {"current_time": int(current_time_value)}
+
 # Run the application
 if __name__ == '__main__':
     run(app, host='localhost', port=8080, debug=True)

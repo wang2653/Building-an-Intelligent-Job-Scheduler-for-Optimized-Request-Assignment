@@ -1,3 +1,3 @@
 doctor_1,doctor_2,doctor_3,doctor_4,doctor_5,doctor_6,doctor_7,doctor_8
-14,0,0,16,0,0,15,17,8,13,9,7,6,5,0,0,0,0,0
-Evaluation,0,0,Triage,0,0,Evaluation,Triage,Laboratory,Laboratory,Discharge,Discharge,Discharge,Discharge,0,0,0,0,0
+24,0,0,0,23,25,0,22,20,17,19,13,21,14,0,0,18,0,0
+Evaluation,0,0,0,Evaluation,Evaluation,0,Evaluation,Consultation,Discharge,Laboratory,Discharge,Laboratory,Consultation,0,0,X-ray,0,0

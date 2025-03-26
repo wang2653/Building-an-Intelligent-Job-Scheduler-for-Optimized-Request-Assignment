@@ -506,6 +506,13 @@ footer {
     width: 300px;
 }
 
+.currentTimeDisplay {
+    position: absolute;
+    right: 10px;
+    font-weight: bold;
+    padding-right: 20px;
+}
+
   /* Content area for doctor/patient cards */
 .content {
     flex: 1;

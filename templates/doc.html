@@ -98,6 +98,9 @@
         <button id="searchButton">Search</button>
         <button id="doctorBtn">Staff</button>
         <button id="patientBtn">Patient</button>
+        <div id="currentTimeDisplay" class="currentTimeDisplay">
+          Current Time: ...
+        </div>
       </div>
   
       <!-- Content Area with Two Containers -->
@@ -377,6 +380,19 @@
     patientCardsContainer.classList.add('hidden');
     updateMedicalResources();
     doctorInterval = setInterval(updateMedicalResources, 1000);
+
+    // Get current time
+    const currentTimeEl = document.getElementById('currentTimeDisplay');
+    function updateCurrentTime() {
+      fetch('/get_current_time')
+        .then(response => response.json())
+        .then(data => {
+          currentTimeEl.innerText = 'Current Time: ' + data.current_time;
+        })
+        .catch(err => console.error(err));
+    }
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 100);
   </script>
 
 </body>
