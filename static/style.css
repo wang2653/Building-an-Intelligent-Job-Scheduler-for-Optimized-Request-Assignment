@@ -279,6 +279,8 @@ footer {
 
 .demo img {
     width: 40%;
+    border: 2px solid #b7b7b7;
+    border-radius: 5px;
 }
 
 .demo_message {
