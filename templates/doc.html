@@ -393,6 +393,60 @@
     }
     updateCurrentTime();
     setInterval(updateCurrentTime, 100);
+
+    // Search Function
+    const searchButton = document.getElementById('searchButton');
+    const searchBar = document.getElementById('searchBar');
+
+    searchButton.addEventListener('click', () => {
+      // 1. Grab the user’s search input
+      const queryId = searchBar.value.trim();
+      if (!queryId) {
+        return; // If empty, do nothing or optionally show a message
+      }
+
+      // 2. Call our new /search_patients endpoint
+      fetch(`/search_patients?patient_id=${encodeURIComponent(queryId)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          // data is an array of patient objects returned from search.csv
+
+          // 3. Switch our main view to "patient" so we can display the results
+          currentView = 'patient';
+          doctorCardsContainer.classList.add('hidden');
+          patientCardsContainer.classList.remove('hidden');
+
+          // 4. Show only the filtered patient(s).
+          //    Easiest is to dynamically rebuild the patient container with the data.
+          patientCardsContainer.innerHTML = ''; // clear out any existing cards
+
+          // If no data returned, handle that case
+          if (data.length === 0) {
+            patientCardsContainer.innerHTML = '<p>No matching patient found.</p>';
+            return;
+          }
+
+          // 5. Create a card for each row in "data"
+          data.forEach((patient) => {
+            // Build a card with the same structure as your existing patient cards
+            const card = document.createElement('div');
+            card.className = 'card patient-card';
+            card.innerHTML = `
+              <img src="https://via.placeholder.com/80" alt="Patient Photo">
+              <h3>Patient ${patient.patient_id}</h3>
+              <p>Acuity Level: ${patient.acuity_level}</p>
+              <p>Waiting Time: ${patient.waiting_time}</p>
+              <p>Current Treatment: ${patient.current_treatment}</p>
+              <p>Remaining Time: ${patient.remaining_time}</p>
+              <p>Status: ${patient.status == 1 ? 'In Treatment' : 'Waiting'}</p>
+            `;
+            patientCardsContainer.appendChild(card);
+          });
+        })
+        .catch((err) => {
+          console.error('Search error:', err);
+        });
+    });
   </script>
 
 </body>

@@ -1,0 +1,2 @@
+current_time,patient_id,acuity_level,waiting_time,current_treatment,remaining_time,status
+185,21,3,0,Laboratory,57,1

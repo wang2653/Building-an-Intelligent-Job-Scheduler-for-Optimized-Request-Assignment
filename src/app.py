@@ -112,6 +112,27 @@ def get_current_time():
     current_time_value = df.iloc[0]['current_time']
     return {"current_time": int(current_time_value)}
 
+@app.route('/search_patients', method=['GET'])
+def search_patients():
+    # 1. Get the patient_id from the query string
+    patient_id = request.query.get('patient_id')
+    if not patient_id:
+        # If nothing is provided, return empty or an error
+        return []
+
+    # 2. Read current patient info
+    df = pd.read_csv('../data/current_patients_info.csv')
+
+    # 3. Filter for the matching patient_id (convert to int if needed)
+    #    e.g. if patient_id is a string, cast to int, or compare as string if your CSV uses strings
+    filtered_df = df[df['patient_id'] == int(patient_id)]
+
+    # 4. Write the filtered data to search.csv
+    filtered_df.to_csv('../data/search.csv', index=False)
+
+    # 5. Return JSON so the frontend can build the card(s)
+    return filtered_df.to_json(orient="records")
+
 # Run the application
 if __name__ == '__main__':
     run(app, host='localhost', port=8080, debug=True)
