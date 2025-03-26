@@ -770,7 +770,7 @@ def run_simulation(agent):
         for patient_id in all_current_patients:
             current_treatment_index = global_patient[patient_id].current_treatment_index
             if current_treatment_index == len(global_patient[patient_id].treatment_plan_arr):
-                treatment_name = "Done"
+                treatment_name = "None"
                 status = 2
             else:
                 current_treatment_id = global_patient[patient_id].treatment_plan_arr[current_treatment_index]
