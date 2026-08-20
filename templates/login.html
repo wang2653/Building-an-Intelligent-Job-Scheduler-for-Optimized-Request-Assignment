@@ -9,7 +9,17 @@
 <body class="login-body">
     <div class="login-box">
         <h2>Login</h2>
-        <form method="post">
+        % if defined('error') and error:
+        <div style="color: #ffb4b4; font-size: 13px; margin-bottom: 10px; text-align: center; width: 250px;">
+            {{error}}
+        </div>
+        % end
+        % if defined('success') and success:
+        <div style="color: #b4ffb4; font-size: 13px; margin-bottom: 10px; text-align: center; width: 250px;">
+            {{success}}
+        </div>
+        % end
+        <form method="post" action="/login">
             <div class="input-box">
                 <label>Account</label>
                 <input type="text" name="username" required>
@@ -21,8 +31,8 @@
             <div class="btn-box">
                 <a href="#">Forget Password?</a>
                 <div>
-                    <button>Sign In</button>
-                    <button>Sign Up</button>
+                    <button type="submit" name="action" value="signin">Sign In</button>
+                    <button type="submit" name="action" value="signup">Sign Up</button>
                 </div>
             </div>
         </form>

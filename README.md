@@ -72,8 +72,6 @@ cd src
 python app.py  
 ```
 
-4️⃣ Access the web app: Open http://localhost:8000 in your browser.
-
 ---
 
 ## System Block Diagram

@@ -1,1 +1,9 @@
 current_time,patient_id,acuity_level,waiting_time,current_treatment,remaining_time,status
+145,7,1,0,Discharge,30,1
+145,8,2,0,Discharge,30,1
+145,13,3,0,Laboratory,79,1
+145,14,5,0,CT scan,70,1
+145,15,3,2,Discharge,30,1
+145,16,2,1,Laboratory,13,1
+145,17,4,0,Consultation,60,1
+145,18,2,4,Evaluation,49,0

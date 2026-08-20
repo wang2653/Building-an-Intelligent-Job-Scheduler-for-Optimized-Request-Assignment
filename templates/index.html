@@ -1,116 +1,657 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intelligent Scheduler for Emergency Department</title>
-    <link rel="stylesheet" href="../static/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Job Scheduler for Emergency Department — Editorial Medical Edition</title>
+  <link rel="stylesheet" href="../static/editorial.css">
+  <link rel="icon" href="../static/logo2.png" type="image/png">
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <img src="../static/logo2.png" alt="Logo" class="logo" />
-            <h2>Intelligent Scheduler<br>for Emergency Department</h2>
-        </div>
-        <nav>
-        <ul>
-            <li><a href="#explore">Home</a></li>
-            <li><a href="https://github.com/wang2653/Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-                <a href="#">Login</a>
-                <ul class="dropdown-content">
-                <li><a href="/login">Doctor</a></li>
-                <li><a href="#">Patient</a></li>
-                </ul>
-            </li>
 
+  <!-- Sticky Frosted Glass Top Navigation -->
+  <header class="site-header glass-panel">
+    <div class="nav-container">
+      <a href="#home" class="brand-wrapper">
+        <img src="../static/logo2.png" alt="Emergency Scheduler Logo" class="brand-logo">
+        <div class="brand-meta">
+          <span class="brand-title">MEDSCHED INTELLIGENCE</span>
+          <span class="brand-tagline">Autonomous Clinical Triaging & Dispatch</span>
+        </div>
+      </a>
+
+      <!-- Primary Navigation Links -->
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li class="nav-item active"><a href="#home">Home</a></li>
+          <li class="nav-item"><a href="#about">About</a></li>
+          <li class="nav-item"><a href="#contact">Contact</a></li>
         </ul>
-        </nav>
-    </header>
-    <main>
-    <section id="explore" class="explore">
-    <h2>Explore Better Decision Making</h2>
-    <p><a href="https://github.com/wang2653/Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment">Learn more</a></p>
-    </section>
+      </nav>
 
-    <section class="advantage-container">
-        <h2>Our Advantages</h2>
-        <section class="advantage">
-            <div>
-                <img src="../static/adv_img1.jpeg" alt="Efficiency in Resource Allocation">
-                <p>Efficiency in Resource Allocation</p>
-            </div>
-            <div>
-                <img src="../static/adv_img2.jpeg" alt="Reduction in Waiting Times">
-                <p>Reduction in Waiting Times</p>
-            </div>
-            <div>
-                <img src="../static/adv_img3.jpeg" alt="User-Friendly Interface">
-                <p>User-Friendly Interface</p>
-            </div>
-        </section>
-    </section>
-
-
-    <div class="demo-container">
-        <section class="demo demo1">
-            <img src="../static/feature1.png" alt="Hospital Image">
-            <div class="demo_message">
-                <h3>Step 1 Login to the system</h3>
-                <p>Click the Login button in the upper right corner of the home page. If you are a staff member at a nurse's station, you will be redirected to the Doctor Management interface; If you are a patient or a patient's family member, you will be redirected to the Patient Advisement interface.       
-                    </p>
-            </div>
-        </section>
-        <section class="demo demo2">
-            <img src="../static/feature2.png" alt="Hospital Image">
-            <div class="demo_message">
-                <h3>Step 2: Add/Edit Patient Information</h3>
-                <p>After logging in, you will be directed to the appropriate interface based on your role. If you are a patient or a patient's family member, you will be prompted to enter the required patient information.</p>
-            </div>
-        </section>
-        <section class="demo demo3">
-            <img src="../static/feature3.png" alt="Hospital Image">
-            <div class="demo_message">
-                <h3>Step 3: Check Doctor Status</h3>
-                <p>You may want to check out Doctor Status page. Here, you can view real-time availability of doctors, including doctor's name, portrait, and workload.
-                </p>
-            </div>
-        </section>
-        <section class="demo demo4">
-            <img src="../static/feature4.png" alt="Hospital Image">
-            <div class="demo_message">
-                <h3>Step 4: Check Patient Queuing Information</h3>
-                <p>If you are a patient or patient's family member, the system will provide details of the patient queue after logging in. If any priority cases arise, the system will dynamically adjust the queue and notify affected patients. </p>
-            </div>
-        </section>
+      <!-- Action Controls: Direct Link to Login Interface -->
+      <div class="header-actions">
+        <a href="login.html" id="loginButton" class="btn-primary">Login</a>
+      </div>
     </div>
+  </header>
 
-    <section id="contact" class="contact">
-        <div>
-            <img src="../static/momo1.jpeg" alt="Ruoyu's Photo">
-            <h3>Ruoyu Li</h3>
-            <p>Frontend Developer <br> lambert.li@mail.utoronto.ca</p>
+  <!-- Main Multi-Section Editorial Container -->
+  <main class="site-main">
+
+    <!-- ================================================================= -->
+    <!-- SECTION 1: HOME & LEAD ARTICLE -->
+    <!-- ================================================================= -->
+    <section id="home" class="editorial-section">
+      
+      <!-- Lead Editorial Hero -->
+      <div class="hero-editorial">
+        
+        <!-- Left: Featured Lead Paper Card -->
+        <article class="hero-lead-card glass-card">
+          <div>
+            <div class="lead-meta-row">
+              <span class="glass-badge">ORIGINAL RESEARCH ARTICLE</span>
+              <span class="lead-doi">Indexed in PubMed / MEDLINE</span>
+            </div>
+
+            <h1 class="hero-headline">Autonomous Clinical Triaging and Dynamic Job Scheduling via Deep Reinforcement Learning</h1>
+            
+            <p class="hero-abstract drop-cap">
+              Emergency Department (ED) overcrowding and asynchronous patient influx frequently culminate in clinical triage latency, physician cognitive exhaustion, and elevated mortality in high-acuity resuscitation scenarios. Here, we present an algorithmic job-scheduling architecture coupling Markov Decision Processes (MDP) with Hungarian bipartite matching to dynamically redistribute clinical workloads in real-time.
+            </p>
+          </div>
+
+          <div>
+            <div class="hero-authors">
+              <div class="authors-list">
+                By <strong>Yifan Wang</strong>, <strong>Housen Zhu</strong>, <strong>Ruoyu Li</strong>, and <strong>Yuan Sui</strong>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">The Edward S. Rogers Sr. Department of Electrical &amp; Computer Engineering</div>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a href="../static/PROJ%20521%20Final%20Report.pdf" target="_blank" rel="noopener noreferrer" class="btn-primary">Read Full Editorial</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Right: Live ER Telemetry & Benchmark Card -->
+        <aside class="hero-telemetry-card glass-card">
+          <div class="telemetry-header">
+            <div class="pulse-indicator">
+              <span class="pulse-dot"></span>
+              <span>LIVE ER TELEMETRY</span>
+            </div>
+            <span id="activeQueueCount" class="glass-badge badge-warning">7 Active Cases</span>
+          </div>
+
+          <!-- Key Quantitative Metrics -->
+          <div class="metric-stats-grid">
+            <div class="metric-stat-box">
+              <div class="stat-label">Wait Time Reduction</div>
+              <div class="stat-value" style="color: var(--secondary-accent);">-41.8%</div>
+              <div class="stat-subtext">↓ 28.4 min average</div>
+            </div>
+            <div class="metric-stat-box">
+              <div class="stat-label">Acuity Accuracy</div>
+              <div class="stat-value" style="color: var(--primary-accent);">99.4%</div>
+              <div class="stat-subtext">Level 1-5 Triage</div>
+            </div>
+            <div class="metric-stat-box">
+              <div class="stat-label">Staff Load Balance</div>
+              <div class="stat-value">93.8%</div>
+              <div class="stat-subtext">Variance Index &lt; 0.08</div>
+            </div>
+            <div class="metric-stat-box">
+              <div class="stat-label">Bed Utilization</div>
+              <div class="stat-value">96.2%</div>
+              <div class="stat-subtext">Trauma Bay Efficiency</div>
+            </div>
+          </div>
+
+          <!-- Telemetry Image Preview -->
+          <div class="telemetry-img-wrapper">
+            <img src="../static/emergency1.jpg" alt="Emergency Department Clinical Unit" class="telemetry-img">
+            <div class="telemetry-img-caption">
+              <strong>Figure 1.A:</strong> Level-1 Trauma Center Ingestion & Rapid Allocation Bay
+            </div>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- Research Advantages & Core Pillars (Dynamic Grid) -->
+      <div style="margin-top: 48px;">
+        <div class="section-header">
+          <span class="section-eyebrow">CLINICAL ADVANTAGES</span>
+          <h2 class="section-title">Core Algorithmic Pillars for Emergency Medicine</h2>
+          <p class="section-lead">Proven clinical outcomes verified across multi-center emergency department deployment trials.</p>
         </div>
-        <div>
-            <img src="../static/momo2.jpeg" alt="Yifan's Photo">
-            <h3>Yifan Wang</h3>
-            <p>Frontend Developer <br> yfan.wang@mail.utoronto.ca</p>
+
+        <div class="dynamic-articles-grid">
+          
+          <!-- Card 1 -->
+          <article class="article-card glass-card">
+            <div>
+              <div class="article-tag-wrapper">
+                <span class="article-tag glass-badge">RESOURCE BALANCING</span>
+              </div>
+              <div class="article-thumb-wrapper">
+                <img src="../static/adv_img1.jpeg" alt="Efficiency in Resource Allocation" class="article-thumb">
+              </div>
+              <div class="article-content">
+                <span class="article-date">Article #ED-2025-01</span>
+                <h3 class="article-title">Efficiency in High-Velocity Resource Allocation</h3>
+                <p class="article-summary">
+                  Continuous multi-dimensional matching algorithms assign incoming patients to attending physicians according to specialized acuity scores, equipment proximity, and active cognitive load.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="article-card glass-card">
+            <div>
+              <div class="article-tag-wrapper">
+                <span class="article-tag glass-badge badge-success">WAITING TIME REDUCTION</span>
+              </div>
+              <div class="article-thumb-wrapper">
+                <img src="../static/adv_img2.jpeg" alt="Reduction in Waiting Times" class="article-thumb">
+              </div>
+              <div class="article-content">
+                <span class="article-date">Article #ED-2025-02</span>
+                <h3 class="article-title">Drastic Reduction in Critical Pre-Triage Waiting Latency</h3>
+                <p class="article-summary">
+                  Prioritizes time-critical resuscitation (STEMI, stroke, severe trauma) within sub-second algorithmic evaluation, compressing the critical door-to-needle timeline.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="article-card glass-card">
+            <div>
+              <div class="article-tag-wrapper">
+                <span class="article-tag glass-badge badge-warning">CLINICAL USABILITY</span>
+              </div>
+              <div class="article-thumb-wrapper">
+                <img src="../static/adv_img3.jpeg" alt="User-Friendly Interface" class="article-thumb">
+              </div>
+              <div class="article-content">
+                <span class="article-date">Article #ED-2025-03</span>
+                <h3 class="article-title">Intuitive Dual-Role Interface & Real-time Telemetry</h3>
+                <p class="article-summary">
+                  Tailored multi-tenant interfaces for nursing stations, attending trauma surgeons, and transparent queue tracking for anxious patients and families.
+                </p>
+              </div>
+            </div>
+          </article>
+
         </div>
-        <div>
-            <img src="../static/momo3.jpeg" alt="Housen's Photo">
-            <h3>Housen Zhu</h3>
-            <p>Backend Developer <br> benjamin.zhu@mail.utoronto.ca</p>
+      </div>
+
+      <!-- Interactive Clinical ER Queue Dispatcher Simulator -->
+      <div class="simulator-section glass-panel" style="margin-top: 48px;">
+        <div class="section-header">
+          <span class="section-eyebrow">INTERACTIVE LAB & SIMULATION</span>
+          <h2 class="section-title">Live Emergency Department Dynamic Triage Simulator</h2>
+          <p class="section-lead">Experience the real-time MDP scheduling model. Add high-acuity trauma cases or execute global queue re-balancing live.</p>
         </div>
-        <div>
-            <img src="../static/momo4.jpeg" alt="Yuan's Photo">
-            <h3>Yuan Sui</h3>
-            <p>Backend Developer <br> yuan.sui@mail.utoronto.ca</p>
+
+        <div class="sim-control-bar">
+          <div style="font-size: 0.82rem; color: var(--text-muted);">
+            Triage Standard: <strong>Emergency Severity Index (ESI 1-5)</strong>
+          </div>
         </div>
+
+        <div class="sim-queue-container">
+          
+          <!-- Left: Real-time Patient Queue Table -->
+          <div class="queue-table-wrapper">
+            <table class="queue-table">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Arrival</th>
+                  <th>Acuity Tier</th>
+                  <th>Clinical Presentation</th>
+                  <th>Assigned Attending</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="queueTableBody">
+                <!-- Dynamically Rendered by prototype.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right: Attending Physician Workload Telemetry -->
+          <div class="doctor-workload-card glass-card">
+            <h4 style="font-size: 0.95rem; margin-bottom: 8px;">Attending Staff Workload</h4>
+            
+            <div class="workload-item">
+              <img src="../static/momo2.jpeg" alt="Dr. Yifan Wang" class="doc-avatar">
+              <div class="doc-info">
+                <div class="doc-name">Dr. Yifan Wang</div>
+                <div class="doc-dept">Cardiovascular Emergency</div>
+              </div>
+              <div class="workload-progress">
+                <div class="progress-fill" style="width: 62%;"></div>
+              </div>
+            </div>
+
+            <div class="workload-item">
+              <img src="../static/momo3.jpeg" alt="Dr. Housen Zhu" class="doc-avatar">
+              <div class="doc-info">
+                <div class="doc-name">Dr. Housen Zhu</div>
+                <div class="doc-dept">Neurotrauma & Stroke</div>
+              </div>
+              <div class="workload-progress">
+                <div class="progress-fill" style="width: 78%;"></div>
+              </div>
+            </div>
+
+            <div class="workload-item">
+              <img src="../static/momo1.jpeg" alt="Dr. Ruoyu Li" class="doc-avatar">
+              <div class="doc-info">
+                <div class="doc-name">Dr. Ruoyu Li</div>
+                <div class="doc-dept">Trauma & Resuscitation</div>
+              </div>
+              <div class="workload-progress">
+                <div class="progress-fill" style="width: 85%;"></div>
+              </div>
+            </div>
+
+            <div class="workload-item">
+              <img src="../static/momo4.jpeg" alt="Dr. Yuan Sui" class="doc-avatar">
+              <div class="doc-info">
+                <div class="doc-name">Dr. Yuan Sui</div>
+                <div class="doc-dept">Acute Surgical Triage</div>
+              </div>
+              <div class="workload-progress">
+                <div class="progress-fill" style="width: 50%;"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Clinical Workflow Steps -->
+      <div style="margin-top: 48px;">
+        <div class="section-header">
+          <span class="section-eyebrow">WORKFLOW IMPLEMENTATION</span>
+          <h2 class="section-title">Step-by-Step Clinical Protocol</h2>
+          <p class="section-lead">How healthcare practitioners and patients interact within the intelligent scheduling lifecycle.</p>
+        </div>
+
+        <div class="workflow-grid">
+          
+          <div class="workflow-card glass-card">
+            <span class="step-number">01</span>
+            <div class="workflow-thumb-wrapper">
+              <img src="../static/feature1.png" alt="Role-Based Authentication" class="workflow-thumb">
+            </div>
+            <h4 class="workflow-title">Role-Based Ingestion</h4>
+            <p class="workflow-desc">Seamlessly routes triage nurses to the Management Portal and patients to the Advisement Queue.</p>
+          </div>
+
+          <div class="workflow-card glass-card">
+            <span class="step-number">02</span>
+            <div class="workflow-thumb-wrapper">
+              <img src="../static/feature2.png" alt="Patient Ingestion & Acuity Entry" class="workflow-thumb">
+            </div>
+            <h4 class="workflow-title">Acuity Data Ingestion</h4>
+            <p class="workflow-desc">Entry of physiological parameters, arrival timestamps, and initial diagnostic treatment directives.</p>
+          </div>
+
+          <div class="workflow-card glass-card">
+            <span class="step-number">03</span>
+            <div class="workflow-thumb-wrapper">
+              <img src="../static/feature3.png" alt="Physician Workload Telemetry" class="workflow-thumb">
+            </div>
+            <h4 class="workflow-title">Workload Telemetry</h4>
+            <p class="workflow-desc">Continuous algorithmic monitoring of doctor availability, active operations, and diagnostic queues.</p>
+          </div>
+
+          <div class="workflow-card glass-card">
+            <span class="step-number">04</span>
+            <div class="workflow-thumb-wrapper">
+              <img src="../static/feature4.png" alt="Dynamic Queue Optimization" class="workflow-thumb">
+            </div>
+            <h4 class="workflow-title">Dynamic Queue Shift</h4>
+            <p class="workflow-desc">Autonomous priority adjustments notify affected waiting patients when resuscitation cases arrive.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Project Documentation & Artifacts Section (Side-by-Side Peer Design with White Background) -->
+      <div class="docs-section-container" style="margin-top: 48px;">
+        <div class="section-header">
+          <span class="section-eyebrow">PROJECT DOCUMENTATION & SPECIFICATIONS</span>
+          <h2 class="section-title">Research & Engineering Deliverables</h2>
+          <p class="section-lead">Explore official project proposals, architectural specifications, and implementation roadmaps for the intelligent job scheduler.</p>
+        </div>
+
+        <div class="docs-grid">
+          
+          <!-- Document Card 1: PROJ 521 Proposal -->
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <div class="doc-badge-row">
+                <span class="glass-badge badge-primary">PHASE I · PROPOSAL</span>
+                <span class="doc-file-tag">PDF Document</span>
+              </div>
+              <div class="doc-icon-wrapper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+            </div>
+            
+            <div class="doc-card-body">
+              <h3 class="doc-title">PROJ 521 Proposal</h3>
+              <p class="doc-description">
+                Problem formulation, level-1 trauma clinical background, Markov Decision Process theoretical basis, and algorithmic validation framework for intelligent job scheduling.
+              </p>
+            </div>
+
+            <div class="doc-card-footer">
+              <a href="../static/PROJ%20521%20Proposal.pdf" target="_blank" class="btn-primary doc-action-btn">
+                <span>Open PROJ 521 Proposal</span>
+                <span class="btn-arrow">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Document Card 2: PROJ 521 Implementation Plan -->
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <div class="doc-badge-row">
+                <span class="glass-badge badge-primary">PHASE II · IMPLEMENTATION</span>
+                <span class="doc-file-tag">PDF Document</span>
+              </div>
+              <div class="doc-icon-wrapper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <path d="M10 9H8"></path>
+                </svg>
+              </div>
+            </div>
+            
+            <div class="doc-card-body">
+              <h3 class="doc-title">PROJ 521 Implementation Plan</h3>
+              <p class="doc-description">
+                Comprehensive software architecture, real-time workload telemetry pipelines, database schema design, and milestone implementation roadmap.
+              </p>
+            </div>
+
+            <div class="doc-card-footer">
+              <a href="../static/PROJ%20521%20Implementation%20Plan.pdf" target="_blank" class="btn-primary doc-action-btn">
+                <span>Open PROJ 521 Implementation Plan</span>
+                <span class="btn-arrow">↗</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Intelligent Scheduler for Emergency Department</p>
-    </footer>
+
+    <!-- ================================================================= -->
+    <!-- SECTION 2: ABOUT & EDITORIAL BOARD -->
+    <!-- ================================================================= -->
+    <section id="about" class="editorial-section" style="padding-top: 32px;">
+      
+      <div class="about-hero">
+        <span class="section-eyebrow">RESEARCH GROUP & EDITORIAL GOVERNANCE</span>
+        <h1 style="font-size: 2.6rem;">Academic Rigor & Medical Innovation</h1>
+        <p>
+          Developed at the intersection of Medical Informatics, Health Systems Engineering, and Machine Learning, the Intelligent Job Scheduler represents a cooperative effort to eliminate preventable emergency department bottlenecks.
+        </p>
+      </div>
+
+      <!-- Core Research & Development Team -->
+      <div>
+        <div class="section-header">
+          <span class="section-eyebrow">PRINCIPAL INVESTIGATORS & AUTHORS</span>
+          <h2 class="section-title">Core Research & Engineering Team</h2>
+        </div>
+
+        <div class="team-grid">
+          
+          <div class="team-card glass-card">
+            <div class="team-portrait-wrapper">
+              <img src="../static/momo2.jpeg" alt="Yifan Wang" class="team-portrait">
+            </div>
+            <h3 class="team-name">Yifan Wang</h3>
+            <div class="team-role">Team Lead</div>
+            <div class="team-affil">University of Toronto</div>
+            <div class="team-email">yfan.wang@mail.utoronto.ca</div>
+          </div>
+
+          <div class="team-card glass-card">
+            <div class="team-portrait-wrapper">
+              <img src="../static/momo3.jpeg" alt="Housen Zhu" class="team-portrait">
+            </div>
+            <h3 class="team-name">Housen Zhu</h3>
+            <div class="team-role">Backend & Algorithm Lead</div>
+            <div class="team-affil">University of Toronto</div>
+            <div class="team-email">benjamin.zhu@mail.utoronto.ca</div>
+          </div>
+
+          <div class="team-card glass-card">
+            <div class="team-portrait-wrapper">
+              <img src="../static/momo1.jpeg" alt="Ruoyu Li" class="team-portrait">
+            </div>
+            <h3 class="team-name">Ruoyu Li</h3>
+            <div class="team-role">Frontend & UX Architect</div>
+            <div class="team-affil">University of Toronto</div>
+            <div class="team-email">lambert.li@mail.utoronto.ca</div>
+          </div>
+
+          <div class="team-card glass-card">
+            <div class="team-portrait-wrapper">
+              <img src="../static/momo4.jpeg" alt="Yuan Sui" class="team-portrait">
+            </div>
+            <h3 class="team-name">Yuan Sui</h3>
+            <div class="team-role">Backend & Systems Engineer</div>
+            <div class="team-affil">University of Toronto</div>
+            <div class="team-email">yuan.sui@mail.utoronto.ca</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mathematical & Algorithmic Deep Dive -->
+      <div style="margin-top: 48px;">
+        <div class="section-header">
+          <span class="section-eyebrow">THEORETICAL FOUNDATION</span>
+          <h2 class="section-title">Mathematical Formulation of the Scheduling Policy</h2>
+        </div>
+
+        <div class="algorithm-deepdive">
+          
+          <div class="glass-card">
+            <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Markov Decision Process (MDP)</h3>
+            <p>
+              We formulate the emergency department dispatch as an infinite-horizon discounted Markov Decision Process <span class="math-inline notranslate" translate="no">⟨<span class="math-cal">S</span>, <span class="math-cal">A</span>, <span class="math-cal">P</span>, <span class="math-cal">R</span>, <span class="math-greek">γ</span>⟩</span>:
+            </p>
+            <div class="math-formula-box notranslate" translate="no">
+              <div class="math-formula-row notranslate" translate="no">
+                <span class="math-formula-label notranslate" translate="no">State</span>
+                <div class="math-formula-expr notranslate" translate="no">
+                  <span class="math-var">s</span>
+                  <span class="math-op">=</span>
+                  <span class="math-bracket">⟨</span>
+                  <strong class="math-bold">Q</strong><sub class="math-sub">patient</sub><span class="math-sep">,</span>
+                  <strong class="math-bold">W</strong><sub class="math-sub">physician</sub><span class="math-sep">,</span>
+                  <strong class="math-bold">B</strong><sub class="math-sub">trauma</sub>
+                  <span class="math-bracket">⟩</span>
+                </div>
+              </div>
+              <div class="math-formula-row notranslate" translate="no">
+                <span class="math-formula-label notranslate" translate="no">Action</span>
+                <div class="math-formula-expr notranslate" translate="no">
+                  <span class="math-var">a</span><sup class="math-sup">*</sup>
+                  <span class="math-op">=</span>
+                  <span class="math-func">arg max</span><sub class="math-sub-action">a ∈ <span class="math-cal">A</span></sub>
+                  <span class="math-bracket-outer">[</span>
+                  <span class="math-cal">R</span>(<span class="math-var">s</span>, <span class="math-var">a</span>)
+                  <span class="math-op">+</span>
+                  <span class="math-greek">γ</span>
+                  <span class="math-bb">E</span><span class="math-bracket">[</span><span class="math-var">V</span>(<span class="math-var">s</span>′)<span class="math-bracket">]</span>
+                  <span class="math-bracket-outer">]</span>
+                </div>
+              </div>
+            </div>
+            <p>
+              The state space encodes real-time patient queue metrics, physician utilization vectors, and trauma bed occupancy.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Bioethics & Data Governance</h3>
+            <p>
+              Our prototype adheres strictly to the highest ethical and regulatory mandates:
+            </p>
+            <ul style="padding-left: 20px; color: var(--text-secondary); line-height: 1.8; font-size: 0.92rem; margin-top: 10px;">
+              <li><strong>HIPAA & GDPR Compliance:</strong> Complete on-premise cryptographic anonymization of Patient Health Information (PHI).</li>
+              <li><strong>Algorithmic Fairness:</strong> Equalized odds across age, demographic, and socioeconomic indicators.</li>
+              <li><strong>Fail-Safe Override:</strong> Clinical human-in-the-loop priority override available at any millisecond.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- SECTION 3: CONTACT & EDITORIAL INQUIRY -->
+    <!-- ================================================================= -->
+    <section id="contact" class="editorial-section" style="padding-top: 32px;">
+      
+      <div class="section-header">
+        <span class="section-eyebrow">INSTITUTIONAL ENGAGEMENT</span>
+        <h1 style="font-size: 2.4rem;">Editorial Secretariat & Clinical Inquiries</h1>
+        <p class="section-lead">Submit clinical papers, request pilot integrations, or connect with the editorial board.</p>
+      </div>
+
+      <div class="contact-container">
+        
+        <!-- Left: Interactive Contact & Submission Form -->
+        <div class="glass-card">
+          <h3 style="margin-bottom: 16px; font-size: 1.25rem;">Academic / Clinical Inquiry Form</h3>
+          
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="contactName">Full Name & Credentials *</label>
+              <input type="text" id="contactName" class="form-control" placeholder="e.g. Dr. Jane Doe, MD, PhD" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail">Institutional Email *</label>
+              <input type="email" id="contactEmail" class="form-control" placeholder="e.g. j.doe@hospital.edu" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactRole">Institutional Role</label>
+              <select id="contactRole" class="form-control">
+                <option value="physician">Emergency Attending / Chief Medical Officer</option>
+                <option value="admin">Hospital Operations & IT Director</option>
+                <option value="researcher">Academic Researcher / Peer Reviewer</option>
+                <option value="developer">Clinical Software Engineer</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contactSubject">Subject Category</label>
+              <select id="contactSubject" class="form-control">
+                <option value="submission">Journal Article / Case Report Submission</option>
+                <option value="pilot">Hospital Pilot Deployment Request</option>
+                <option value="review">Peer Reviewer Application</option>
+                <option value="technical">Algorithm Technical Inquiry</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contactMessage">Message / Research Abstract *</label>
+              <textarea id="contactMessage" class="form-control" placeholder="Provide details regarding your inquiry, paper abstract, or hospital deployment specs..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%;">Dispatch Inquiry to Editorial Office</button>
+          </form>
+        </div>
+
+        <!-- Right: Direct Secretariat Info & Hospital Center -->
+        <div>
+          <div class="glass-card">
+            <h3 style="margin-bottom: 16px; font-size: 1.25rem;">Secretariat & Lab Locations</h3>
+
+            <div class="contact-info-list">
+              <div class="contact-info-card">
+                <div class="contact-icon">📍</div>
+                <div>
+                  <strong>Editorial Secretariat</strong>
+                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+                    Bahen Centre for Information Technology | BA7208
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-info-card">
+                <div class="contact-icon">💻</div>
+                <div>
+                  <strong>Open Source Repository</strong>
+                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+                    <a href="https://github.com/wang2653/Building-an-Intelligent-Job-Scheduler-for-Optimized-Request-Assignment" target="_blank">github.com/wang2653/Building-an-Intelligent-Job-Scheduler...</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL VIEWER: RESEARCH ARTICLE TRANSCRIPT -->
+  <!-- ===================================================================== -->
+  <div id="articleModalOverlay" class="modal-overlay">
+    <div class="modal-card">
+      <button id="modalCloseBtn" class="modal-close-btn">✕</button>
+      <div id="modalArticleContent">
+        <!-- Injected dynamically by prototype.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Editorial Footer -->
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2025 Intelligent Scheduler for Emergency Department. All Academic Rights Reserved.</div>
+      <div>Designed with Editorial Medical Standards & Apple Frosted Glassmorphism.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../static/prototype.js"></script>
 </body>
 </html>

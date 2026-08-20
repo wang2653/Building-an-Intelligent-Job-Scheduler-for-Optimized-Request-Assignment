@@ -15,3 +15,10 @@ matplotlib
 
 # Seaborn for enhanced data visualizations, built on top of Matplotlib
 seaborn
+
+# Bottle web framework
+bottle
+
+# Google Auth & OAuth client
+google-auth-oauthlib
+oauth2client
